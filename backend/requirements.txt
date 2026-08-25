@@ -8,4 +8,4 @@ scikit-learn>=1.4.0
 pytest>=8.2.0
 pytest-asyncio>=0.23.0
 python-dotenv>=1.0.1
-h3>=3.7.6
+h3>=4.0.0

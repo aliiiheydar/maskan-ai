@@ -21,6 +21,7 @@ _DIGIT_TABLE = str.maketrans(
     _PERSIAN_DIGITS + _ARABIC_INDIC_DIGITS,
     _ASCII_DIGITS + _ASCII_DIGITS,
 )
+_REVERSE_DIGIT_TABLE = str.maketrans(_ASCII_DIGITS, _PERSIAN_DIGITS)
 
 
 def normalize_persian_text(text: str) -> str:
@@ -42,3 +43,14 @@ def normalize_persian_text(text: str) -> str:
 def parse_persian_numbers(text: str) -> str:
     """Convert Persian and Arabic-Indic digits to ASCII digits."""
     return text.translate(_DIGIT_TABLE)
+
+
+def to_persian_digits(value: "int | str") -> str:
+    """Convert ASCII digits to Persian digits, for user-facing display text."""
+    return str(value).translate(_REVERSE_DIGIT_TABLE)
+
+
+def clean_for_llm(text: str) -> str:
+    """Full normalization pipeline (char normalization, then digit conversion)
+    applied to any Persian text before it is sent to an LLM."""
+    return parse_persian_numbers(normalize_persian_text(text))
