@@ -1,6 +1,6 @@
 import pytest
 
-from app.core.config import TARH_TERAFIK_BBOX
+from app.core.constants import TARH_TERAFIK_BBOX
 from app.spatial.distance import haversine_distance_km
 from app.spatial.transit import estimate_commute_time, find_nearest_metro_station, is_inside_tarh_terafik
 
@@ -16,9 +16,9 @@ def test_haversine_zero_distance_for_same_point():
 
 
 def test_find_nearest_metro_station_returns_metro_type_and_correct_walk_time():
-    station, dist_km, walk_mins = find_nearest_metro_station(35.8044, 51.4300)
+    station, dist_km, walk_mins = find_nearest_metro_station(35.80464927254761, 51.43348783883829)
     assert station["type"] == "metro"
-    assert station["id"] == "metro-1-01"  # Tajrish, exact match
+    assert station["id"] == "metro-tajrish"  # Tajrish, exact match
     assert dist_km == pytest.approx(0.0, abs=1e-6)
     assert walk_mins == pytest.approx(dist_km * 1000 / 80.0)
 

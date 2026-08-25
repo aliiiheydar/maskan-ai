@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from app.core import config
+from app.core import constants
 from app.spatial.distance import haversine_distance_km
 
 _DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "tehran_transit_nodes.json"
@@ -15,13 +15,13 @@ def find_nearest_metro_station(lat: float, lon: float) -> tuple[dict, float, flo
     metro_nodes = [n for n in TRANSIT_NODES if n["type"] == "metro"]
     nearest = min(metro_nodes, key=lambda n: haversine_distance_km(lat, lon, n["lat"], n["lon"]))
     dist_km = haversine_distance_km(lat, lon, nearest["lat"], nearest["lon"])
-    walk_mins = dist_km * 1000 / config.WALK_SPEED_MPM
+    walk_mins = dist_km * 1000 / constants.WALK_SPEED_MPM
     return nearest, dist_km, walk_mins
 
 
 def is_inside_tarh_terafik(lat: float, lon: float) -> bool:
     """Whether a point falls inside the (approximate) congestion-pricing zone."""
-    b = config.TARH_TERAFIK_BBOX
+    b = constants.TARH_TERAFIK_BBOX
     return b.min_lat <= lat <= b.max_lat and b.min_lon <= lon <= b.max_lon
 
 
@@ -36,15 +36,15 @@ def estimate_commute_time(
     dist_km = haversine_distance_km(origin_lat, origin_lon, dest_lat, dest_lon)
 
     if mode == "walk":
-        return dist_km * 1000 / config.WALK_SPEED_MPM
+        return dist_km * 1000 / constants.WALK_SPEED_MPM
 
     if mode == "drive":
-        minutes = dist_km / config.AVG_DRIVE_SPEED_KMH * 60.0
+        minutes = dist_km / constants.AVG_DRIVE_SPEED_KMH * 60.0
         if is_inside_tarh_terafik(origin_lat, origin_lon) or is_inside_tarh_terafik(dest_lat, dest_lon):
-            minutes *= config.CONGESTION_PENALTY
+            minutes *= constants.CONGESTION_PENALTY
         return minutes
 
     if mode == "transit":
-        return dist_km / config.AVG_TRANSIT_SPEED_KMH * 60.0 + config.TRANSIT_TRANSFER_BUFFER_MINS
+        return dist_km / constants.AVG_TRANSIT_SPEED_KMH * 60.0 + constants.TRANSIT_TRANSFER_BUFFER_MINS
 
     raise ValueError(f"Unknown commute mode: {mode!r}. Expected 'walk', 'drive', or 'transit'.")

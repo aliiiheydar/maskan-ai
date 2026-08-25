@@ -1,113 +1,5808 @@
 [
-  {"id": "metro-1-01", "name": "تجریش", "lat": 35.8044, "lon": 51.4300, "line": "1", "type": "metro"},
-  {"id": "metro-1-02", "name": "قلهک", "lat": 35.7870, "lon": 51.4280, "line": "1", "type": "metro"},
-  {"id": "metro-1-03", "name": "شهید بهشتی (مصلی)", "lat": 35.7550, "lon": 51.4210, "line": "1", "type": "metro"},
-  {"id": "metro-1-04", "name": "میدان ولیعصر", "lat": 35.7145, "lon": 51.4090, "line": "1", "type": "metro"},
-  {"id": "metro-1-05", "name": "میدان فردوسی", "lat": 35.6980, "lon": 51.4200, "line": "1", "type": "metro"},
-  {"id": "metro-1-06", "name": "راه‌آهن", "lat": 35.6550, "lon": 51.4190, "line": "1", "type": "metro"},
-  {"id": "metro-1-07", "name": "شهرری", "lat": 35.5950, "lon": 51.4350, "line": "1", "type": "metro"},
-  {"id": "metro-1-08", "name": "کهریزک", "lat": 35.5550, "lon": 51.4200, "line": "1", "type": "metro"},
-
-  {"id": "metro-2-01", "name": "فرهنگسرا", "lat": 35.7020, "lon": 51.5450, "line": "2", "type": "metro"},
-  {"id": "metro-2-02", "name": "پیروزی", "lat": 35.6980, "lon": 51.4650, "line": "2", "type": "metro"},
-  {"id": "metro-2-03", "name": "دروازه دولت", "lat": 35.6950, "lon": 51.4300, "line": "2", "type": "metro"},
-  {"id": "metro-2-04", "name": "میدان امام خمینی", "lat": 35.6892, "lon": 51.4173, "line": "2", "type": "metro"},
-  {"id": "metro-2-05", "name": "تئاتر شهر", "lat": 35.7080, "lon": 51.4080, "line": "2", "type": "metro"},
-  {"id": "metro-2-06", "name": "صادقیه", "lat": 35.7280, "lon": 51.3350, "line": "2", "type": "metro"},
-  {"id": "metro-2-07", "name": "اکباتان", "lat": 35.7150, "lon": 51.3050, "line": "2", "type": "metro"},
-  {"id": "metro-2-08", "name": "کرج", "lat": 35.7400, "lon": 51.1200, "line": "2", "type": "metro"},
-
-  {"id": "metro-3-01", "name": "قائم", "lat": 35.7450, "lon": 51.5300, "line": "3", "type": "metro"},
-  {"id": "metro-3-02", "name": "تهرانپارس", "lat": 35.7350, "lon": 51.5100, "line": "3", "type": "metro"},
-  {"id": "metro-3-03", "name": "نارمک", "lat": 35.7280, "lon": 51.4850, "line": "3", "type": "metro"},
-  {"id": "metro-3-04", "name": "میدان امام حسین", "lat": 35.7020, "lon": 51.4400, "line": "3", "type": "metro"},
-  {"id": "metro-3-05", "name": "میدان انقلاب", "lat": 35.7006, "lon": 51.3919, "line": "3", "type": "metro"},
-  {"id": "metro-3-06", "name": "میدان آزادی", "lat": 35.6980, "lon": 51.3350, "line": "3", "type": "metro"},
-  {"id": "metro-3-07", "name": "طرشت", "lat": 35.7150, "lon": 51.3550, "line": "3", "type": "metro"},
-  {"id": "metro-3-08", "name": "وردآورد", "lat": 35.7600, "lon": 51.1300, "line": "3", "type": "metro"},
-
-  {"id": "metro-4-01", "name": "شهید کلاهدوز", "lat": 35.7480, "lon": 51.3020, "line": "4", "type": "metro"},
-  {"id": "metro-4-02", "name": "صادقیه", "lat": 35.7281, "lon": 51.3351, "line": "4", "type": "metro"},
-  {"id": "metro-4-03", "name": "طرشت", "lat": 35.7151, "lon": 51.3551, "line": "4", "type": "metro"},
-  {"id": "metro-4-04", "name": "میدان انقلاب", "lat": 35.7007, "lon": 51.3920, "line": "4", "type": "metro"},
-  {"id": "metro-4-05", "name": "مولوی", "lat": 35.6750, "lon": 51.4180, "line": "4", "type": "metro"},
-  {"id": "metro-4-06", "name": "شوش", "lat": 35.6700, "lon": 51.4050, "line": "4", "type": "metro"},
-  {"id": "metro-4-07", "name": "خزانه", "lat": 35.6350, "lon": 51.3850, "line": "4", "type": "metro"},
-  {"id": "metro-4-08", "name": "بیمه", "lat": 35.6100, "lon": 51.4300, "line": "4", "type": "metro"},
-
-  {"id": "metro-5-01", "name": "صادقیه", "lat": 35.7282, "lon": 51.3352, "line": "5", "type": "metro"},
-  {"id": "metro-5-02", "name": "اکباتان", "lat": 35.7151, "lon": 51.3051, "line": "5", "type": "metro"},
-  {"id": "metro-5-03", "name": "شهید کلاهدوز", "lat": 35.7481, "lon": 51.3021, "line": "5", "type": "metro"},
-  {"id": "metro-5-04", "name": "شهرک زیبا", "lat": 35.7550, "lon": 51.2600, "line": "5", "type": "metro"},
-  {"id": "metro-5-05", "name": "آزادگان", "lat": 35.7700, "lon": 51.1350, "line": "5", "type": "metro"},
-  {"id": "metro-5-06", "name": "گلشهر", "lat": 35.7900, "lon": 51.1600, "line": "5", "type": "metro"},
-  {"id": "metro-5-07", "name": "مهرشهر", "lat": 35.8100, "lon": 51.1200, "line": "5", "type": "metro"},
-
-  {"id": "metro-6-01", "name": "کوهسار", "lat": 35.8200, "lon": 51.4600, "line": "6", "type": "metro"},
-  {"id": "metro-6-02", "name": "شهید چمران", "lat": 35.7750, "lon": 51.4020, "line": "6", "type": "metro"},
-  {"id": "metro-6-03", "name": "نوبنیاد", "lat": 35.7600, "lon": 51.5100, "line": "6", "type": "metro"},
-  {"id": "metro-6-04", "name": "میدان امام حسین", "lat": 35.7021, "lon": 51.4401, "line": "6", "type": "metro"},
-  {"id": "metro-6-05", "name": "مولوی", "lat": 35.6751, "lon": 51.4181, "line": "6", "type": "metro"},
-  {"id": "metro-6-06", "name": "شوش", "lat": 35.6701, "lon": 51.4051, "line": "6", "type": "metro"},
-  {"id": "metro-6-07", "name": "بازار", "lat": 35.6750, "lon": 51.4200, "line": "6", "type": "metro"},
-  {"id": "metro-6-08", "name": "دولت‌آباد", "lat": 35.6400, "lon": 51.4550, "line": "6", "type": "metro"},
-
-  {"id": "metro-7-01", "name": "تیر دوقلو", "lat": 35.7450, "lon": 51.5400, "line": "7", "type": "metro"},
-  {"id": "metro-7-02", "name": "نیروی هوایی", "lat": 35.7150, "lon": 51.4950, "line": "7", "type": "metro"},
-  {"id": "metro-7-03", "name": "شهید بهشتی (مصلی)", "lat": 35.7551, "lon": 51.4211, "line": "7", "type": "metro"},
-  {"id": "metro-7-04", "name": "میدان انقلاب", "lat": 35.7008, "lon": 51.3921, "line": "7", "type": "metro"},
-  {"id": "metro-7-05", "name": "میدان آزادی", "lat": 35.6981, "lon": 51.3351, "line": "7", "type": "metro"},
-  {"id": "metro-7-06", "name": "ورزشگاه آزادی", "lat": 35.7200, "lon": 51.3550, "line": "7", "type": "metro"},
-  {"id": "metro-7-07", "name": "بسیج", "lat": 35.6300, "lon": 51.3400, "line": "7", "type": "metro"},
-  {"id": "metro-7-08", "name": "کهریزک", "lat": 35.5551, "lon": 51.4201, "line": "7", "type": "metro"},
-
-  {"id": "brt-1-01", "name": "میدان آزادی", "lat": 35.6982, "lon": 51.3352, "line": "brt-1", "type": "brt"},
-  {"id": "brt-1-02", "name": "میدان انقلاب", "lat": 35.7009, "lon": 51.3922, "line": "brt-1", "type": "brt"},
-  {"id": "brt-1-03", "name": "میدان امام حسین", "lat": 35.7022, "lon": 51.4402, "line": "brt-1", "type": "brt"},
-  {"id": "brt-1-04", "name": "تهرانپارس", "lat": 35.7351, "lon": 51.5101, "line": "brt-1", "type": "brt"},
-
-  {"id": "brt-2-01", "name": "میدان ونک", "lat": 35.7580, "lon": 51.4110, "line": "brt-2", "type": "brt"},
-  {"id": "brt-2-02", "name": "میدان ولیعصر", "lat": 35.7146, "lon": 51.4091, "line": "brt-2", "type": "brt"},
-  {"id": "brt-2-03", "name": "راه‌آهن", "lat": 35.6551, "lon": 51.4191, "line": "brt-2", "type": "brt"},
-  {"id": "brt-2-04", "name": "شوش", "lat": 35.6702, "lon": 51.4052, "line": "brt-2", "type": "brt"},
-
-  {"id": "brt-3-01", "name": "میدان فردوسی", "lat": 35.6981, "lon": 51.4201, "line": "brt-3", "type": "brt"},
-  {"id": "brt-3-02", "name": "بهارستان", "lat": 35.6900, "lon": 51.4280, "line": "brt-3", "type": "brt"},
-  {"id": "brt-3-03", "name": "مولوی", "lat": 35.6752, "lon": 51.4182, "line": "brt-3", "type": "brt"},
-  {"id": "brt-3-04", "name": "شوش", "lat": 35.6703, "lon": 51.4053, "line": "brt-3", "type": "brt"},
-
-  {"id": "brt-4-01", "name": "صادقیه", "lat": 35.7283, "lon": 51.3353, "line": "brt-4", "type": "brt"},
-  {"id": "brt-4-02", "name": "آریاشهر", "lat": 35.7180, "lon": 51.3450, "line": "brt-4", "type": "brt"},
-  {"id": "brt-4-03", "name": "شهید کلاهدوز", "lat": 35.7482, "lon": 51.3022, "line": "brt-4", "type": "brt"},
-  {"id": "brt-4-04", "name": "ورزشگاه آزادی", "lat": 35.7201, "lon": 51.3551, "line": "brt-4", "type": "brt"},
-
-  {"id": "brt-5-01", "name": "تهرانپارس", "lat": 35.7352, "lon": 51.5102, "line": "brt-5", "type": "brt"},
-  {"id": "brt-5-02", "name": "پیروزی", "lat": 35.6981, "lon": 51.4651, "line": "brt-5", "type": "brt"},
-  {"id": "brt-5-03", "name": "شوش", "lat": 35.6704, "lon": 51.4054, "line": "brt-5", "type": "brt"},
-  {"id": "brt-5-04", "name": "راه‌آهن", "lat": 35.6552, "lon": 51.4192, "line": "brt-5", "type": "brt"},
-
-  {"id": "brt-6-01", "name": "شهرری", "lat": 35.5951, "lon": 51.4351, "line": "brt-6", "type": "brt"},
-  {"id": "brt-6-02", "name": "حرم مطهر", "lat": 35.5750, "lon": 51.4300, "line": "brt-6", "type": "brt"},
-  {"id": "brt-6-03", "name": "کهریزک", "lat": 35.5552, "lon": 51.4202, "line": "brt-6", "type": "brt"},
-  {"id": "brt-6-04", "name": "دروازه ورامین", "lat": 35.6650, "lon": 51.4350, "line": "brt-6", "type": "brt"},
-
-  {"id": "brt-7-01", "name": "شهید چمران", "lat": 35.7751, "lon": 51.4021, "line": "brt-7", "type": "brt"},
-  {"id": "brt-7-02", "name": "مدرس", "lat": 35.7600, "lon": 51.4230, "line": "brt-7", "type": "brt"},
-  {"id": "brt-7-03", "name": "حقانی", "lat": 35.7480, "lon": 51.4150, "line": "brt-7", "type": "brt"},
-  {"id": "brt-7-04", "name": "میدان ونک", "lat": 35.7581, "lon": 51.4111, "line": "brt-7", "type": "brt"},
-
-  {"id": "brt-8-01", "name": "صدر", "lat": 35.7900, "lon": 51.4450, "line": "brt-8", "type": "brt"},
-  {"id": "brt-8-02", "name": "ظفر", "lat": 35.7700, "lon": 51.4300, "line": "brt-8", "type": "brt"},
-  {"id": "brt-8-03", "name": "آفریقا", "lat": 35.7650, "lon": 51.4180, "line": "brt-8", "type": "brt"},
-  {"id": "brt-8-04", "name": "میدان ونک", "lat": 35.7582, "lon": 51.4112, "line": "brt-8", "type": "brt"},
-
-  {"id": "brt-9-01", "name": "بسیج", "lat": 35.6301, "lon": 51.3401, "line": "brt-9", "type": "brt"},
-  {"id": "brt-9-02", "name": "ورزشگاه آزادی", "lat": 35.7202, "lon": 51.3552, "line": "brt-9", "type": "brt"},
-  {"id": "brt-9-03", "name": "میدان آزادی", "lat": 35.6983, "lon": 51.3353, "line": "brt-9", "type": "brt"},
-  {"id": "brt-9-04", "name": "صادقیه", "lat": 35.7284, "lon": 51.3354, "line": "brt-9", "type": "brt"},
-
-  {"id": "brt-10-01", "name": "تجریش", "lat": 35.8045, "lon": 51.4301, "line": "brt-10", "type": "brt"},
-  {"id": "brt-10-02", "name": "شهید بهشتی (مصلی)", "lat": 35.7552, "lon": 51.4212, "line": "brt-10", "type": "brt"},
-  {"id": "brt-10-03", "name": "میدان ولیعصر", "lat": 35.7147, "lon": 51.4092, "line": "brt-10", "type": "brt"},
-  {"id": "brt-10-04", "name": "میدان انقلاب", "lat": 35.7010, "lon": 51.3923, "line": "brt-10", "type": "brt"}
+  {
+    "id": "metro-tajrish",
+    "name": "تجریش",
+    "name_en": "Tajrish",
+    "lat": 35.80464927254761,
+    "lon": 51.43348783883829,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-gheytariyeh"
+    ]
+  },
+  {
+    "id": "metro-gheytariyeh",
+    "name": "قیطریه",
+    "name_en": "Gheytariyeh",
+    "lat": 35.79304519418441,
+    "lon": 51.435008131547185,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahid-sadr",
+      "metro-tajrish"
+    ]
+  },
+  {
+    "id": "metro-shahid-sadr",
+    "name": "شهید صدر",
+    "name_en": "Shahid Sadr",
+    "lat": 35.78517256576695,
+    "lon": 51.435841867673915,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-gheytariyeh",
+      "metro-qolhak",
+      "metro-shahid-sadr"
+    ]
+  },
+  {
+    "id": "metro-qolhak",
+    "name": "قلهک",
+    "name_en": "Qolhak",
+    "lat": 35.772803086807926,
+    "lon": 51.43794821185644,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-doctor-shariati",
+      "metro-shahid-sadr"
+    ]
+  },
+  {
+    "id": "metro-doctor-shariati",
+    "name": "دکتر شریعتی",
+    "name_en": "Doctor Shariati",
+    "lat": 35.76267935499542,
+    "lon": 51.44424182534614,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-mirdamad",
+      "metro-qolhak"
+    ]
+  },
+  {
+    "id": "metro-mirdamad",
+    "name": "میرداماد",
+    "name_en": "Mirdamad",
+    "lat": 35.75982627256205,
+    "lon": 51.433819296509455,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-doctor-shariati",
+      "metro-shahid-haghani"
+    ]
+  },
+  {
+    "id": "metro-shahid-haghani",
+    "name": "شهید حقانی",
+    "name_en": "Shahid Haghani",
+    "lat": 35.75627557912093,
+    "lon": 51.42661575418256,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-mirdamad",
+      "metro-shahid-hemmat"
+    ]
+  },
+  {
+    "id": "metro-shahid-hemmat",
+    "name": "شهید همت",
+    "name_en": "Shahid Hemmat",
+    "lat": 35.748052365109096,
+    "lon": 51.425991738835656,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-mosalla-ye-imam-khomeini",
+      "metro-shahid-haghani"
+    ]
+  },
+  {
+    "id": "metro-mosalla-ye-imam-khomeini",
+    "name": "مصلی امام خمینی",
+    "name_en": "Mosalla-ye Imam Khomeini",
+    "lat": 35.74046332086735,
+    "lon": 51.427096058695945,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahid-beheshti",
+      "metro-shahid-hemmat"
+    ]
+  },
+  {
+    "id": "metro-shahid-beheshti",
+    "name": "شهید بهشتی",
+    "name_en": "Shahid Beheshti",
+    "lat": 35.730966425953845,
+    "lon": 51.42707272534462,
+    "type": "metro",
+    "lines": [
+      "1",
+      "3"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-mirza-ye-shirazi",
+      "metro-mosalla-ye-imam-khomeini",
+      "metro-shahid-mofattah",
+      "metro-sohrevardi"
+    ]
+  },
+  {
+    "id": "metro-shahid-mofattah",
+    "name": "شهید مفتح",
+    "name_en": "Shahid Mofattah",
+    "lat": 35.7245795929327,
+    "lon": 51.42783745418104,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahid-beheshti",
+      "metro-shohada-ye-haftom-e-tir"
+    ]
+  },
+  {
+    "id": "metro-ayatollah-taleghani",
+    "name": "آیت‌الله طالقانی",
+    "name_en": "Ayatollah Taleghani",
+    "lat": 35.70745447349628,
+    "lon": 51.42549816356315,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-darvazeh-dolat",
+      "metro-shohada-ye-haftom-e-tir"
+    ]
+  },
+  {
+    "id": "metro-darvazeh-dolat",
+    "name": "دروازه دولت",
+    "name_en": "Darvazeh Dolat",
+    "lat": 35.70178021056275,
+    "lon": 51.425749525343356,
+    "type": "metro",
+    "lines": [
+      "1",
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-ayatollah-taleghani",
+      "metro-darvazeh-shemiran",
+      "metro-ferdowsi",
+      "metro-sa-adi"
+    ]
+  },
+  {
+    "id": "metro-sa-adi",
+    "name": "سعدی",
+    "name_en": "Sa'adi",
+    "lat": 35.69333496668028,
+    "lon": 51.42453935232323,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-darvazeh-dolat",
+      "metro-imam-khomeini"
+    ]
+  },
+  {
+    "id": "metro-imam-khomeini",
+    "name": "امام خمینی",
+    "name_en": "Imam Khomeini",
+    "lat": 35.68552517258591,
+    "lon": 51.41988539650591,
+    "type": "metro",
+    "lines": [
+      "1",
+      "2"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-hasan-abad",
+      "metro-mellat",
+      "metro-panzdah-e-khordad",
+      "metro-sa-adi"
+    ]
+  },
+  {
+    "id": "metro-panzdah-e-khordad",
+    "name": "پانزده خرداد",
+    "name_en": "Panzdah-e Khordad",
+    "lat": 35.67800327258833,
+    "lon": 51.41753379650562,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-imam-khomeini",
+      "metro-khayyam"
+    ]
+  },
+  {
+    "id": "metro-khayyam",
+    "name": "خیام",
+    "name_en": "Khayyam",
+    "lat": 35.673200056951956,
+    "lon": 51.416903425342056,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-meydan-e-mohammadiyeh",
+      "metro-panzdah-e-khordad"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-mohammadiyeh",
+    "name": "میدان محمدیه",
+    "name_en": "Meydan-e Mohammadiyeh",
+    "lat": 35.66823308587964,
+    "lon": 51.4160060658123,
+    "type": "metro",
+    "lines": [
+      "1",
+      "7"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-khayyam",
+      "metro-mahdiyeh",
+      "metro-mowlavi",
+      "metro-shoush"
+    ]
+  },
+  {
+    "id": "metro-shoush",
+    "name": "شوش",
+    "name_en": "Shoush",
+    "lat": 35.657419184572184,
+    "lon": 51.41413394685172,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-meydan-e-mohammadiyeh",
+      "metro-payaneh-jonoub-jonoub-terminal"
+    ]
+  },
+  {
+    "id": "metro-payaneh-jonoub-jonoub-terminal",
+    "name": "پایانه جنوبی",
+    "name_en": "Payaneh Jonoub(Jonoub Terminal)",
+    "lat": 35.65076177259719,
+    "lon": 51.416637846256535,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahid-bokharaei",
+      "metro-shoush"
+    ]
+  },
+  {
+    "id": "metro-shahid-bokharaei",
+    "name": "شهید بخارایی",
+    "name_en": "Shahid Bokharaei",
+    "lat": 35.640656695868415,
+    "lon": 51.414943338696624,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-aliabad",
+      "metro-payaneh-jonoub-jonoub-terminal"
+    ]
+  },
+  {
+    "id": "metro-aliabad",
+    "name": "علی‌آباد",
+    "name_en": "Aliabad",
+    "lat": 35.629762515281406,
+    "lon": 51.41611118115705,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-javanmard-e-ghassab",
+      "metro-shahid-bokharaei"
+    ]
+  },
+  {
+    "id": "metro-javanmard-e-ghassab",
+    "name": "جوانمرد قصاب",
+    "name_en": "Javanmard-e Ghassab",
+    "lat": 35.60993278245109,
+    "lon": 51.419522067666,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-aliabad",
+      "metro-shahr-e-rey"
+    ]
+  },
+  {
+    "id": "metro-shahr-e-rey",
+    "name": "شهر ری",
+    "name_en": "Shahr-e Rey",
+    "lat": 35.59472807905189,
+    "lon": 51.42233516766524,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-javanmard-e-ghassab",
+      "metro-palayeshgah"
+    ]
+  },
+  {
+    "id": "metro-palayeshgah",
+    "name": "پالایشگاه",
+    "name_en": "Palayeshgah",
+    "lat": 35.55974358258574,
+    "lon": 51.3994788965002,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahed-baghershahr",
+      "metro-shahr-e-rey"
+    ]
+  },
+  {
+    "id": "metro-shahed-baghershahr",
+    "name": "شاهد - باقرشهر",
+    "name_en": "Shahed - BagherShahr",
+    "lat": 35.54699212568495,
+    "lon": 51.38257987565447,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-holy-shrine-of-imam-khomeini",
+      "metro-namayeshgah-e-shahr-e-aftab",
+      "metro-palayeshgah"
+    ]
+  },
+  {
+    "id": "metro-namayeshgah-e-shahr-e-aftab",
+    "name": "نمایشگاه شهر آفتاب",
+    "name_en": "Namayeshgah-e Shahr-e Aftab",
+    "lat": 35.53987425194572,
+    "lon": 51.349153496499326,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahed-baghershahr",
+      "metro-vavan"
+    ]
+  },
+  {
+    "id": "metro-vavan",
+    "name": "واوان",
+    "name_en": "Vavan",
+    "lat": 35.514507,
+    "lon": 51.30011,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-emam-khomeini-airport",
+      "metro-namayeshgah-e-shahr-e-aftab"
+    ]
+  },
+  {
+    "id": "metro-emam-khomeini-airport",
+    "name": "فرودگاه امام خمینی",
+    "name_en": "Emam Khomeini Airport",
+    "lat": 35.406838494162756,
+    "lon": 51.154226667656715,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-shahr-e-parand",
+      "metro-vavan"
+    ]
+  },
+  {
+    "id": "metro-shahr-e-parand",
+    "name": "شهر پرند",
+    "name_en": "Shahr-e Parand",
+    "lat": 35.46441271365459,
+    "lon": 50.976677065935476,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-emam-khomeini-airport"
+    ]
+  },
+  {
+    "id": "metro-holy-shrine-of-imam-khomeini",
+    "name": "حرم مطهر امام خمینی",
+    "name_en": "Holy Shrine of Imam Khomeini",
+    "lat": 35.54518486863606,
+    "lon": 51.373194344395415,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-kahrizak",
+      "metro-shahed-baghershahr"
+    ]
+  },
+  {
+    "id": "metro-kahrizak",
+    "name": "کهریزک",
+    "name_en": "Kahrizak",
+    "lat": 35.521557736592776,
+    "lon": 51.36925401927023,
+    "type": "metro",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-holy-shrine-of-imam-khomeini"
+    ]
+  },
+  {
+    "id": "metro-farhangsara",
+    "name": "فرهنگسرا",
+    "name_en": "Farhangsara",
+    "lat": 35.73000736469926,
+    "lon": 51.54689530764591,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-tehranpars"
+    ]
+  },
+  {
+    "id": "metro-tehranpars",
+    "name": "تهرانپارس",
+    "name_en": "Tehranpars",
+    "lat": 35.731032252220864,
+    "lon": 51.53174534920288,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-farhangsara",
+      "metro-shahid-bagheri"
+    ]
+  },
+  {
+    "id": "metro-shahid-bagheri",
+    "name": "شهید باقری",
+    "name_en": "Shahid Bagheri",
+    "lat": 35.73310824018062,
+    "lon": 51.516413791466555,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-daneshgah-e-elm-o-san-at",
+      "metro-tehranpars"
+    ]
+  },
+  {
+    "id": "metro-daneshgah-e-elm-o-san-at",
+    "name": "دانشگاه علم و صنعت",
+    "name_en": "Daneshgah-e Elm-o San'at",
+    "lat": 35.734610428888075,
+    "lon": 51.50501472056151,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-sarsabz",
+      "metro-shahid-bagheri"
+    ]
+  },
+  {
+    "id": "metro-sarsabz",
+    "name": "سرسبز",
+    "name_en": "Sarsabz",
+    "lat": 35.73531978593998,
+    "lon": 51.49491362733336,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-daneshgah-e-elm-o-san-at",
+      "metro-janbazan"
+    ]
+  },
+  {
+    "id": "metro-janbazan",
+    "name": "جانبازان",
+    "name_en": "Janbazan",
+    "lat": 35.73342366377895,
+    "lon": 51.48459698476707,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-fadak",
+      "metro-sarsabz"
+    ]
+  },
+  {
+    "id": "metro-fadak",
+    "name": "فدک",
+    "name_en": "Fadak",
+    "lat": 35.72654128306413,
+    "lon": 51.475803967952544,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-janbazan",
+      "metro-sabalan"
+    ]
+  },
+  {
+    "id": "metro-sabalan",
+    "name": "سبلان",
+    "name_en": "Sabalan",
+    "lat": 35.718205558895995,
+    "lon": 51.46465670720315,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-fadak",
+      "metro-shahid-madani"
+    ]
+  },
+  {
+    "id": "metro-shahid-madani",
+    "name": "شهید مدنی",
+    "name_en": "Shahid Madani",
+    "lat": 35.70920813139492,
+    "lon": 51.453372800456044,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-imam-hossein",
+      "metro-sabalan"
+    ]
+  },
+  {
+    "id": "metro-imam-hossein",
+    "name": "امام حسین",
+    "name_en": "Imam Hossein",
+    "lat": 35.702215852360844,
+    "lon": 51.44572070502451,
+    "type": "metro",
+    "lines": [
+      "2",
+      "6"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-darvazeh-shemiran",
+      "metro-meydan-e-shohada",
+      "metro-sarbaz",
+      "metro-shahid-madani"
+    ]
+  },
+  {
+    "id": "metro-darvazeh-shemiran",
+    "name": "دروازه شمیران",
+    "name_en": "Darvazeh Shemiran",
+    "lat": 35.69908634681844,
+    "lon": 51.43769983388175,
+    "type": "metro",
+    "lines": [
+      "2",
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-baharistan",
+      "metro-darvazeh-dolat",
+      "metro-imam-hossein",
+      "metro-meydan-e-shohada"
+    ]
+  },
+  {
+    "id": "metro-baharistan",
+    "name": "بهارستان",
+    "name_en": "Baharistan",
+    "lat": 35.69191347602845,
+    "lon": 51.432758239912324,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-darvazeh-shemiran",
+      "metro-mellat"
+    ]
+  },
+  {
+    "id": "metro-mellat",
+    "name": "ملت",
+    "name_en": "Mellat",
+    "lat": 35.688484046889265,
+    "lon": 51.42682095105412,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-baharistan",
+      "metro-imam-khomeini"
+    ]
+  },
+  {
+    "id": "metro-hasan-abad",
+    "name": "حسن آباد",
+    "name_en": "Hasan Abad",
+    "lat": 35.686415244197384,
+    "lon": 51.41012096766948,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-daneshgah-e-imam-ali",
+      "metro-imam-khomeini"
+    ]
+  },
+  {
+    "id": "metro-daneshgah-e-imam-ali",
+    "name": "دانشگاه امام علی",
+    "name_en": "Daneshgah-e Imam Ali",
+    "lat": 35.687225660229096,
+    "lon": 51.399424318005046,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-hasan-abad",
+      "metro-meydan-e-horr"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-horr",
+    "name": "میدان حر",
+    "name_en": "Meydan-e Horr",
+    "lat": 35.690962448655995,
+    "lon": 51.388446693930064,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-daneshgah-e-imam-ali",
+      "metro-shahid-navab-e-safavi"
+    ]
+  },
+  {
+    "id": "metro-shahid-navab-e-safavi",
+    "name": "شهید نواب صفوی",
+    "name_en": "Shahid Navab-e Safavi",
+    "lat": 35.69446218774433,
+    "lon": 51.37923331665502,
+    "type": "metro",
+    "lines": [
+      "2",
+      "7"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-meydan-e-horr",
+      "metro-roudaki",
+      "metro-shademan",
+      "metro-towhid"
+    ]
+  },
+  {
+    "id": "metro-shademan",
+    "name": "شادمان",
+    "name_en": "Shademan",
+    "lat": 35.70066539490897,
+    "lon": 51.36350496310954,
+    "type": "metro",
+    "lines": [
+      "2",
+      "4"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-daneshgah-e-sharif",
+      "metro-doctor-habibollah",
+      "metro-shahid-navab-e-safavi",
+      "metro-towhid"
+    ]
+  },
+  {
+    "id": "metro-daneshgah-e-sharif",
+    "name": "دانشگاه شریف",
+    "name_en": "Daneshgah-e Sharif",
+    "lat": 35.7058048453456,
+    "lon": 51.35363318140592,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-shademan",
+      "metro-tarasht"
+    ]
+  },
+  {
+    "id": "metro-tarasht",
+    "name": "طرشت",
+    "name_en": "Tarasht",
+    "lat": 35.716167999536054,
+    "lon": 51.34343870910494,
+    "type": "metro",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-daneshgah-e-sharif",
+      "metro-tehran-sadeghiyeh"
+    ]
+  },
+  {
+    "id": "metro-tehran-sadeghiyeh",
+    "name": "تهران (صادقیه)",
+    "name_en": "Tehran (Sadeghiyeh)",
+    "lat": 35.717576979751065,
+    "lon": 51.33096191268742,
+    "type": "metro",
+    "lines": [
+      "2",
+      "5"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-eram-e-sabz",
+      "metro-tarasht"
+    ]
+  },
+  {
+    "id": "metro-qa-em",
+    "name": "قائم",
+    "name_en": "Qa'em",
+    "lat": 35.7987685128104,
+    "lon": 51.5209879438365,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahid-mahallati"
+    ]
+  },
+  {
+    "id": "metro-shahid-mahallati",
+    "name": "شهید محلاتی",
+    "name_en": "Shahid Mahallati",
+    "lat": 35.79790926564732,
+    "lon": 51.5081728391952,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-aghdasiyeh",
+      "metro-qa-em"
+    ]
+  },
+  {
+    "id": "metro-aghdasiyeh",
+    "name": "اقدسیه",
+    "name_en": "Aghdasiyeh",
+    "lat": 35.80036394698206,
+    "lon": 51.483775336766335,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-nobonyad",
+      "metro-shahid-mahallati"
+    ]
+  },
+  {
+    "id": "metro-nobonyad",
+    "name": "نوبنیاد",
+    "name_en": "Nobonyad",
+    "lat": 35.790715615863185,
+    "lon": 51.47868420919925,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-aghdasiyeh",
+      "metro-hossein-abad"
+    ]
+  },
+  {
+    "id": "metro-hossein-abad",
+    "name": "حسین‌آباد",
+    "name_en": "Hossein Abad",
+    "lat": 35.778856448057304,
+    "lon": 51.478771138837,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-meydan-e-heravi",
+      "metro-nobonyad"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-heravi",
+    "name": "میدان هروی",
+    "name_en": "Meydan-e Heravi",
+    "lat": 35.77186464474175,
+    "lon": 51.47339266788893,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-hossein-abad",
+      "metro-shahid-zeynoddin"
+    ]
+  },
+  {
+    "id": "metro-shahid-zeynoddin",
+    "name": "شهید زین‌الدین",
+    "name_en": "Shahid Zeynoddin",
+    "lat": 35.760523492375995,
+    "lon": 51.46548920364399,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-khajeh-abdollah-e-ansari",
+      "metro-meydan-e-heravi"
+    ]
+  },
+  {
+    "id": "metro-khajeh-abdollah-e-ansari",
+    "name": "خواجه عبدالله انصاری",
+    "name_en": "Khajeh Abdollah-e Ansari",
+    "lat": 35.743425883530044,
+    "lon": 51.463469815304826,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahid-sayyad-shirazi",
+      "metro-shahid-zeynoddin"
+    ]
+  },
+  {
+    "id": "metro-shahid-sayyad-shirazi",
+    "name": "شهید صیاد شیرازی",
+    "name_en": "Shahid Sayyad Shirazi",
+    "lat": 35.73536131951541,
+    "lon": 51.458426696508255,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-khajeh-abdollah-e-ansari",
+      "metro-shahid-ghodousi"
+    ]
+  },
+  {
+    "id": "metro-shahid-ghodousi",
+    "name": "شهید قدوسی",
+    "name_en": "Shahid Ghodousi",
+    "lat": 35.73144645262075,
+    "lon": 51.44437452890492,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahid-sayyad-shirazi",
+      "metro-sohrevardi"
+    ]
+  },
+  {
+    "id": "metro-sohrevardi",
+    "name": "سهروردی",
+    "name_en": "Sohrevardi",
+    "lat": 35.73106228632752,
+    "lon": 51.436983861080726,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahid-beheshti",
+      "metro-shahid-ghodousi"
+    ]
+  },
+  {
+    "id": "metro-mirza-ye-shirazi",
+    "name": "میرزا شیرازی",
+    "name_en": "Mirza-ye Shirazi",
+    "lat": 35.728102353394476,
+    "lon": 51.41744408700073,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-meydan-e-jahad",
+      "metro-shahid-beheshti"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-jahad",
+    "name": "میدان جهاد",
+    "name_en": "Meydan-e Jahad",
+    "lat": 35.72060101981384,
+    "lon": 51.40821158345821,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-meydan-e-hazrat-vali-asr",
+      "metro-mirza-ye-shirazi"
+    ]
+  },
+  {
+    "id": "metro-teatr-e-shahr",
+    "name": "تئاتر شهر",
+    "name_en": "Teatr-e Shahr",
+    "lat": 35.70115619978607,
+    "lon": 51.40534185101572,
+    "type": "metro",
+    "lines": [
+      "3",
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-ferdowsi",
+      "metro-meydan-e-enghelab-e-eslami",
+      "metro-meydan-e-hazrat-vali-asr",
+      "metro-moniriyeh"
+    ]
+  },
+  {
+    "id": "metro-moniriyeh",
+    "name": "منیریه",
+    "name_en": "Moniriyeh",
+    "lat": 35.681079689206186,
+    "lon": 51.40158998370889,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-mahdiyeh",
+      "metro-teatr-e-shahr"
+    ]
+  },
+  {
+    "id": "metro-mahdiyeh",
+    "name": "مهدیه",
+    "name_en": "Mahdiyeh",
+    "lat": 35.667066187380414,
+    "lon": 51.39929005768028,
+    "type": "metro",
+    "lines": [
+      "3",
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-helal-ahmar",
+      "metro-meydan-e-mohammadiyeh",
+      "metro-moniriyeh",
+      "metro-rahahan"
+    ]
+  },
+  {
+    "id": "metro-rahahan",
+    "name": "راه آهن",
+    "name_en": "Rahahan",
+    "lat": 35.658659693529906,
+    "lon": 51.39834374868766,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-javadiyeh",
+      "metro-mahdiyeh"
+    ]
+  },
+  {
+    "id": "metro-javadiyeh",
+    "name": "جوادیه",
+    "name_en": "Javadiyeh",
+    "lat": 35.65911627746628,
+    "lon": 51.388141527579855,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-rahahan",
+      "metro-zamzam"
+    ]
+  },
+  {
+    "id": "metro-zamzam",
+    "name": "زمزم",
+    "name_en": "Zamzam",
+    "lat": 35.65258765923896,
+    "lon": 51.37329904910739,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-javadiyeh",
+      "metro-shahrak-e-shariaty"
+    ]
+  },
+  {
+    "id": "metro-shahrak-e-shariaty",
+    "name": "شهرک شریعتی",
+    "name_en": "Shahrak-e Shariaty",
+    "lat": 35.64433913304947,
+    "lon": 51.36927744889414,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-abdol-abad",
+      "metro-zamzam"
+    ]
+  },
+  {
+    "id": "metro-abdol-abad",
+    "name": "عبدل آباد",
+    "name_en": "Abdol Abad",
+    "lat": 35.63813580890704,
+    "lon": 51.36016010714025,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-nemat-abad",
+      "metro-shahrak-e-shariaty"
+    ]
+  },
+  {
+    "id": "metro-nemat-abad",
+    "name": "نعمت آباد",
+    "name_en": "Nemat Abad",
+    "lat": 35.63389614355468,
+    "lon": 51.347081546602425,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-abdol-abad",
+      "metro-azadegan"
+    ]
+  },
+  {
+    "id": "metro-azadegan",
+    "name": "آزادگان",
+    "name_en": "Azadegan",
+    "lat": 35.62732694905995,
+    "lon": 51.335490511644274,
+    "type": "metro",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-nemat-abad"
+    ]
+  },
+  {
+    "id": "metro-shahid-kolahdooz",
+    "name": "شهید کلاهدوز",
+    "name_en": "Shahid Kolahdooz",
+    "lat": 35.698258629647235,
+    "lon": 51.49985618004835,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-nirou-havaei"
+    ]
+  },
+  {
+    "id": "metro-nirou-havaei",
+    "name": "نیروهوایی",
+    "name_en": "Nirou Havaei",
+    "lat": 35.69293668867253,
+    "lon": 51.488247662419106,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-nabard",
+      "metro-shahid-kolahdooz"
+    ]
+  },
+  {
+    "id": "metro-nabard",
+    "name": "نبرد",
+    "name_en": "Nabard",
+    "lat": 35.69159833444614,
+    "lon": 51.47746281806465,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-nirou-havaei",
+      "metro-piroozi"
+    ]
+  },
+  {
+    "id": "metro-piroozi",
+    "name": "پیروزی",
+    "name_en": "Piroozi",
+    "lat": 35.69100756244922,
+    "lon": 51.46791847268905,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-ebn-e-sina",
+      "metro-nabard"
+    ]
+  },
+  {
+    "id": "metro-ebn-e-sina",
+    "name": "ابن سینا",
+    "name_en": "Ebn-e Sina",
+    "lat": 35.69064287074757,
+    "lon": 51.456541439825315,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-meydan-e-shohada",
+      "metro-piroozi"
+    ]
+  },
+  {
+    "id": "metro-ferdowsi",
+    "name": "فردوسی",
+    "name_en": "Ferdowsi",
+    "lat": 35.701335063593696,
+    "lon": 51.418506516640896,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-darvazeh-dolat",
+      "metro-teatr-e-shahr"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-enghelab-e-eslami",
+    "name": "میدان انقلاب اسلامی",
+    "name_en": "Meydan-e Enghelab-e Eslami",
+    "lat": 35.70118753104048,
+    "lon": 51.389983004854955,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-teatr-e-shahr",
+      "metro-towhid"
+    ]
+  },
+  {
+    "id": "metro-towhid",
+    "name": "توحید",
+    "name_en": "Towhid",
+    "lat": 35.70085257588454,
+    "lon": 51.378564150294714,
+    "type": "metro",
+    "lines": [
+      "4",
+      "7"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-meydan-e-enghelab-e-eslami",
+      "metro-modafean-e-salamat",
+      "metro-shademan",
+      "metro-shahid-navab-e-safavi"
+    ]
+  },
+  {
+    "id": "metro-doctor-habibollah",
+    "name": "دکتر حبیب‌الله",
+    "name_en": "Doctor Habibollah",
+    "lat": 35.700688779675005,
+    "lon": 51.356038792281,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-ostad-mo-in",
+      "metro-shademan"
+    ]
+  },
+  {
+    "id": "metro-ostad-mo-in",
+    "name": "استاد معین",
+    "name_en": "Ostad Mo'in",
+    "lat": 35.700121277637706,
+    "lon": 51.344610347765624,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-doctor-habibollah",
+      "metro-meydan-e-azadi"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-azadi",
+    "name": "میدان آزادی",
+    "name_en": "Meydan-e Azadi",
+    "lat": 35.701162131955776,
+    "lon": 51.333326937560194,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-bimeh",
+      "metro-ostad-mo-in"
+    ]
+  },
+  {
+    "id": "metro-bimeh",
+    "name": "بیمه",
+    "name_en": "Bimeh",
+    "lat": 35.69963393508256,
+    "lon": 51.320203078841026,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-mehrabad-airport-terminal-1-2",
+      "metro-meydan-e-azadi",
+      "metro-shahrak-e-ekbatan"
+    ]
+  },
+  {
+    "id": "metro-mehrabad-airport-terminal-1-2",
+    "name": "پایانه ۱ و ۲ فرودگاه مهرآباد",
+    "name_en": "Mehrabad Airport Terminal 1&2",
+    "lat": 35.69582428567988,
+    "lon": 51.32412755578428,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-bimeh",
+      "metro-mehrabad-airport-terminal-4-6"
+    ]
+  },
+  {
+    "id": "metro-mehrabad-airport-terminal-4-6",
+    "name": "پایانه ۴ و ۶ فرودگاه مهرآباد",
+    "name_en": "Mehrabad Airport Terminal 4&6",
+    "lat": 35.688655093664195,
+    "lon": 51.3311217144775,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-mehrabad-airport-terminal-1-2"
+    ]
+  },
+  {
+    "id": "metro-shahrak-e-ekbatan",
+    "name": "شهرک اکباتان",
+    "name_en": "Shahrak-e Ekbatan",
+    "lat": 35.70542641649221,
+    "lon": 51.3076514993387,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-bimeh",
+      "metro-eram-e-sabz"
+    ]
+  },
+  {
+    "id": "metro-allameh-jafari",
+    "name": "علامه جعفری",
+    "name_en": "Allameh Jafari",
+    "lat": 35.73071888431695,
+    "lon": 51.30725541293873,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-ayatollah-kashani",
+      "metro-eram-e-sabz"
+    ]
+  },
+  {
+    "id": "metro-chaharbagh",
+    "name": "چهارباغ",
+    "name_en": "Chaharbagh",
+    "lat": 35.7506525742434,
+    "lon": 51.30401221869391,
+    "type": "metro",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-ayatollah-kashani"
+    ]
+  },
+  {
+    "id": "metro-eram-e-sabz",
+    "name": "ارم سبز",
+    "name_en": "Eram-e Sabz",
+    "lat": 35.71779722200492,
+    "lon": 51.30178953947772,
+    "type": "metro",
+    "lines": [
+      "4",
+      "5"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-allameh-jafari",
+      "metro-shahrak-e-ekbatan",
+      "metro-tehran-sadeghiyeh",
+      "metro-varzeshgah-e-azadi"
+    ]
+  },
+  {
+    "id": "metro-varzeshgah-e-azadi",
+    "name": "ورزشگاه آزادی",
+    "name_en": "Varzeshgah-e Azadi",
+    "lat": 35.717234943300866,
+    "lon": 51.28403182648372,
+    "type": "metro",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-chitgar",
+      "metro-eram-e-sabz"
+    ]
+  },
+  {
+    "id": "metro-chitgar",
+    "name": "چیتگر",
+    "name_en": "Chitgar",
+    "lat": 35.717051515872264,
+    "lon": 51.243843136928454,
+    "type": "metro",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-iran-khodro",
+      "metro-varzeshgah-e-azadi"
+    ]
+  },
+  {
+    "id": "metro-iran-khodro",
+    "name": "ایران‌خودرو",
+    "name_en": "Iran Khodro",
+    "lat": 35.725609187647265,
+    "lon": 51.196807349845535,
+    "type": "metro",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-chitgar",
+      "metro-vardavard"
+    ]
+  },
+  {
+    "id": "metro-vardavard",
+    "name": "وردآورد",
+    "name_en": "Vardavard",
+    "lat": 35.74435836939475,
+    "lon": 51.15103133982739,
+    "type": "metro",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-garmdareh",
+      "metro-iran-khodro"
+    ]
+  },
+  {
+    "id": "metro-garmdareh",
+    "name": "گرم‌دره",
+    "name_en": "Garmdareh",
+    "lat": 35.75103678574071,
+    "lon": 51.081781876919074,
+    "type": "metro",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-atmosphere",
+      "metro-vardavard"
+    ]
+  },
+  {
+    "id": "metro-atmosphere",
+    "name": "اتمسفر",
+    "name_en": "Atmosphere",
+    "lat": 35.76653088007448,
+    "lon": 51.046564975722,
+    "type": "metro",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-garmdareh",
+      "metro-karaj"
+    ]
+  },
+  {
+    "id": "metro-karaj",
+    "name": "کرج",
+    "name_en": "Karaj",
+    "lat": 35.78700975978792,
+    "lon": 51.00270499651076,
+    "type": "metro",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-atmosphere",
+      "metro-mohammadshahr"
+    ]
+  },
+  {
+    "id": "metro-mohammadshahr",
+    "name": "محمدشهر",
+    "name_en": "Mohammadshahr",
+    "lat": 35.802094307718946,
+    "lon": 50.96482512274756,
+    "type": "metro",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-golshahr",
+      "metro-karaj"
+    ]
+  },
+  {
+    "id": "metro-golshahr",
+    "name": "گلشهر",
+    "name_en": "Golshahr",
+    "lat": 35.82487887349704,
+    "lon": 50.933065067675706,
+    "type": "metro",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-mohammadshahr",
+      "metro-shahid-sepahbod-qasem-soleimani"
+    ]
+  },
+  {
+    "id": "metro-shahid-sepahbod-qasem-soleimani",
+    "name": "شهید سپهبد قاسم سلیمانی",
+    "name_en": "Shahid Sepahbod Qasem Soleimani",
+    "lat": 35.95900066056138,
+    "lon": 50.719114690587546,
+    "type": "metro",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-golshahr"
+    ]
+  },
+  {
+    "id": "metro-haram-e-hazrat-e-abdol-azim",
+    "name": "حرم حضرت عبدالعظیم",
+    "name_en": "Haram-e Hazrat-e Abdol Azim",
+    "lat": 35.5916,
+    "lon": 51.4391,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-meydan-e-hazrat-e-abdol-azim"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-hazrat-e-abdol-azim",
+    "name": "میدان حضرت عبدالعظیم",
+    "name_en": "Meydan-e Hazrat-e Abdol Azim",
+    "lat": 35.5935,
+    "lon": 51.4406,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-ebn-e-babviyeh",
+      "metro-haram-e-hazrat-e-abdol-azim"
+    ]
+  },
+  {
+    "id": "metro-ebn-e-babviyeh",
+    "name": "ابن بابویه",
+    "name_en": "Ebn-e Babviyeh",
+    "lat": 35.6037,
+    "lon": 51.4463,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-cheshmeh-ali",
+      "metro-meydan-e-hazrat-e-abdol-azim"
+    ]
+  },
+  {
+    "id": "metro-cheshmeh-ali",
+    "name": "چشمه علی",
+    "name_en": "Cheshmeh Ali",
+    "lat": 35.6099,
+    "lon": 51.455,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-ebn-e-babviyeh",
+      "metro-shohada-ye-dowlat-abad"
+    ]
+  },
+  {
+    "id": "metro-shohada-ye-dowlat-abad",
+    "name": "شهدای دولت‌آباد",
+    "name_en": "Shohada-ye Dowlat Abad",
+    "lat": 35.618896274330154,
+    "lon": 51.46461183910625,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-cheshmeh-ali",
+      "metro-kiyan-shahr"
+    ]
+  },
+  {
+    "id": "metro-kiyan-shahr",
+    "name": "کیان شهر",
+    "name_en": "Kiyan Shahr",
+    "lat": 35.632845132735895,
+    "lon": 51.448598964280926,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-be-sat",
+      "metro-shohada-ye-dowlat-abad"
+    ]
+  },
+  {
+    "id": "metro-be-sat",
+    "name": "بعثت",
+    "name_en": "Be'sat",
+    "lat": 35.64472632973612,
+    "lon": 51.44426629272494,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-kiyan-shahr",
+      "metro-shahid-rezaei"
+    ]
+  },
+  {
+    "id": "metro-shahid-rezaei",
+    "name": "شهید رضایی",
+    "name_en": "Shahid Rezaei",
+    "lat": 35.65237572978883,
+    "lon": 51.44471695119032,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-be-sat",
+      "metro-meydan-e-khorasan"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-khorasan",
+    "name": "میدان خراسان",
+    "name_en": "Meydan-e Khorasan",
+    "lat": 35.66413851159522,
+    "lon": 51.445149666909494,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahid-rezaei",
+      "metro-shohada-ye-hefdah-e-shahrivar"
+    ]
+  },
+  {
+    "id": "metro-shohada-ye-hefdah-e-shahrivar",
+    "name": "شهدای هفده شهریور",
+    "name_en": "Shohada-ye Hefdah-e Shahrivar",
+    "lat": 35.668382544515524,
+    "lon": 51.44541700354487,
+    "type": "metro",
+    "lines": [
+      "6",
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-amirkabir",
+      "metro-chehel-tan-e-doulab",
+      "metro-meydan-e-giyam",
+      "metro-meydan-e-khorasan"
+    ]
+  },
+  {
+    "id": "metro-amirkabir",
+    "name": "امیرکبیر",
+    "name_en": "Amirkabir",
+    "lat": 35.682479930721314,
+    "lon": 51.44702291322249,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-meydan-e-shohada",
+      "metro-shohada-ye-hefdah-e-shahrivar"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-shohada",
+    "name": "میدان شهدا",
+    "name_en": "Meydan-e Shohada",
+    "lat": 35.69046819891562,
+    "lon": 51.447573991000134,
+    "type": "metro",
+    "lines": [
+      "4",
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-amirkabir",
+      "metro-darvazeh-shemiran",
+      "metro-ebn-e-sina",
+      "metro-imam-hossein"
+    ]
+  },
+  {
+    "id": "metro-sarbaz",
+    "name": "سرباز",
+    "name_en": "Sarbaz",
+    "lat": 35.708965257212725,
+    "lon": 51.44282476747766,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-bahar-shiraz-khanevadeh-hospital",
+      "metro-imam-hossein"
+    ]
+  },
+  {
+    "id": "metro-bahar-shiraz-khanevadeh-hospital",
+    "name": "بهار شیراز (بیمارستان خانواده)",
+    "name_en": "Bahar Shiraz (Khanevadeh Hospital)",
+    "lat": 35.7122,
+    "lon": 51.4325,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-sarbaz",
+      "metro-shohada-ye-haftom-e-tir"
+    ]
+  },
+  {
+    "id": "metro-shohada-ye-haftom-e-tir",
+    "name": "شهدای هفتم تیر",
+    "name_en": "Shohada-ye Haftom-e Tir",
+    "lat": 35.71532411227465,
+    "lon": 51.42627241803309,
+    "type": "metro",
+    "lines": [
+      "1",
+      "6"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-ayatollah-taleghani",
+      "metro-bahar-shiraz-khanevadeh-hospital",
+      "metro-maryam-e-moghaddas",
+      "metro-shahid-mofattah"
+    ]
+  },
+  {
+    "id": "metro-maryam-e-moghaddas",
+    "name": "مریم مقدس (س)",
+    "name_en": "Maryam-e Moghaddas",
+    "lat": 35.71543003739339,
+    "lon": 51.414545041430245,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-meydan-e-hazrat-vali-asr",
+      "metro-shohada-ye-haftom-e-tir"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-hazrat-vali-asr",
+    "name": "میدان حضرت ولیعصر",
+    "name_en": "Meydan-e Hazrat Vali Asr",
+    "lat": 35.71202629383182,
+    "lon": 51.40786886120657,
+    "type": "metro",
+    "lines": [
+      "3",
+      "6"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-bustan-e-laleh",
+      "metro-maryam-e-moghaddas",
+      "metro-meydan-e-jahad",
+      "metro-teatr-e-shahr"
+    ]
+  },
+  {
+    "id": "metro-bustan-e-laleh",
+    "name": "بوستان لاله",
+    "name_en": "Bustan-e Laleh",
+    "lat": 35.708172999999995,
+    "lon": 51.3908470712869,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-karagar",
+      "metro-meydan-e-hazrat-vali-asr"
+    ]
+  },
+  {
+    "id": "metro-karagar",
+    "name": "کارگر",
+    "name_en": "Karagar",
+    "lat": 35.71493526247226,
+    "lon": 51.38957556915313,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-bustan-e-laleh",
+      "metro-daneshgah-e-tarbiat-modarres"
+    ]
+  },
+  {
+    "id": "metro-daneshgah-e-tarbiat-modarres",
+    "name": "دانشگاه تربیت مدرس",
+    "name_en": "Daneshgah-e Tarbiat Modarres",
+    "lat": 35.72413657282073,
+    "lon": 51.3813022329255,
+    "type": "metro",
+    "lines": [
+      "6",
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-boostan-e-goftegou",
+      "metro-karagar",
+      "metro-modafean-e-salamat",
+      "metro-shahrak-e-azmayesh"
+    ]
+  },
+  {
+    "id": "metro-shahrak-e-azmayesh",
+    "name": "شهرک آزمایش",
+    "name_en": "Shahrak-e Azmayesh",
+    "lat": 35.73162345726911,
+    "lon": 51.37133820553804,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-daneshgah-e-tarbiat-modarres",
+      "metro-marzdaran"
+    ]
+  },
+  {
+    "id": "metro-marzdaran",
+    "name": "مرزداران",
+    "name_en": "Marzdaran",
+    "lat": 35.73455522161478,
+    "lon": 51.35946088139418,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahrak-e-azmayesh",
+      "metro-yadegar-e-imam"
+    ]
+  },
+  {
+    "id": "metro-yadegar-e-imam",
+    "name": "یادگار امام",
+    "name_en": "Yadegar-e Imam",
+    "lat": 35.7349857300152,
+    "lon": 51.34616137121202,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-marzdaran",
+      "metro-shahid-ashrafi-esfahani"
+    ]
+  },
+  {
+    "id": "metro-shahid-ashrafi-esfahani",
+    "name": "شهید اشرفی اصفهانی",
+    "name_en": "Shahid Ashrafi Esfahani",
+    "lat": 35.73600106730899,
+    "lon": 51.33175593750171,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahid-sattari",
+      "metro-yadegar-e-imam"
+    ]
+  },
+  {
+    "id": "metro-shahid-sattari",
+    "name": "شهید ستاری",
+    "name_en": "Shahid Sattari",
+    "lat": 35.736882178757604,
+    "lon": 51.319948407717405,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-ayatollah-kashani",
+      "metro-shahid-ashrafi-esfahani"
+    ]
+  },
+  {
+    "id": "metro-ayatollah-kashani",
+    "name": "آیت‌الله کاشانی",
+    "name_en": "Ayatollah Kashani",
+    "lat": 35.74100968403951,
+    "lon": 51.30259777850838,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-allameh-jafari",
+      "metro-chaharbagh",
+      "metro-shahid-sattari",
+      "metro-shahr-e-ziba"
+    ]
+  },
+  {
+    "id": "metro-shahr-e-ziba",
+    "name": "شهر زیبا",
+    "name_en": "Shahr-e Ziba",
+    "lat": 35.745683564857195,
+    "lon": 51.29469436724632,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-ayatollah-kashani",
+      "metro-shahran"
+    ]
+  },
+  {
+    "id": "metro-shahran",
+    "name": "شهران",
+    "name_en": "Shahran",
+    "lat": 35.75395279299403,
+    "lon": 51.288140667283,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-shahr-e-ziba",
+      "metro-shohada-ye-kan"
+    ]
+  },
+  {
+    "id": "metro-shohada-ye-kan",
+    "name": "شهدای کن",
+    "name_en": "Shohada-ye Kan",
+    "lat": 35.76350331872328,
+    "lon": 51.28346118280588,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-kouhsar",
+      "metro-shahran"
+    ]
+  },
+  {
+    "id": "metro-kouhsar",
+    "name": "کوهسار",
+    "name_en": "Kouhsar",
+    "lat": 35.770810717303846,
+    "lon": 51.27914785190507,
+    "type": "metro",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-shohada-ye-kan"
+    ]
+  },
+  {
+    "id": "metro-varzeshgah-e-takhti",
+    "name": "ورزشگاه تختی",
+    "name_en": "Varzeshgah-e Takhti",
+    "lat": 35.67082903161425,
+    "lon": 51.508351640093636,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-basij"
+    ]
+  },
+  {
+    "id": "metro-basij",
+    "name": "بسیج",
+    "name_en": "Basij",
+    "lat": 35.6667482543179,
+    "lon": 51.49085866766856,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-ahang",
+      "metro-varzeshgah-e-takhti"
+    ]
+  },
+  {
+    "id": "metro-ahang",
+    "name": "آهنگ",
+    "name_en": "Ahang",
+    "lat": 35.66953177750175,
+    "lon": 51.47382899650526,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-basij",
+      "metro-chehel-tan-e-doulab"
+    ]
+  },
+  {
+    "id": "metro-chehel-tan-e-doulab",
+    "name": "چهل تن دولاب",
+    "name_en": "Chehel Tan-e Doulab",
+    "lat": 35.66793780192468,
+    "lon": 51.46256923399226,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-ahang",
+      "metro-shohada-ye-hefdah-e-shahrivar"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-giyam",
+    "name": "میدان قیام",
+    "name_en": "Meydan-e Giyam",
+    "lat": 35.67000475397928,
+    "lon": 51.4373240157089,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-mowlavi",
+      "metro-shohada-ye-hefdah-e-shahrivar"
+    ]
+  },
+  {
+    "id": "metro-mowlavi",
+    "name": "مولوی",
+    "name_en": "Mowlavi",
+    "lat": 35.668181587846355,
+    "lon": 51.41601339759233,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-meydan-e-giyam",
+      "metro-meydan-e-mohammadiyeh"
+    ]
+  },
+  {
+    "id": "metro-helal-ahmar",
+    "name": "هلال احمر",
+    "name_en": "Helal Ahmar",
+    "lat": 35.66800970632861,
+    "lon": 51.38758465752482,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-beryanak",
+      "metro-mahdiyeh"
+    ]
+  },
+  {
+    "id": "metro-beryanak",
+    "name": "بریانک",
+    "name_en": "Beryanak",
+    "lat": 35.673191256951,
+    "lon": 51.3808000388323,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-helal-ahmar",
+      "metro-komeyl"
+    ]
+  },
+  {
+    "id": "metro-komeyl",
+    "name": "کمیل",
+    "name_en": "Komeyl",
+    "lat": 35.6805029770884,
+    "lon": 51.379828288372224,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-beryanak",
+      "metro-roudaki"
+    ]
+  },
+  {
+    "id": "metro-roudaki",
+    "name": "رودکی",
+    "name_en": "Roudaki",
+    "lat": 35.687617922639255,
+    "lon": 51.37908769121558,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-komeyl",
+      "metro-shahid-navab-e-safavi"
+    ]
+  },
+  {
+    "id": "metro-modafean-e-salamat",
+    "name": "مدافعان سلامت",
+    "name_en": "Modafean-e Salamat",
+    "lat": 35.706678505970594,
+    "lon": 51.37734433897117,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-daneshgah-e-tarbiat-modarres",
+      "metro-towhid"
+    ]
+  },
+  {
+    "id": "metro-boostan-e-goftegou",
+    "name": "بوستان گفتگو",
+    "name_en": "Boostan-e Goftegou",
+    "lat": 35.73256007254948,
+    "lon": 51.382599,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-daneshgah-e-tarbiat-modarres",
+      "metro-milad-tower"
+    ]
+  },
+  {
+    "id": "metro-milad-tower",
+    "name": "برج میلاد",
+    "name_en": "Milad Tower",
+    "lat": 35.74770719166458,
+    "lon": 51.378312966476884,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": true,
+    "relations": [
+      "metro-boostan-e-goftegou",
+      "metro-meydan-e-san-at"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-san-at",
+    "name": "میدان صنعت",
+    "name_en": "Meydan-e San'at",
+    "lat": 35.7544706937203,
+    "lon": 51.36739593228225,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-milad-tower",
+      "metro-shahid-dadman"
+    ]
+  },
+  {
+    "id": "metro-shahid-dadman",
+    "name": "شهید دادمان",
+    "name_en": "Shahid Dadman",
+    "lat": 35.767048177938676,
+    "lon": 51.36612886767306,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-meydan-e-ketab",
+      "metro-meydan-e-san-at"
+    ]
+  },
+  {
+    "id": "metro-meydan-e-ketab",
+    "name": "میدان کتاب",
+    "name_en": "Meydan-e Ketab",
+    "lat": 35.77730678107591,
+    "lon": 51.35548756724749,
+    "type": "metro",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "metro-shahid-dadman"
+    ]
+  },
+  {
+    "id": "brt-1-01",
+    "name": "چهارراه تهرانپارس",
+    "name_en": null,
+    "lat": 35.72371968307161,
+    "lon": 51.520331458378195,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-02"
+    ]
+  },
+  {
+    "id": "brt-1-02",
+    "name": "داریوش",
+    "name_en": null,
+    "lat": 35.720439691881744,
+    "lon": 51.509127854935905,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-01",
+      "brt-1-03"
+    ]
+  },
+  {
+    "id": "brt-1-03",
+    "name": "پل خاقانی",
+    "name_en": null,
+    "lat": 35.718058296853485,
+    "lon": 51.50138931407128,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-02",
+      "brt-1-04"
+    ]
+  },
+  {
+    "id": "brt-1-04",
+    "name": "ابوریحان",
+    "name_en": null,
+    "lat": 35.71603625084827,
+    "lon": 51.49485922523491,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-03",
+      "brt-1-05"
+    ]
+  },
+  {
+    "id": "brt-1-05",
+    "name": "پل",
+    "name_en": null,
+    "lat": 35.71265308434382,
+    "lon": 51.48390238362558,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-04",
+      "brt-1-06"
+    ]
+  },
+  {
+    "id": "brt-1-06",
+    "name": "وحیدیه",
+    "name_en": null,
+    "lat": 35.71124625734618,
+    "lon": 51.47932757974701,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-05",
+      "brt-1-07"
+    ]
+  },
+  {
+    "id": "brt-1-07",
+    "name": "سبلان",
+    "name_en": null,
+    "lat": 35.70913005078581,
+    "lon": 51.4725054290233,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-06",
+      "brt-1-08"
+    ]
+  },
+  {
+    "id": "brt-1-08",
+    "name": "فرودگاه",
+    "name_en": null,
+    "lat": 35.70723756682152,
+    "lon": 51.46616731372655,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-07",
+      "brt-1-09"
+    ]
+  },
+  {
+    "id": "brt-1-09",
+    "name": "فتحنایی",
+    "name_en": null,
+    "lat": 35.70542018613612,
+    "lon": 51.45992610042409,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-08",
+      "brt-1-10"
+    ]
+  },
+  {
+    "id": "brt-1-10",
+    "name": "بوعلی",
+    "name_en": null,
+    "lat": 35.704358478234006,
+    "lon": 51.456203320995606,
+    "type": "brt",
+    "lines": [
+      "1",
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-09",
+      "brt-1-11",
+      "brt-9-18",
+      "brt-9-19"
+    ]
+  },
+  {
+    "id": "brt-1-11",
+    "name": "شهید منتظری",
+    "name_en": null,
+    "lat": 35.703276777795836,
+    "lon": 51.45244443332259,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-10",
+      "brt-1-12"
+    ]
+  },
+  {
+    "id": "brt-1-12",
+    "name": "میدان امام حسین علیه السلام",
+    "name_en": null,
+    "lat": 35.70200318543914,
+    "lon": 51.445562926193574,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-11",
+      "brt-1-13"
+    ]
+  },
+  {
+    "id": "brt-1-13",
+    "name": "پل چوبی",
+    "name_en": null,
+    "lat": 35.70191645307928,
+    "lon": 51.437640001636666,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-12",
+      "brt-1-14"
+    ]
+  },
+  {
+    "id": "brt-1-14",
+    "name": "دکتر شریعتی",
+    "name_en": null,
+    "lat": 35.70180738175442,
+    "lon": 51.430044932806645,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-13",
+      "brt-1-15"
+    ]
+  },
+  {
+    "id": "brt-1-15",
+    "name": "دروازه دولت",
+    "name_en": null,
+    "lat": 35.70173570323856,
+    "lon": 51.42526226736277,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-14",
+      "brt-1-16"
+    ]
+  },
+  {
+    "id": "brt-1-16",
+    "name": "میدان فردوسی",
+    "name_en": null,
+    "lat": 35.701634102444466,
+    "lon": 51.42012843697618,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-15",
+      "brt-1-17"
+    ]
+  },
+  {
+    "id": "brt-1-17",
+    "name": "چهارراه ولیعصر",
+    "name_en": null,
+    "lat": 35.70133575307535,
+    "lon": 51.40558237017183,
+    "type": "brt",
+    "lines": [
+      "1",
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-16",
+      "brt-1-18",
+      "brt-7-09",
+      "brt-7-10"
+    ]
+  },
+  {
+    "id": "brt-1-18",
+    "name": "دانشگاه تهران",
+    "name_en": null,
+    "lat": 35.70121453365888,
+    "lon": 51.399976375016735,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-17",
+      "brt-1-19"
+    ]
+  },
+  {
+    "id": "brt-1-19",
+    "name": "میدان انقلاب اسلامی",
+    "name_en": null,
+    "lat": 35.701046848848385,
+    "lon": 51.39260355826083,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-18",
+      "brt-1-20"
+    ]
+  },
+  {
+    "id": "brt-1-20",
+    "name": "دکتر قریب",
+    "name_en": null,
+    "lat": 35.70088323902722,
+    "lon": 51.38477279064233,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-19",
+      "brt-1-21"
+    ]
+  },
+  {
+    "id": "brt-1-21",
+    "name": "شهید نواب صفوی",
+    "name_en": null,
+    "lat": 35.70075288222325,
+    "lon": 51.37823600174912,
+    "type": "brt",
+    "lines": [
+      "1",
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-20",
+      "brt-1-22",
+      "brt-4-14",
+      "brt-4-15"
+    ]
+  },
+  {
+    "id": "brt-1-22",
+    "name": "بهبودی",
+    "name_en": null,
+    "lat": 35.70052320114243,
+    "lon": 51.36793892134978,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-21",
+      "brt-1-23"
+    ]
+  },
+  {
+    "id": "brt-1-23",
+    "name": "دانشگاه شریف",
+    "name_en": null,
+    "lat": 35.70015194269856,
+    "lon": 51.35290408832117,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-22",
+      "brt-1-24"
+    ]
+  },
+  {
+    "id": "brt-1-24",
+    "name": "استاد معین",
+    "name_en": null,
+    "lat": 35.70002555941627,
+    "lon": 51.34760217114036,
+    "type": "brt",
+    "lines": [
+      "1"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-23",
+      "brt-1-25"
+    ]
+  },
+  {
+    "id": "brt-1-25",
+    "name": "پایانه آزادی",
+    "name_en": null,
+    "lat": 35.70170487155101,
+    "lon": 51.33277602771746,
+    "type": "brt",
+    "lines": [
+      "1",
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-24",
+      "brt-2-26"
+    ]
+  },
+  {
+    "id": "brt-2-01",
+    "name": "پایانه خاوران پایانه آزادی",
+    "name_en": null,
+    "lat": 35.64291143805251,
+    "lon": 51.477606772569516,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-02"
+    ]
+  },
+  {
+    "id": "brt-2-02",
+    "name": "پمپ بنزین",
+    "name_en": null,
+    "lat": 35.64699206017192,
+    "lon": 51.47233590109482,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-01",
+      "brt-2-03"
+    ]
+  },
+  {
+    "id": "brt-2-03",
+    "name": "فرهنگسرای خاوران",
+    "name_en": null,
+    "lat": 35.65050365360551,
+    "lon": 51.46915200406534,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-02",
+      "brt-2-04"
+    ]
+  },
+  {
+    "id": "brt-2-04",
+    "name": "باسکول",
+    "name_en": null,
+    "lat": 35.654363495277934,
+    "lon": 51.46559241184959,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-03",
+      "brt-2-05"
+    ]
+  },
+  {
+    "id": "brt-2-05",
+    "name": "اتابک",
+    "name_en": null,
+    "lat": 35.657456429659725,
+    "lon": 51.46270556031496,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-04",
+      "brt-2-06"
+    ]
+  },
+  {
+    "id": "brt-2-06",
+    "name": "امیر سلیمانی",
+    "name_en": null,
+    "lat": 35.66025391816333,
+    "lon": 51.45714352058313,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-05",
+      "brt-2-07"
+    ]
+  },
+  {
+    "id": "brt-2-07",
+    "name": "مخبر",
+    "name_en": null,
+    "lat": 35.663684331966174,
+    "lon": 51.45194651955785,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-06",
+      "brt-2-08"
+    ]
+  },
+  {
+    "id": "brt-2-08",
+    "name": "میدان خراسان",
+    "name_en": null,
+    "lat": 35.6652777619495,
+    "lon": 51.44609066636905,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-07",
+      "brt-2-09"
+    ]
+  },
+  {
+    "id": "brt-2-09",
+    "name": "زیبا",
+    "name_en": null,
+    "lat": 35.66661136505489,
+    "lon": 51.440688686840865,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-08",
+      "brt-2-10"
+    ]
+  },
+  {
+    "id": "brt-2-10",
+    "name": "میدان قیام",
+    "name_en": null,
+    "lat": 35.66967231072779,
+    "lon": 51.43486926550378,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-09",
+      "brt-2-11"
+    ]
+  },
+  {
+    "id": "brt-2-11",
+    "name": "چهارراه مولوی",
+    "name_en": null,
+    "lat": 35.669361648650906,
+    "lon": 51.43006299056804,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-10",
+      "brt-2-12"
+    ]
+  },
+  {
+    "id": "brt-2-12",
+    "name": "سعادت",
+    "name_en": null,
+    "lat": 35.66841913382449,
+    "lon": 51.421973770472604,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-11",
+      "brt-2-13"
+    ]
+  },
+  {
+    "id": "brt-2-13",
+    "name": "خیام",
+    "name_en": null,
+    "lat": 35.667886379355785,
+    "lon": 51.4175735450026,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-12",
+      "brt-2-14"
+    ]
+  },
+  {
+    "id": "brt-2-14",
+    "name": "وحدت اسلامی",
+    "name_en": null,
+    "lat": 35.66739426208809,
+    "lon": 51.40744187164977,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-13",
+      "brt-2-15"
+    ]
+  },
+  {
+    "id": "brt-2-15",
+    "name": "ولیعصر",
+    "name_en": null,
+    "lat": 35.66718299121466,
+    "lon": 51.400121496298226,
+    "type": "brt",
+    "lines": [
+      "2",
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-14",
+      "brt-2-16",
+      "brt-7-03",
+      "brt-7-04"
+    ]
+  },
+  {
+    "id": "brt-2-16",
+    "name": "میدان رازی",
+    "name_en": null,
+    "lat": 35.667098633080776,
+    "lon": 51.39674528290217,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-15",
+      "brt-2-17"
+    ]
+  },
+  {
+    "id": "brt-2-17",
+    "name": "عباسی",
+    "name_en": null,
+    "lat": 35.66781841590321,
+    "lon": 51.387399328206115,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-16",
+      "brt-2-18"
+    ]
+  },
+  {
+    "id": "brt-2-18",
+    "name": "کشاورز",
+    "name_en": null,
+    "lat": 35.668312420391125,
+    "lon": 51.37816679674261,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-17",
+      "brt-2-19"
+    ]
+  },
+  {
+    "id": "brt-2-19",
+    "name": "امامزاده معصوم",
+    "name_en": null,
+    "lat": 35.668170944870255,
+    "lon": 51.37431572709629,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-18",
+      "brt-2-20"
+    ]
+  },
+  {
+    "id": "brt-2-20",
+    "name": "دوراهی قپان",
+    "name_en": null,
+    "lat": 35.667129584893836,
+    "lon": 51.369548902749244,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-19",
+      "brt-2-21"
+    ]
+  },
+  {
+    "id": "brt-2-21",
+    "name": "فرهنگسرای قرآن",
+    "name_en": null,
+    "lat": 35.668466782587494,
+    "lon": 51.36034909380361,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-20",
+      "brt-2-22"
+    ]
+  },
+  {
+    "id": "brt-2-22",
+    "name": "سه‌ راه آذری",
+    "name_en": null,
+    "lat": 35.67083808853923,
+    "lon": 51.35242806127428,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-21",
+      "brt-2-23"
+    ]
+  },
+  {
+    "id": "brt-2-23",
+    "name": "شمشیری",
+    "name_en": null,
+    "lat": 35.671943532764416,
+    "lon": 51.34939377695469,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-22",
+      "brt-2-24"
+    ]
+  },
+  {
+    "id": "brt-2-24",
+    "name": "شهید بختیاری",
+    "name_en": null,
+    "lat": 35.67747344088348,
+    "lon": 51.34418589196638,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-23",
+      "brt-2-25"
+    ]
+  },
+  {
+    "id": "brt-2-25",
+    "name": "هاشمی",
+    "name_en": null,
+    "lat": 35.688368360128266,
+    "lon": 51.34064237766157,
+    "type": "brt",
+    "lines": [
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-24",
+      "brt-2-26"
+    ]
+  },
+  {
+    "id": "brt-2-26",
+    "name": "میدان آزادی",
+    "name_en": null,
+    "lat": 35.698288703456384,
+    "lon": 51.33814143332364,
+    "type": "brt",
+    "lines": [
+      "10",
+      "2"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-25",
+      "brt-10-16",
+      "brt-10-17",
+      "brt-2-25"
+    ]
+  },
+  {
+    "id": "brt-3-01",
+    "name": "پایانه خاوران پایانه علم و صنعت",
+    "name_en": null,
+    "lat": 35.64121307640409,
+    "lon": 51.47794367071272,
+    "type": "brt",
+    "lines": [
+      "3",
+      "8"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-02",
+      "brt-8-01"
+    ]
+  },
+  {
+    "id": "brt-3-02",
+    "name": "بسیج",
+    "name_en": null,
+    "lat": 35.64097590654407,
+    "lon": 51.48455319215905,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-01",
+      "brt-3-03"
+    ]
+  },
+  {
+    "id": "brt-3-03",
+    "name": "رحمانی",
+    "name_en": null,
+    "lat": 35.643333845873656,
+    "lon": 51.48485373328534,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-02",
+      "brt-3-04"
+    ]
+  },
+  {
+    "id": "brt-3-04",
+    "name": "ولیعصر",
+    "name_en": null,
+    "lat": 35.64716037637274,
+    "lon": 51.48540175867442,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-03",
+      "brt-3-05"
+    ]
+  },
+  {
+    "id": "brt-3-05",
+    "name": "آشوری",
+    "name_en": null,
+    "lat": 35.6504897667976,
+    "lon": 51.48655178735091,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-04",
+      "brt-3-06"
+    ]
+  },
+  {
+    "id": "brt-3-06",
+    "name": "آهنگ",
+    "name_en": null,
+    "lat": 35.653773958121306,
+    "lon": 51.48769390859076,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-05",
+      "brt-3-07"
+    ]
+  },
+  {
+    "id": "brt-3-07",
+    "name": "رحیمی",
+    "name_en": null,
+    "lat": 35.66145582016041,
+    "lon": 51.490311465061566,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-06",
+      "brt-3-08"
+    ]
+  },
+  {
+    "id": "brt-3-08",
+    "name": "شهید محلاتی",
+    "name_en": null,
+    "lat": 35.666037547412934,
+    "lon": 51.491890747962756,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-07",
+      "brt-3-09"
+    ]
+  },
+  {
+    "id": "brt-3-09",
+    "name": "قصر فیروزه",
+    "name_en": null,
+    "lat": 35.67441776366665,
+    "lon": 51.492554994301834,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-08",
+      "brt-3-10"
+    ]
+  },
+  {
+    "id": "brt-3-10",
+    "name": "ائمه اطهار",
+    "name_en": null,
+    "lat": 35.67968754794506,
+    "lon": 51.492775119982284,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-09",
+      "brt-3-11"
+    ]
+  },
+  {
+    "id": "brt-3-11",
+    "name": "پیروزی",
+    "name_en": null,
+    "lat": 35.696444601926856,
+    "lon": 51.49206255310943,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-10",
+      "brt-3-12"
+    ]
+  },
+  {
+    "id": "brt-3-12",
+    "name": "نیروی هوایی",
+    "name_en": null,
+    "lat": 35.70170068230937,
+    "lon": 51.48963798513833,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-11",
+      "brt-3-13"
+    ]
+  },
+  {
+    "id": "brt-3-13",
+    "name": "امامت",
+    "name_en": null,
+    "lat": 35.707429899256994,
+    "lon": 51.48732500188084,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-12",
+      "brt-3-14"
+    ]
+  },
+  {
+    "id": "brt-3-14",
+    "name": "دکترآیت",
+    "name_en": null,
+    "lat": 35.71413997056794,
+    "lon": 51.490380960858424,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-13",
+      "brt-3-15"
+    ]
+  },
+  {
+    "id": "brt-3-15",
+    "name": "تلفنخانه",
+    "name_en": null,
+    "lat": 35.71987344562831,
+    "lon": 51.491784498325075,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-14",
+      "brt-3-16"
+    ]
+  },
+  {
+    "id": "brt-3-16",
+    "name": "نبوت",
+    "name_en": null,
+    "lat": 35.727639720910666,
+    "lon": 51.49329391841394,
+    "type": "brt",
+    "lines": [
+      "3"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-15",
+      "brt-3-17"
+    ]
+  },
+  {
+    "id": "brt-3-17",
+    "name": "سرسبز",
+    "name_en": null,
+    "lat": 35.73485558974997,
+    "lon": 51.494728178320145,
+    "type": "brt",
+    "lines": [
+      "3",
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-16",
+      "brt-3-18",
+      "brt-5-08"
+    ]
+  },
+  {
+    "id": "brt-3-18",
+    "name": "پایانه علم و صنعت جنوبی تخلیه",
+    "name_en": null,
+    "lat": 35.73368015178091,
+    "lon": 51.50616169365233,
+    "type": "brt",
+    "lines": [
+      "3",
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-17"
+    ]
+  },
+  {
+    "id": "brt-4-01",
+    "name": "پایانه جنوب پایانه شهید افشار",
+    "name_en": null,
+    "lat": 35.6513185066255,
+    "lon": 51.41914323900711,
+    "type": "brt",
+    "lines": [
+      "4",
+      "8"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-02",
+      "brt-8-04"
+    ]
+  },
+  {
+    "id": "brt-4-02",
+    "name": "شهید رجایی",
+    "name_en": null,
+    "lat": 35.64801108808667,
+    "lon": 51.412562797475026,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-01",
+      "brt-4-03"
+    ]
+  },
+  {
+    "id": "brt-4-03",
+    "name": "شهید امامی",
+    "name_en": null,
+    "lat": 35.64912465952574,
+    "lon": 51.40236884865051,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-02",
+      "brt-4-04"
+    ]
+  },
+  {
+    "id": "brt-4-04",
+    "name": "میدان بهمن",
+    "name_en": null,
+    "lat": 35.649810465891704,
+    "lon": 51.3983220358609,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-03",
+      "brt-4-05"
+    ]
+  },
+  {
+    "id": "brt-4-05",
+    "name": "قالیشویی",
+    "name_en": null,
+    "lat": 35.65121168752932,
+    "lon": 51.39714195262163,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-04",
+      "brt-4-06"
+    ]
+  },
+  {
+    "id": "brt-4-06",
+    "name": "پل جوادیه",
+    "name_en": null,
+    "lat": 35.65390903339238,
+    "lon": 51.39534070659386,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-05",
+      "brt-4-07"
+    ]
+  },
+  {
+    "id": "brt-4-07",
+    "name": "رباط کریم",
+    "name_en": null,
+    "lat": 35.66174790707341,
+    "lon": 51.388523006197204,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-06",
+      "brt-4-08"
+    ]
+  },
+  {
+    "id": "brt-4-08",
+    "name": "هلال احمر",
+    "name_en": null,
+    "lat": 35.668550891268694,
+    "lon": 51.38181958215641,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-07",
+      "brt-4-09"
+    ]
+  },
+  {
+    "id": "brt-4-09",
+    "name": "قزوین",
+    "name_en": null,
+    "lat": 35.67098094182015,
+    "lon": 51.3816171701124,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-08",
+      "brt-4-10"
+    ]
+  },
+  {
+    "id": "brt-4-10",
+    "name": "صفدری",
+    "name_en": null,
+    "lat": 35.67614166097468,
+    "lon": 51.38097406132713,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-09",
+      "brt-4-11"
+    ]
+  },
+  {
+    "id": "brt-4-11",
+    "name": "کمیل",
+    "name_en": null,
+    "lat": 35.68001212523591,
+    "lon": 51.38041123443499,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-10",
+      "brt-4-12"
+    ]
+  },
+  {
+    "id": "brt-4-12",
+    "name": "امام خمینی",
+    "name_en": null,
+    "lat": 35.687786555733254,
+    "lon": 51.37982482788044,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-11",
+      "brt-4-13"
+    ]
+  },
+  {
+    "id": "brt-4-13",
+    "name": "آذربایجان",
+    "name_en": null,
+    "lat": 35.69418158187611,
+    "lon": 51.37889457021775,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-12",
+      "brt-4-14"
+    ]
+  },
+  {
+    "id": "brt-4-14",
+    "name": "ارومیه",
+    "name_en": null,
+    "lat": 35.69814061773716,
+    "lon": 51.37844318768257,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-21",
+      "brt-4-13"
+    ]
+  },
+  {
+    "id": "brt-4-15",
+    "name": "میدان توحید",
+    "name_en": null,
+    "lat": 35.705031984209924,
+    "lon": 51.37773939590661,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-21",
+      "brt-4-16"
+    ]
+  },
+  {
+    "id": "brt-4-16",
+    "name": "باقرخان",
+    "name_en": null,
+    "lat": 35.710100883830854,
+    "lon": 51.37800311331473,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-15",
+      "brt-4-17"
+    ]
+  },
+  {
+    "id": "brt-4-17",
+    "name": "کوی نصر",
+    "name_en": null,
+    "lat": 35.72489046443106,
+    "lon": 51.38158164992698,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-16",
+      "brt-4-18"
+    ]
+  },
+  {
+    "id": "brt-4-18",
+    "name": "ملاصدرا",
+    "name_en": null,
+    "lat": 35.75681118040128,
+    "lon": 51.38731162007976,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-17",
+      "brt-4-19"
+    ]
+  },
+  {
+    "id": "brt-4-19",
+    "name": "پل مدیریت",
+    "name_en": null,
+    "lat": 35.77101794809129,
+    "lon": 51.3876870421524,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-18",
+      "brt-4-20"
+    ]
+  },
+  {
+    "id": "brt-4-20",
+    "name": "آتی ساز",
+    "name_en": null,
+    "lat": 35.787445846880026,
+    "lon": 51.39205688315537,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-19",
+      "brt-4-21"
+    ]
+  },
+  {
+    "id": "brt-4-21",
+    "name": "نمایشگاه",
+    "name_en": null,
+    "lat": 35.79261079987331,
+    "lon": 51.39958179710753,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-20",
+      "brt-4-22"
+    ]
+  },
+  {
+    "id": "brt-4-22",
+    "name": "پمپ بنزین",
+    "name_en": null,
+    "lat": 35.792670753345995,
+    "lon": 51.40498764031129,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-21",
+      "brt-4-23"
+    ]
+  },
+  {
+    "id": "brt-4-23",
+    "name": "پایانه افشار تخلیه",
+    "name_en": null,
+    "lat": 35.79110153662433,
+    "lon": 51.41729427750349,
+    "type": "brt",
+    "lines": [
+      "4"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-22"
+    ]
+  },
+  {
+    "id": "brt-5-01",
+    "name": "پایانه بیهقی پایانه علم و صنعت",
+    "name_en": null,
+    "lat": 35.737493640016794,
+    "lon": 51.416929733216804,
+    "type": "brt",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-5-02"
+    ]
+  },
+  {
+    "id": "brt-5-02",
+    "name": "مصلی امام خمینی",
+    "name_en": null,
+    "lat": 35.74018014786979,
+    "lon": 51.427777308517136,
+    "type": "brt",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-5-01",
+      "brt-5-03"
+    ]
+  },
+  {
+    "id": "brt-5-03",
+    "name": "بهشت مادران",
+    "name_en": null,
+    "lat": 35.742576175639726,
+    "lon": 51.43911285376448,
+    "type": "brt",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-5-02",
+      "brt-5-04"
+    ]
+  },
+  {
+    "id": "brt-5-04",
+    "name": "سید خندان",
+    "name_en": null,
+    "lat": 35.74151589807748,
+    "lon": 51.45223660396462,
+    "type": "brt",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-5-03",
+      "brt-5-05"
+    ]
+  },
+  {
+    "id": "brt-5-05",
+    "name": "استاد حسن بنا",
+    "name_en": null,
+    "lat": 35.74010919474788,
+    "lon": 51.46762052064786,
+    "type": "brt",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-5-04",
+      "brt-5-06"
+    ]
+  },
+  {
+    "id": "brt-5-06",
+    "name": "اثنی عشری",
+    "name_en": null,
+    "lat": 35.739587105858824,
+    "lon": 51.4715536253173,
+    "type": "brt",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-5-05",
+      "brt-5-07"
+    ]
+  },
+  {
+    "id": "brt-5-07",
+    "name": "کرمان",
+    "name_en": null,
+    "lat": 35.737994484633674,
+    "lon": 51.47993904359573,
+    "type": "brt",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-5-06",
+      "brt-5-08"
+    ]
+  },
+  {
+    "id": "brt-5-08",
+    "name": "میدان رسالت",
+    "name_en": null,
+    "lat": 35.73677408254879,
+    "lon": 51.48744853812365,
+    "type": "brt",
+    "lines": [
+      "5"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-17",
+      "brt-5-07"
+    ]
+  },
+  {
+    "id": "brt-6-01",
+    "name": "پایانه لاله",
+    "name_en": null,
+    "lat": 35.79183138781384,
+    "lon": 51.53146292958973,
+    "type": "brt",
+    "lines": [
+      "6",
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-02",
+      "brt-6-03"
+    ]
+  },
+  {
+    "id": "brt-6-02",
+    "name": "کوی یاس",
+    "name_en": null,
+    "lat": 35.793256767915224,
+    "lon": 51.52773374683233,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-01",
+      "brt-6-03"
+    ]
+  },
+  {
+    "id": "brt-6-03",
+    "name": "کوثر",
+    "name_en": null,
+    "lat": 35.794769288238975,
+    "lon": 51.52185598302987,
+    "type": "brt",
+    "lines": [
+      "6",
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-01",
+      "brt-6-02",
+      "brt-6-04"
+    ]
+  },
+  {
+    "id": "brt-6-04",
+    "name": "دانشگاه اهل بیت",
+    "name_en": null,
+    "lat": 35.795329018681656,
+    "lon": 51.51930297710438,
+    "type": "brt",
+    "lines": [
+      "6",
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-03",
+      "brt-6-05",
+      "brt-6-06"
+    ]
+  },
+  {
+    "id": "brt-6-05",
+    "name": "سازمان جنگلها",
+    "name_en": null,
+    "lat": 35.796211650568885,
+    "lon": 51.51516338889934,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-04",
+      "brt-6-06"
+    ]
+  },
+  {
+    "id": "brt-6-06",
+    "name": "شهید محلاتی",
+    "name_en": null,
+    "lat": 35.7980497732021,
+    "lon": 51.5070397767326,
+    "type": "brt",
+    "lines": [
+      "6",
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-04",
+      "brt-6-05",
+      "brt-6-07"
+    ]
+  },
+  {
+    "id": "brt-6-07",
+    "name": "پیام نور",
+    "name_en": null,
+    "lat": 35.79921344931613,
+    "lon": 51.501432620240955,
+    "type": "brt",
+    "lines": [
+      "6",
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-06",
+      "brt-6-08",
+      "brt-9-27"
+    ]
+  },
+  {
+    "id": "brt-6-08",
+    "name": "پایانه اوشان",
+    "name_en": null,
+    "lat": 35.80046015573453,
+    "lon": 51.49584733295509,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-07",
+      "brt-6-09"
+    ]
+  },
+  {
+    "id": "brt-6-09",
+    "name": "اراج",
+    "name_en": null,
+    "lat": 35.80133874677091,
+    "lon": 51.48922610842131,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-08",
+      "brt-6-10"
+    ]
+  },
+  {
+    "id": "brt-6-10",
+    "name": "شهرک شهید رجایی",
+    "name_en": null,
+    "lat": 35.78707133917052,
+    "lon": 51.488640699727185,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-09",
+      "brt-6-11"
+    ]
+  },
+  {
+    "id": "brt-6-11",
+    "name": "نوبنیاد",
+    "name_en": null,
+    "lat": 35.79031206229835,
+    "lon": 51.480436964228396,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-10",
+      "brt-6-12"
+    ]
+  },
+  {
+    "id": "brt-6-12",
+    "name": "اختیاریه",
+    "name_en": null,
+    "lat": 35.79144764412457,
+    "lon": 51.47011269177977,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-11",
+      "brt-6-13"
+    ]
+  },
+  {
+    "id": "brt-6-13",
+    "name": "دیباجی",
+    "name_en": null,
+    "lat": 35.79295843854273,
+    "lon": 51.46357743771677,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-12",
+      "brt-6-14"
+    ]
+  },
+  {
+    "id": "brt-6-14",
+    "name": "قیطریه",
+    "name_en": null,
+    "lat": 35.792011308170885,
+    "lon": 51.45691076411747,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-13",
+      "brt-6-15"
+    ]
+  },
+  {
+    "id": "brt-6-15",
+    "name": "بهار",
+    "name_en": null,
+    "lat": 35.78704777925231,
+    "lon": 51.44767136870505,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-14",
+      "brt-6-16"
+    ]
+  },
+  {
+    "id": "brt-6-16",
+    "name": "دستور",
+    "name_en": null,
+    "lat": 35.78526020803101,
+    "lon": 51.44120756574951,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-15",
+      "brt-6-17"
+    ]
+  },
+  {
+    "id": "brt-6-17",
+    "name": "الهیه",
+    "name_en": null,
+    "lat": 35.784417733286304,
+    "lon": 51.42309652712178,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-16",
+      "brt-6-18"
+    ]
+  },
+  {
+    "id": "brt-6-18",
+    "name": "پایانه شهید افشار",
+    "name_en": null,
+    "lat": 35.790156229396246,
+    "lon": 51.41872208248892,
+    "type": "brt",
+    "lines": [
+      "6"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-17"
+    ]
+  },
+  {
+    "id": "brt-7-01",
+    "name": "معینی",
+    "name_en": null,
+    "lat": 35.66014356910882,
+    "lon": 51.394507581426936,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-02"
+    ]
+  },
+  {
+    "id": "brt-7-02",
+    "name": "شوش",
+    "name_en": null,
+    "lat": 35.65935013154413,
+    "lon": 51.39694140560157,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-01",
+      "brt-7-03"
+    ]
+  },
+  {
+    "id": "brt-7-03",
+    "name": "مختاری",
+    "name_en": null,
+    "lat": 35.66263697357879,
+    "lon": 51.39859572482358,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-15",
+      "brt-7-02"
+    ]
+  },
+  {
+    "id": "brt-7-04",
+    "name": "شهید مدرس",
+    "name_en": null,
+    "lat": 35.671967496487596,
+    "lon": 51.400129065209285,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-2-15",
+      "brt-7-05"
+    ]
+  },
+  {
+    "id": "brt-7-05",
+    "name": "پل امیربهادر",
+    "name_en": null,
+    "lat": 35.675063616519544,
+    "lon": 51.40055622598366,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-04",
+      "brt-7-06"
+    ]
+  },
+  {
+    "id": "brt-7-06",
+    "name": "میدان منیریه",
+    "name_en": null,
+    "lat": 35.68055299768381,
+    "lon": 51.40150120600852,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-05",
+      "brt-7-07"
+    ]
+  },
+  {
+    "id": "brt-7-07",
+    "name": "امام خمینی",
+    "name_en": null,
+    "lat": 35.68674172560692,
+    "lon": 51.402575467894465,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-06",
+      "brt-7-08"
+    ]
+  },
+  {
+    "id": "brt-7-08",
+    "name": "جامی",
+    "name_en": null,
+    "lat": 35.69143647978607,
+    "lon": 51.4034103920415,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-07",
+      "brt-7-09"
+    ]
+  },
+  {
+    "id": "brt-7-09",
+    "name": "جمهوری اسلامی",
+    "name_en": null,
+    "lat": 35.695161696378584,
+    "lon": 51.40408341780064,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-17",
+      "brt-7-08"
+    ]
+  },
+  {
+    "id": "brt-7-10",
+    "name": "آیت الله طالقانی",
+    "name_en": null,
+    "lat": 35.70619500482329,
+    "lon": 51.40599190764966,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-17",
+      "brt-7-11"
+    ]
+  },
+  {
+    "id": "brt-7-11",
+    "name": "میدان ولیعصر",
+    "name_en": null,
+    "lat": 35.71075549285819,
+    "lon": 51.40680851199164,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-10",
+      "brt-7-12"
+    ]
+  },
+  {
+    "id": "brt-7-12",
+    "name": "میدان ولیعصر",
+    "name_en": null,
+    "lat": 35.713813798082704,
+    "lon": 51.40735649369609,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-11",
+      "brt-7-13"
+    ]
+  },
+  {
+    "id": "brt-7-13",
+    "name": "قدس",
+    "name_en": null,
+    "lat": 35.71799050472792,
+    "lon": 51.40809757209866,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-12",
+      "brt-7-14"
+    ]
+  },
+  {
+    "id": "brt-7-14",
+    "name": "شهید مطهری",
+    "name_en": null,
+    "lat": 35.72471631485609,
+    "lon": 51.411385370975076,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-13",
+      "brt-7-15"
+    ]
+  },
+  {
+    "id": "brt-7-15",
+    "name": "شهید بهشتی",
+    "name_en": null,
+    "lat": 35.72783535278105,
+    "lon": 51.41334634920741,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-14",
+      "brt-7-16"
+    ]
+  },
+  {
+    "id": "brt-7-16",
+    "name": "پله اول",
+    "name_en": null,
+    "lat": 35.73066281193041,
+    "lon": 51.41194395756615,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-15",
+      "brt-7-17"
+    ]
+  },
+  {
+    "id": "brt-7-17",
+    "name": "آبشار",
+    "name_en": null,
+    "lat": 35.73522478465806,
+    "lon": 51.409863232139834,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-16",
+      "brt-7-18"
+    ]
+  },
+  {
+    "id": "brt-7-18",
+    "name": "سی و دوم",
+    "name_en": null,
+    "lat": 35.74147508522068,
+    "lon": 51.40995209035269,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-17",
+      "brt-7-19"
+    ]
+  },
+  {
+    "id": "brt-7-19",
+    "name": "توانیر",
+    "name_en": null,
+    "lat": 35.74662472498072,
+    "lon": 51.41135593577774,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-18",
+      "brt-7-20"
+    ]
+  },
+  {
+    "id": "brt-7-20",
+    "name": "شهید همت",
+    "name_en": null,
+    "lat": 35.75018801034014,
+    "lon": 51.411530701897746,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-19",
+      "brt-7-21"
+    ]
+  },
+  {
+    "id": "brt-7-21",
+    "name": "میدان ونک",
+    "name_en": null,
+    "lat": 35.7566213820028,
+    "lon": 51.410143985980916,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-20",
+      "brt-7-22"
+    ]
+  },
+  {
+    "id": "brt-7-22",
+    "name": "میدان ونک",
+    "name_en": null,
+    "lat": 35.75844380445792,
+    "lon": 51.40970990705961,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-21",
+      "brt-7-23"
+    ]
+  },
+  {
+    "id": "brt-7-23",
+    "name": "میرداماد",
+    "name_en": null,
+    "lat": 35.762916762034614,
+    "lon": 51.41007046190654,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-22",
+      "brt-7-24"
+    ]
+  },
+  {
+    "id": "brt-7-24",
+    "name": "ظفر",
+    "name_en": null,
+    "lat": 35.76727583908151,
+    "lon": 51.41103622887448,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-23",
+      "brt-7-25"
+    ]
+  },
+  {
+    "id": "brt-7-25",
+    "name": "نیایش",
+    "name_en": null,
+    "lat": 35.771051349393574,
+    "lon": 51.41186563476469,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-24",
+      "brt-7-26"
+    ]
+  },
+  {
+    "id": "brt-7-26",
+    "name": "پارک ملت",
+    "name_en": null,
+    "lat": 35.776267855757276,
+    "lon": 51.41302310455269,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-25",
+      "brt-7-27"
+    ]
+  },
+  {
+    "id": "brt-7-27",
+    "name": "خبرنگاران",
+    "name_en": null,
+    "lat": 35.782360651526396,
+    "lon": 51.41435104308751,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-26",
+      "brt-7-28"
+    ]
+  },
+  {
+    "id": "brt-7-28",
+    "name": "امانیه",
+    "name_en": null,
+    "lat": 35.785774840481906,
+    "lon": 51.41506542289066,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-27",
+      "brt-7-29"
+    ]
+  },
+  {
+    "id": "brt-7-29",
+    "name": "پارک وی",
+    "name_en": null,
+    "lat": 35.78994925507249,
+    "lon": 51.416037484253536,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-28",
+      "brt-7-30"
+    ]
+  },
+  {
+    "id": "brt-7-30",
+    "name": "محمودیه",
+    "name_en": null,
+    "lat": 35.79434466015392,
+    "lon": 51.41702789619583,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-29",
+      "brt-7-31"
+    ]
+  },
+  {
+    "id": "brt-7-31",
+    "name": "همایونی",
+    "name_en": null,
+    "lat": 35.79829332026667,
+    "lon": 51.41812410604585,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-30",
+      "brt-7-32"
+    ]
+  },
+  {
+    "id": "brt-7-32",
+    "name": "پسیان",
+    "name_en": null,
+    "lat": 35.799903331458815,
+    "lon": 51.41887941105465,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-31",
+      "brt-7-33"
+    ]
+  },
+  {
+    "id": "brt-7-33",
+    "name": "باغ فردوس",
+    "name_en": null,
+    "lat": 35.80384874589896,
+    "lon": 51.42099916378087,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-32",
+      "brt-7-34"
+    ]
+  },
+  {
+    "id": "brt-7-34",
+    "name": "کاظمی",
+    "name_en": null,
+    "lat": 35.805852402673466,
+    "lon": 51.42287554531407,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-33",
+      "brt-7-35"
+    ]
+  },
+  {
+    "id": "brt-7-35",
+    "name": "پایانه تجریش تخلیه",
+    "name_en": null,
+    "lat": 35.80667182552122,
+    "lon": 51.42866586356575,
+    "type": "brt",
+    "lines": [
+      "7"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-7-34"
+    ]
+  },
+  {
+    "id": "brt-8-01",
+    "name": "شهید بروجردی",
+    "name_en": null,
+    "lat": 35.64158807085603,
+    "lon": 51.46700680575655,
+    "type": "brt",
+    "lines": [
+      "8"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-3-01",
+      "brt-8-02"
+    ]
+  },
+  {
+    "id": "brt-8-02",
+    "name": "شاهد",
+    "name_en": null,
+    "lat": 35.644956716585256,
+    "lon": 51.45755301274927,
+    "type": "brt",
+    "lines": [
+      "8"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-8-01",
+      "brt-8-03"
+    ]
+  },
+  {
+    "id": "brt-8-03",
+    "name": "هفده شهریور",
+    "name_en": null,
+    "lat": 35.64528831368656,
+    "lon": 51.44647393164713,
+    "type": "brt",
+    "lines": [
+      "8"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-8-02",
+      "brt-8-04"
+    ]
+  },
+  {
+    "id": "brt-8-04",
+    "name": "پارک بعثت",
+    "name_en": null,
+    "lat": 35.64625811731665,
+    "lon": 51.428731849370784,
+    "type": "brt",
+    "lines": [
+      "8"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-4-01",
+      "brt-8-03"
+    ]
+  },
+  {
+    "id": "brt-9-01",
+    "name": "پایانه مترو جوانمرد قصاب",
+    "name_en": null,
+    "lat": 35.60936105498065,
+    "lon": 51.42092249102059,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-02"
+    ]
+  },
+  {
+    "id": "brt-9-02",
+    "name": "میدان نماز",
+    "name_en": null,
+    "lat": 35.603256137471604,
+    "lon": 51.42507981061236,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-01",
+      "brt-9-03"
+    ]
+  },
+  {
+    "id": "brt-9-03",
+    "name": "گذرنامه",
+    "name_en": null,
+    "lat": 35.60761134953,
+    "lon": 51.42906113868738,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-02",
+      "brt-9-04"
+    ]
+  },
+  {
+    "id": "brt-9-04",
+    "name": "دیلمان",
+    "name_en": null,
+    "lat": 35.607532341322944,
+    "lon": 51.43546762733192,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-03",
+      "brt-9-05"
+    ]
+  },
+  {
+    "id": "brt-9-05",
+    "name": "غیوری",
+    "name_en": null,
+    "lat": 35.60544071926988,
+    "lon": 51.44285100821804,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-04",
+      "brt-9-06"
+    ]
+  },
+  {
+    "id": "brt-9-06",
+    "name": "شهید تراب",
+    "name_en": null,
+    "lat": 35.60002547520847,
+    "lon": 51.44980006644415,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-05",
+      "brt-9-07"
+    ]
+  },
+  {
+    "id": "brt-9-07",
+    "name": "معدن شرقی",
+    "name_en": null,
+    "lat": 35.60814603298251,
+    "lon": 51.45601750371089,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-06",
+      "brt-9-08"
+    ]
+  },
+  {
+    "id": "brt-9-08",
+    "name": "توسکا",
+    "name_en": null,
+    "lat": 35.62518268248317,
+    "lon": 51.464900651835904,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-07",
+      "brt-9-09"
+    ]
+  },
+  {
+    "id": "brt-9-09",
+    "name": "شهید بروجردی",
+    "name_en": null,
+    "lat": 35.63693995805687,
+    "lon": 51.46424154578408,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-08",
+      "brt-9-10"
+    ]
+  },
+  {
+    "id": "brt-9-10",
+    "name": "رضایی",
+    "name_en": null,
+    "lat": 35.645728186279115,
+    "lon": 51.4631910963495,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-09",
+      "brt-9-11"
+    ]
+  },
+  {
+    "id": "brt-9-11",
+    "name": "ابراهیمی",
+    "name_en": null,
+    "lat": 35.65038115362344,
+    "lon": 51.46193661080742,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-10",
+      "brt-9-12"
+    ]
+  },
+  {
+    "id": "brt-9-12",
+    "name": "خاوران",
+    "name_en": null,
+    "lat": 35.65952021604595,
+    "lon": 51.46122420583091,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-11",
+      "brt-9-13"
+    ]
+  },
+  {
+    "id": "brt-9-13",
+    "name": "دولاب",
+    "name_en": null,
+    "lat": 35.66516883404113,
+    "lon": 51.46387688185859,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-12",
+      "brt-9-14"
+    ]
+  },
+  {
+    "id": "brt-9-14",
+    "name": "شهید محلاتی",
+    "name_en": null,
+    "lat": 35.67143895010845,
+    "lon": 51.46383353761989,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-13",
+      "brt-9-15"
+    ]
+  },
+  {
+    "id": "brt-9-15",
+    "name": "شهید گمنام",
+    "name_en": null,
+    "lat": 35.67558735074958,
+    "lon": 51.45973175077367,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-14",
+      "brt-9-16"
+    ]
+  },
+  {
+    "id": "brt-9-16",
+    "name": "نیکنام",
+    "name_en": null,
+    "lat": 35.686315568243714,
+    "lon": 51.45863163489877,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-15",
+      "brt-9-17"
+    ]
+  },
+  {
+    "id": "brt-9-17",
+    "name": "پیروزی",
+    "name_en": null,
+    "lat": 35.690815115859664,
+    "lon": 51.457236208514594,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-16",
+      "brt-9-18"
+    ]
+  },
+  {
+    "id": "brt-9-18",
+    "name": "صفا",
+    "name_en": null,
+    "lat": 35.696293297423985,
+    "lon": 51.4568890682956,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-10",
+      "brt-9-17"
+    ]
+  },
+  {
+    "id": "brt-9-19",
+    "name": "شهید مدنی",
+    "name_en": null,
+    "lat": 35.71232769904202,
+    "lon": 51.456757462719544,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-1-10",
+      "brt-9-20"
+    ]
+  },
+  {
+    "id": "brt-9-20",
+    "name": "اکبرنژاد",
+    "name_en": null,
+    "lat": 35.7161453538532,
+    "lon": 51.458079562015214,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-19",
+      "brt-9-21"
+    ]
+  },
+  {
+    "id": "brt-9-21",
+    "name": "سبلان",
+    "name_en": null,
+    "lat": 35.720343147401806,
+    "lon": 51.46457739185043,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-20",
+      "brt-9-22"
+    ]
+  },
+  {
+    "id": "brt-9-22",
+    "name": "فرجام",
+    "name_en": null,
+    "lat": 35.74154245411992,
+    "lon": 51.484125359676405,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-21",
+      "brt-9-23"
+    ]
+  },
+  {
+    "id": "brt-9-23",
+    "name": "مجیدیه",
+    "name_en": null,
+    "lat": 35.74504003131193,
+    "lon": 51.483547043293484,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-22",
+      "brt-9-24"
+    ]
+  },
+  {
+    "id": "brt-9-24",
+    "name": "مبارک آباد",
+    "name_en": null,
+    "lat": 35.769705503384785,
+    "lon": 51.48637601707367,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-23",
+      "brt-9-25"
+    ]
+  },
+  {
+    "id": "brt-9-25",
+    "name": "شیان",
+    "name_en": null,
+    "lat": 35.77566102580134,
+    "lon": 51.48803443511567,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-24",
+      "brt-9-26"
+    ]
+  },
+  {
+    "id": "brt-9-26",
+    "name": "لویزان",
+    "name_en": null,
+    "lat": 35.77906496095313,
+    "lon": 51.490433514220165,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-9-25",
+      "brt-9-27"
+    ]
+  },
+  {
+    "id": "brt-9-27",
+    "name": "گلشن",
+    "name_en": null,
+    "lat": 35.79164222483637,
+    "lon": 51.49160468762654,
+    "type": "brt",
+    "lines": [
+      "9"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-6-07",
+      "brt-9-26"
+    ]
+  },
+  {
+    "id": "brt-10-01",
+    "name": "دانشگاه علوم و تحقیقات",
+    "name_en": null,
+    "lat": 35.78003784970572,
+    "lon": 51.317032666752425,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-02"
+    ]
+  },
+  {
+    "id": "brt-10-02",
+    "name": "مخابرات",
+    "name_en": null,
+    "lat": 35.77829784265472,
+    "lon": 51.322338258467475,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-01",
+      "brt-10-03"
+    ]
+  },
+  {
+    "id": "brt-10-03",
+    "name": "الوند",
+    "name_en": null,
+    "lat": 35.77832791731656,
+    "lon": 51.33053402738331,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-02",
+      "brt-10-04"
+    ]
+  },
+  {
+    "id": "brt-10-04",
+    "name": "آیت الله اشرفی اصفهانی",
+    "name_en": null,
+    "lat": 35.77742342779389,
+    "lon": 51.33589297591403,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-03",
+      "brt-10-05"
+    ]
+  },
+  {
+    "id": "brt-10-05",
+    "name": "آیت الله طالقانی",
+    "name_en": null,
+    "lat": 35.774623834982194,
+    "lon": 51.336287768670225,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-04",
+      "brt-10-06"
+    ]
+  },
+  {
+    "id": "brt-10-06",
+    "name": "آبشناسان",
+    "name_en": null,
+    "lat": 35.768030916868845,
+    "lon": 51.337389182807186,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-05",
+      "brt-10-07"
+    ]
+  },
+  {
+    "id": "brt-10-07",
+    "name": "پونک",
+    "name_en": null,
+    "lat": 35.75882680914163,
+    "lon": 51.33461245684428,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-06",
+      "brt-10-08"
+    ]
+  },
+  {
+    "id": "brt-10-08",
+    "name": "شهید مخبری",
+    "name_en": null,
+    "lat": 35.75443242784687,
+    "lon": 51.332992348246066,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-07",
+      "brt-10-09"
+    ]
+  },
+  {
+    "id": "brt-10-09",
+    "name": "تیراژه",
+    "name_en": null,
+    "lat": 35.74774760248614,
+    "lon": 51.33187993170117,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-08",
+      "brt-10-10"
+    ]
+  },
+  {
+    "id": "brt-10-10",
+    "name": "باغ فیض",
+    "name_en": null,
+    "lat": 35.743950115062624,
+    "lon": 51.332345589047755,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-09",
+      "brt-10-11"
+    ]
+  },
+  {
+    "id": "brt-10-11",
+    "name": "مرزداران",
+    "name_en": null,
+    "lat": 35.734796415665535,
+    "lon": 51.333476352979666,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-10",
+      "brt-10-12"
+    ]
+  },
+  {
+    "id": "brt-10-12",
+    "name": "مسجد جامع",
+    "name_en": null,
+    "lat": 35.72879745967492,
+    "lon": 51.33424345250538,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-11",
+      "brt-10-13"
+    ]
+  },
+  {
+    "id": "brt-10-13",
+    "name": "سازمان آب",
+    "name_en": null,
+    "lat": 35.724741373767266,
+    "lon": 51.33481320508819,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-12",
+      "brt-10-14"
+    ]
+  },
+  {
+    "id": "brt-10-14",
+    "name": "صادقیه",
+    "name_en": null,
+    "lat": 35.72079579898664,
+    "lon": 51.33533707567623,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-13",
+      "brt-10-15"
+    ]
+  },
+  {
+    "id": "brt-10-15",
+    "name": "متروصادقیه",
+    "name_en": null,
+    "lat": 35.715827067419966,
+    "lon": 51.33579753958428,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-14",
+      "brt-10-16"
+    ]
+  },
+  {
+    "id": "brt-10-16",
+    "name": "جناح",
+    "name_en": null,
+    "lat": 35.70231811597392,
+    "lon": 51.33759983091711,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-15",
+      "brt-2-26"
+    ]
+  },
+  {
+    "id": "brt-10-17",
+    "name": "درمانگاه مشیری",
+    "name_en": null,
+    "lat": 35.66905826208673,
+    "lon": 51.34663576085674,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-18",
+      "brt-2-26"
+    ]
+  },
+  {
+    "id": "brt-10-18",
+    "name": "بلوارمعلم",
+    "name_en": null,
+    "lat": 35.661291843075915,
+    "lon": 51.344777322509735,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-17",
+      "brt-10-19"
+    ]
+  },
+  {
+    "id": "brt-10-19",
+    "name": "آموزش و پرورش",
+    "name_en": null,
+    "lat": 35.65661612247087,
+    "lon": 51.346660289845396,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-18",
+      "brt-10-20"
+    ]
+  },
+  {
+    "id": "brt-10-20",
+    "name": "شهرداری منطقه هجده",
+    "name_en": null,
+    "lat": 35.649784123456044,
+    "lon": 51.349529848989,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-19",
+      "brt-10-21"
+    ]
+  },
+  {
+    "id": "brt-10-21",
+    "name": "شهید پژاوند",
+    "name_en": null,
+    "lat": 35.6451667520647,
+    "lon": 51.35123079260508,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-20",
+      "brt-10-22"
+    ]
+  },
+  {
+    "id": "brt-10-22",
+    "name": "سروری غربی",
+    "name_en": null,
+    "lat": 35.637343151157296,
+    "lon": 51.353942348395044,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-21",
+      "brt-10-23"
+    ]
+  },
+  {
+    "id": "brt-10-23",
+    "name": "مترو نعمت آباد",
+    "name_en": null,
+    "lat": 35.63404536583826,
+    "lon": 51.347579388751925,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-22",
+      "brt-10-24"
+    ]
+  },
+  {
+    "id": "brt-10-24",
+    "name": "مترو آزادگان",
+    "name_en": null,
+    "lat": 35.62772982401592,
+    "lon": 51.33518762105429,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-23",
+      "brt-10-25"
+    ]
+  },
+  {
+    "id": "brt-10-25",
+    "name": "پایانه آزادگان",
+    "name_en": null,
+    "lat": 35.6257659614205,
+    "lon": 51.331130364501654,
+    "type": "brt",
+    "lines": [
+      "10"
+    ],
+    "has_elevator": false,
+    "relations": [
+      "brt-10-24"
+    ]
+  }
 ]
