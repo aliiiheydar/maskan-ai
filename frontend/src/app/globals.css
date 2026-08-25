@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0b1120;
+    --foreground: #e2e8f0;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+/* Leaflet ships its own CSS via a separate import in NeshanMap.tsx; these
+   overrides only fix RTL popup/attribution quirks Leaflet doesn't handle. */
+.leaflet-container {
+  font-family: var(--font-vazirmatn), Tahoma, sans-serif;
+  direction: ltr;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+}
