@@ -1,7 +1,10 @@
-app/data/embedding_cache.json
-app/data/maskan.db
-app/data/maskan.db-wal
-app/data/maskan.db-shm
-app/data/processed_listings.json
+# Generated assets: built by app/data/pipelines and backend/scripts, never
+# committed -- the sources they are built from are.
+app/data/assets/embedding_cache.json
+app/data/assets/maskan.db
+app/data/assets/maskan.db-wal
+app/data/assets/maskan.db-shm
+app/data/assets/processed_listings.json
+
 __pycache__/
 .venv/

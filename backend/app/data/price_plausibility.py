@@ -32,6 +32,7 @@ import json
 from pathlib import Path
 from typing import Optional
 
+from app.core import paths
 from app.core import constants
 
 # Tomans per month, Tabdil-normalised (rent + 3% of deposit). The cheapest
@@ -197,7 +198,7 @@ def is_local_price_outlier(
 # up afterwards. Absent file, absent opinion: the crawl falls back to the
 # absolute floors, exactly as it behaved before.
 
-FLOORS_PATH = Path(__file__).resolve().parent / "local_price_floors.json"
+FLOORS_PATH = paths.asset("local_price_floors.json")
 
 
 def save_price_floors(floors: dict[tuple[int, int], float], path: Path = FLOORS_PATH) -> int:

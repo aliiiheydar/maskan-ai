@@ -16,12 +16,12 @@ import asyncio
 import hashlib
 import json
 import os
-from pathlib import Path
 from typing import Any, Optional
 
 import httpx
 from sklearn.feature_extraction.text import HashingVectorizer
 
+from app.core import paths
 from app.core.config import settings
 
 _PLACEHOLDER_API_KEYS = {"", "your_openrouter_api_key_here"}
@@ -81,7 +81,7 @@ def _mock_embedding(text: str) -> list[float]:
 # Embeddings are billed per call but are pure functions of (model, text), and
 # the synthetic corpus re-embeds the same few hundred descriptions on every
 # reload. Persisting them turns that into a one-time cost.
-_EMBEDDING_CACHE_PATH = Path(__file__).resolve().parent.parent / "data" / "embedding_cache.json"
+_EMBEDDING_CACHE_PATH = paths.asset("embedding_cache.json")
 _embedding_cache: Optional[dict[str, list[float]]] = None
 _embedding_cache_dirty = False
 

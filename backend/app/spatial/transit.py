@@ -1,15 +1,15 @@
 """Tehran metro/BRT station graph and commute-time estimation."""
 
 import json
-from pathlib import Path
 
 from shapely.geometry import Point, shape
 from shapely.geometry.base import BaseGeometry
 
+from app.core import paths
 from app.core import constants
 from app.spatial.distance import haversine_distance_km, manhattan_distance_m
 
-_DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "tehran_transit_nodes.json"
+_DATA_PATH = paths.asset("tehran_transit_nodes.json")
 TRANSIT_NODES: list[dict] = json.loads(_DATA_PATH.read_text(encoding="utf-8"))
 
 # Real polygon boundaries for Tarh-e Terafik / Tarh-e Aloodegi, sourced from
@@ -18,7 +18,7 @@ TRANSIT_NODES: list[dict] = json.loads(_DATA_PATH.read_text(encoding="utf-8"))
 # if this file isn't present, both zone checks fall back to the
 # TARH_TERAFIK_BBOX rectangle approximation, so the app behaves identically
 # either way -- dropping the file in later requires no code change.
-_CONGESTION_ZONES_PATH = Path(__file__).resolve().parent.parent / "data" / "congestion_zones.geojson"
+_CONGESTION_ZONES_PATH = paths.asset("congestion_zones.geojson")
 
 # Maps OSM's boundary tag values (real data) to our internal zone names.
 _CONGESTION_ZONE_BOUNDARY_TAGS = {

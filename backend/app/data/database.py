@@ -41,11 +41,12 @@ import sqlite3
 from pathlib import Path
 from typing import Iterable, Iterator, Optional
 
+from app.core import paths
 from app.core.models import Listing
 from app.core.shared_living import is_shared_living
 from app.core.normalizers import normalize_persian_text, parse_persian_numbers
 
-DEFAULT_DB_PATH = Path(__file__).resolve().parent / "maskan.db"
+DEFAULT_DB_PATH = paths.asset("maskan.db")
 
 # Columns that exist purely so SQLite can filter and sort without touching the
 # JSON payload. Kept in one place because the schema, the INSERT and the

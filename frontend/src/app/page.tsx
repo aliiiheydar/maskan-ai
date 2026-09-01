@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { List, Loader2, Map as MapIcon, MessageSquare, SlidersHorizontal } from "lucide-react";
 import clsx from "clsx";
 
-import Header from "@/components/Header";
+import Header from "@/components/Layout/Header";
 import ChatPanel from "@/components/Chat/ChatPanel";
 import ClassicFilterPanel from "@/components/Filters/ClassicFilterPanel";
 import ListingFeed from "@/components/Listings/ListingFeed";

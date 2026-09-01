@@ -6,13 +6,13 @@ listings conventionally show both, e.g. "یوسف‌آباد، منطقه ۶".
 """
 
 import json
-from pathlib import Path
 from typing import Optional
 
 from shapely.geometry import Point, shape
 from shapely.geometry.base import BaseGeometry
+from app.core import paths
 
-_DISTRICTS_PATH = Path(__file__).resolve().parent.parent / "data" / "districts.json"
+_DISTRICTS_PATH = paths.asset("districts.json")
 
 
 def _load_districts() -> list[tuple[str, BaseGeometry]]:

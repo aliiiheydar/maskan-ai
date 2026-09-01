@@ -20,7 +20,7 @@ written back; the result is a *new* file, ``processed_listings.json``.
 
 Run it with::
 
-    python -m app.data.divar_preprocess
+    python -m app.data.pipelines.divar_preprocess
 """
 
 from __future__ import annotations
@@ -35,6 +35,7 @@ from typing import Any, Iterable, Optional
 
 import h3
 
+from app.core import paths
 from app.core.constants import TEHRAN_BBOX
 from app.core.shared_living import is_shared_living
 from app.core.models import Listing
@@ -53,15 +54,13 @@ from app.data.price_plausibility import (
 H3_RESOLUTION = 8
 CURRENT_JALALI_YEAR = 1405
 
-_BACKEND_DIR = Path(__file__).resolve().parent.parent.parent
-_DATA_DIR = Path(__file__).resolve().parent
-RAW_CRAWL_PATH = _BACKEND_DIR.parent / "crawler" / "divar_listings.json"
-PROCESSED_PATH = _DATA_DIR / "processed_listings.json"
+RAW_CRAWL_PATH = paths.PROJECT_ROOT / "crawler" / "divar_listings.json"
+PROCESSED_PATH = paths.asset("processed_listings.json")
 # Divar names our polygon set has no equivalent for, mapped onto the polygon
 # their listings actually fall inside. Written as a *separate* file so the two
 # curated sources (matched_neighborhoods.geojson, paired_neighborhoods.json)
 # stay byte-for-byte untouched; app.spatial.neighborhoods merges it in at load.
-ALIASES_PATH = _DATA_DIR / "neighborhood_aliases.json"
+ALIASES_PATH = paths.asset("neighborhood_aliases.json")
 
 # Areas outside this band are data errors, not unusual apartments (the crawl
 # contains a "115115 متر" row). They are re-derived from the text if possible

@@ -40,14 +40,14 @@ from typing import Optional
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.core import constants  # noqa: E402
+from app.core import paths  # noqa: E402
 from app.data import database  # noqa: E402
-from app.data.divar_preprocess import PROCESSED_PATH, to_listing  # noqa: E402
+from app.data.pipelines.divar_preprocess import PROCESSED_PATH, to_listing  # noqa: E402
 from app.spatial import districts as districts_module  # noqa: E402
 from app.spatial import neighborhoods  # noqa: E402
 
-_DATA_DIR = Path(__file__).resolve().parent.parent / "app" / "data"
-_PRIORS_PATH = _DATA_DIR / "district_prestige.json"
-OUTPUT_PATH = _DATA_DIR / "neighborhood_quality.json"
+_PRIORS_PATH = paths.asset("district_prestige.json")
+OUTPUT_PATH = paths.asset("neighborhood_quality.json")
 
 # Shrinkage strength: the number of listings at which a neighborhood's own
 # median and its district's prior count equally. Eight is roughly where a
@@ -94,7 +94,7 @@ def _load_listings() -> list:
     if database.listing_count():
         return database.load_all()
     raise SystemExit(
-        "No corpus found. Run `python -m app.data.divar_preprocess` or "
+        "No corpus found. Run `python -m app.data.pipelines.divar_preprocess` or "
         "`python -m scripts.build_database` first."
     )
 

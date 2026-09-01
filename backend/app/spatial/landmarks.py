@@ -21,14 +21,13 @@ BRT stops. ``app/data/landmarks.json`` fills the gaps.
 import json
 from difflib import SequenceMatcher
 from functools import lru_cache
-from pathlib import Path
 from typing import NamedTuple, Optional
 
+from app.core import paths
 from app.core.normalizers import normalize_for_match, squash_for_match
 
-_DATA_DIR = Path(__file__).resolve().parent.parent / "data"
-_TRANSIT_PATH = _DATA_DIR / "tehran_transit_nodes.json"
-_LANDMARKS_PATH = _DATA_DIR / "landmarks.json"
+_TRANSIT_PATH = paths.asset("tehran_transit_nodes.json")
+_LANDMARKS_PATH = paths.asset("landmarks.json")
 
 # Words that classify a place rather than name it. Stripped so "میدان ونک"
 # matches "ونک", and never indexed on their own -- "دانشگاه" alone identifies

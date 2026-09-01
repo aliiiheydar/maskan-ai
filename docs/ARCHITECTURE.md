@@ -54,7 +54,7 @@ The platform is designed as an asynchronous, event-driven decoupled architecture
 * **`app/spatial/`**: Contains the station graph for Tehran Metro (Lines 1–7) and BRT corridors. Computes transit walking buffers, spatial bounds, and congestion zone detection (*Tarh-e Terafik* and *Tarh-e Aloodegi*).
 * **`app/llm/`**: Manages communication with OpenRouter. Handles tool calling, JSON schema enforcement, few-shot Persian prompt engineering, and conversational streaming.
 * **`app/search/`**: Executes multi-criteria heuristic scoring, Pareto-tradeoff discovery, and ranking tier stratification.
-* **`app/data/`**: Manages listing storage, dataset loading, and the synthetic listing generator.
+* **`app/data/`**: Listing storage and the data behind it — the SQLite gateway, the in-process repository, and the synthetic generator. Offline builders live in `app/data/pipelines/`, and every data file they read or write in `app/data/assets/` (addressed through `app.core.paths`).
 * **`app/api/v1/`**: Exposes FastAPI routes, CORS configuration, dependency injection, and SSE streaming handlers.
 
 ### 2.2 Frontend Modules (`frontend/src/`)

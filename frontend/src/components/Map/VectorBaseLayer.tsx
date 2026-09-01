@@ -9,7 +9,7 @@ import { useMap } from "react-leaflet";
 
 import "@maplibre/maplibre-gl-leaflet";
 
-import { BASEMAP_ATTRIBUTION, divarMapStyle } from "./divarMapStyle";
+import { BASEMAP_ATTRIBUTION, divarMapStyle } from "./lib/divarMapStyle";
 
 /** Copied out of node_modules at pre(dev|build) time -- see
  * scripts/copy-map-assets.mjs for why each of these has to be a real URL

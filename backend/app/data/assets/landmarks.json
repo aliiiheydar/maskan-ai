@@ -1,5 +1,5 @@
 {
-  "_comment": "Named places people give as a workplace or as an area landmark that no metro/BRT station covers. Coordinates are approximate to within a block -- they anchor a commute estimate and a vicinity lookup, not a route. Transit stations (app/data/tehran_transit_nodes.json) are the main gazetteer; this file only fills its gaps.",
+  "_comment": "Named places people give as a workplace or as an area landmark that no metro/BRT station covers. Coordinates are approximate to within a block -- they anchor a commute estimate and a vicinity lookup, not a route. Transit stations (app/data/assets/tehran_transit_nodes.json) are the main gazetteer; this file only fills its gaps.",
   "landmarks": [
     {
       "name": "دانشگاه امیرکبیر",

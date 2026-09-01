@@ -32,10 +32,15 @@ route adjacency, not a distance heuristic).
 import json
 import math
 import re
+import sys
 from pathlib import Path
 
-RAW_DIR = Path(__file__).resolve().parent.parent / "app" / "data" / "raw"
-OUT_PATH = Path(__file__).resolve().parent.parent / "app" / "data" / "tehran_transit_nodes.json"
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from app.core import paths  # noqa: E402
+
+RAW_DIR = paths.RAW_ASSETS_DIR
+OUT_PATH = paths.asset("tehran_transit_nodes.json")
 
 BRT_MERGE_RADIUS_KM = 0.15
 

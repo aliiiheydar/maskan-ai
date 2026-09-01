@@ -30,8 +30,8 @@ lands in ``gap_neighborhoods.geojson``, which ``app.spatial.neighborhoods``
 merges in alongside them. Overpass answers are cached in
 ``osm_area_context.json`` so a re-run costs no requests.
 
-    python -m app.data.build_gap_neighborhoods            # build, using the cache
-    python -m app.data.build_gap_neighborhoods --refresh  # re-query Overpass
+    python -m app.data.pipelines.build_gap_neighborhoods            # build, using the cache
+    python -m app.data.pipelines.build_gap_neighborhoods --refresh  # re-query Overpass
 """
 
 from __future__ import annotations
@@ -53,18 +53,18 @@ from shapely.geometry import mapping, shape
 from shapely.geometry.base import BaseGeometry
 from shapely.ops import transform, unary_union
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
+from app.core import paths  # noqa: E402
 from app.core.normalizers import normalize_persian_text  # noqa: E402
 from app.spatial.districts import find_district  # noqa: E402
 
-_DATA_DIR = Path(__file__).resolve().parent
-KML_PATH = _DATA_DIR / "tehran_neighborhoods.geojson"
-MATCHED_PATH = _DATA_DIR / "matched_neighborhoods.geojson"
-UNMATCHED_PATH = _DATA_DIR / "unmatched_neighborhoods.json"
-CITY_PATH = _DATA_DIR / "tehran.geojson"
-OUTPUT_PATH = _DATA_DIR / "gap_neighborhoods.geojson"
-CACHE_PATH = _DATA_DIR / "osm_area_context.json"
+KML_PATH = paths.asset("tehran_neighborhoods.geojson")
+MATCHED_PATH = paths.asset("matched_neighborhoods.geojson")
+UNMATCHED_PATH = paths.asset("unmatched_neighborhoods.json")
+CITY_PATH = paths.asset("tehran.geojson")
+OUTPUT_PATH = paths.asset("gap_neighborhoods.geojson")
+CACHE_PATH = paths.asset("osm_area_context.json")
 
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 
@@ -526,7 +526,7 @@ def run(refresh: bool = False) -> dict:
             {
                 "type": "FeatureCollection",
                 "generated_at": datetime.now(timezone.utc).isoformat(),
-                "generated_by": "app.data.build_gap_neighborhoods",
+                "generated_by": "app.data.pipelines.build_gap_neighborhoods",
                 "keywords_source": "OpenStreetMap via Overpass API (ODbL)",
                 "features": features,
             },
@@ -547,7 +547,7 @@ def run(refresh: bool = False) -> dict:
         "area_added_sqkm": round(sum(c.area_sqkm for c in named), 1),
         "city_coverage_before_pct": round(100 * unary_union(matched_geoms).intersection(city).area / city.area, 1),
         "city_coverage_after_pct": round(100 * covered_all.intersection(city).area / city.area, 1),
-        "output": str(OUTPUT_PATH.relative_to(_DATA_DIR.parents[1])),
+        "output": str(OUTPUT_PATH.relative_to(paths.BACKEND_DIR)),
     }
 
 

@@ -26,10 +26,10 @@ search.
 
 import json
 from functools import lru_cache
-from pathlib import Path
 from typing import Optional
+from app.core import paths
 
-_QUALITY_PATH = Path(__file__).resolve().parent.parent / "data" / "neighborhood_quality.json"
+_QUALITY_PATH = paths.asset("neighborhood_quality.json")
 
 # What a neighborhood with no entry scores. Deliberately the middle of the
 # scale and not 0: an unmeasured neighborhood should be neutral in the ranking,

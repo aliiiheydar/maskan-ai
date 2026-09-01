@@ -21,7 +21,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.core.models import Listing  # noqa: E402
-from app.data import database, divar_preprocess  # noqa: E402
+from app.data import database
+from app.data.pipelines import divar_preprocess  # noqa: E402
 
 _EMBED_BATCH = 32
 
@@ -30,7 +31,7 @@ def _load_processed() -> list[Listing]:
     path = divar_preprocess.PROCESSED_PATH
     if not path.exists():
         raise SystemExit(
-            f"{path.name} is missing. Run `python -m app.data.divar_preprocess` first "
+            f"{path.name} is missing. Run `python -m app.data.pipelines.divar_preprocess` first "
             "to enrich the raw crawl."
         )
     records = json.loads(path.read_text(encoding="utf-8"))

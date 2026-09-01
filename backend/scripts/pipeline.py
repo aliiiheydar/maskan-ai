@@ -38,7 +38,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.data import database  # noqa: E402
-from app.data.divar_preprocess import PROCESSED_PATH, RAW_CRAWL_PATH, run as preprocess, to_listing  # noqa: E402
+from app.data.pipelines.divar_preprocess import PROCESSED_PATH, RAW_CRAWL_PATH, run as preprocess, to_listing  # noqa: E402
 from app.llm.client import OpenRouterClient, flush_embedding_cache  # noqa: E402
 
 _CRAWLER = Path(__file__).resolve().parent.parent.parent / "crawler" / "divar-crawler.py"

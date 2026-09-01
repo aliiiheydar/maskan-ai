@@ -7,12 +7,12 @@ label node, which is skipped: only the polygon is of interest here.
 """
 
 import json
-from pathlib import Path
 
 from shapely.geometry import shape
 from shapely.geometry.base import BaseGeometry
+from app.core import paths
 
-_CITY_PATH = Path(__file__).resolve().parent.parent / "data" / "tehran.geojson"
+_CITY_PATH = paths.asset("tehran.geojson")
 
 CITY_NAME = "شهر تهران"
 

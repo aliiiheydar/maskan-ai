@@ -8,8 +8,8 @@ import type { LatLngExpression } from "leaflet";
 import { getCityBoundary, getSearchArea } from "@/lib/api";
 import { useSearchStore } from "@/store/useSearchStore";
 import type { GeoJSONGeometry } from "@/types";
-import { toLeafletRings } from "./geometry";
-import { whenMapIsVisible } from "./visibility";
+import { toLeafletRings } from "./lib/geometry";
+import { whenMapIsVisible } from "./lib/visibility";
 
 /** Everything outside the search area is dimmed by a single polygon that
  * covers the world and has the search area punched out of it as holes.
