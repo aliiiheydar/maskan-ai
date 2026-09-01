@@ -1,6 +1,14 @@
 import { create } from "zustand";
 
-import { describeLocation, getListing, getNeighborhoodAt, getNeighborhoods, searchListings, streamChat } from "@/lib/api";
+import {
+  describeLocation,
+  getAppConfig,
+  getListing,
+  getNeighborhoodAt,
+  getNeighborhoods,
+  searchListings,
+  streamChat,
+} from "@/lib/api";
 import type {
   Listing,
   LivingKind,
@@ -186,6 +194,15 @@ export interface FilterState {
   // Mode Selection
   mode: SearchMode;
   setMode: (mode: SearchMode) => void;
+  /** Whether the backend can serve the conversational search at all.
+   *
+   * It needs an OpenRouter key and the deployment may not have one, in which
+   * case everything else -- the filters, the map, the ranking, the ٪ scores --
+   * still works exactly as it does with one. So the mode is shown disabled
+   * rather than hidden (its absence would read as a missing feature) and
+   * rather than left enabled to fail on the user's first sentence. */
+  aiSearchEnabled: boolean;
+  loadAppConfig: () => Promise<void>;
 
   // Search State
   queryText: string;
@@ -404,8 +421,29 @@ const DEFAULT_FILTERS = {
 
 export const useSearchStore = create<FilterState>((set, get) => ({
   mode: "classic",
+
+  // Optimistic: a configured deployment is the normal one, and starting from
+  // `false` would blink the mode switch disabled on every load. An
+  // unconfigured one corrects this a moment later, and until it does the
+  // button behaves as it always has -- the backend answers a chat turn with
+  // its own Persian "not configured" notice.
+  aiSearchEnabled: true,
+  loadAppConfig: async () => {
+    try {
+      const { ai_search_enabled } = await getAppConfig();
+      set({ aiSearchEnabled: ai_search_enabled });
+      // A user parked in a mode that just turned out to be unavailable is
+      // handed back the filters rather than left on a panel that cannot reply.
+      if (!ai_search_enabled && get().mode === "intelligent") get().setMode("classic");
+    } catch {
+      // Unreachable backend is the search's problem to report, not the mode
+      // switch's; the capability keeps its optimistic default.
+    }
+  },
+
   setMode: (mode) => {
     if (get().mode === mode) return;
+    if (mode === "intelligent" && !get().aiSearchEnabled) return;
     set({ mode, ...MODE_SCOPED_RESET, isLoading: true });
     // Map mode's first search is issued by the map itself, which is the only
     // thing that knows the viewport being searched (see BBoxSync).

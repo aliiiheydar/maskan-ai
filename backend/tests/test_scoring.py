@@ -153,15 +153,28 @@ def test_commute_utility_with_workplace_close_by_scores_higher_than_far():
 # --- Financial utility ---
 
 
-def test_financial_utility_no_budget_returns_neutral():
-    assert financial_utility(make_listing(), make_intent()) == 1.0
+def test_financial_utility_no_budget_falls_back_to_the_market():
+    """No stated budget is not "price does not matter": the corpus median
+    stands in for the ceiling the user never typed."""
+    market = MarketBaselines(city_monthly_cost=50_000_000.0)
+    at_market = make_listing(deposit_toman=0, rent_toman=50_000_000, can_convert=False)
+    cheap = make_listing(deposit_toman=0, rent_toman=20_000_000, can_convert=False)
+    pricey = make_listing(deposit_toman=0, rent_toman=200_000_000, can_convert=False)
+
+    assert financial_utility(at_market, make_intent(), market) == pytest.approx(0.5)
+    assert financial_utility(cheap, make_intent(), market) > 0.5
+    assert 0.0 < financial_utility(pricey, make_intent(), market) < 0.5
+
+
+def test_financial_utility_without_a_corpus_is_neutral():
+    assert financial_utility(make_listing(), make_intent(), MarketBaselines()) == 1.0
 
 
 def test_financial_utility_at_the_cap_is_zero_point_eight():
     intent = make_intent(max_deposit=100_000_000, max_rent=10_000_000)
     c_target = calculate_effective_monthly_cost(100_000_000, 10_000_000)
     listing = make_listing(deposit_toman=100_000_000, rent_toman=c_target - int(100_000_000 * 0.03))
-    assert financial_utility(listing, intent) == pytest.approx(0.8, abs=1e-3)
+    assert financial_utility(listing, intent, MarketBaselines()) == pytest.approx(0.8, abs=1e-3)
 
 
 def test_financial_utility_decays_exponentially_past_the_cap():
@@ -171,14 +184,15 @@ def test_financial_utility_decays_exponentially_past_the_cap():
 
     ratio = (c_target + 1_000_000) / c_target
     expected = 0.8 * math.exp(-5.0 * (ratio - 1.0))
-    assert financial_utility(listing, intent) == pytest.approx(expected)
+    assert financial_utility(listing, intent, MarketBaselines()) == pytest.approx(expected)
 
 
 def test_financial_utility_rewards_being_well_under_budget():
     intent = make_intent(max_deposit=0, max_rent=20_000_000)
     cheap = make_listing(deposit_toman=0, rent_toman=5_000_000, can_convert=False)
     pricey = make_listing(deposit_toman=0, rent_toman=19_000_000, can_convert=False)
-    assert financial_utility(cheap, intent) > financial_utility(pricey, intent)
+    market = MarketBaselines()
+    assert financial_utility(cheap, intent, market) > financial_utility(pricey, intent, market)
 
 
 # --- Value / area / amenity / freshness utilities ---
@@ -355,16 +369,18 @@ async def test_rank_listings_splits_tiers_and_attaches_trade_off_rationale(clien
         area_sqm=80,
         building_age_years=1,
     )
-    # >=25% bigger area than tier1, same metro-walk time (qualifies via the
-    # commute leg of the OR even though its 18% budget overage alone would not),
-    # and its higher price score pulls utility below the 0.70 tier-1 cutoff.
+    # >=25% bigger area than tier1, same metro-walk time, and a 10% overrun on
+    # the stated rent -- the edge of TRADE_OFF_MAX_BUDGET_INCREASE, so the
+    # nudge qualifies. The older building is what puts it below the 0.70
+    # tier-1 cutoff: the price alone no longer can, now that the overrun has
+    # to stay inside the band for a rationale to be written at all.
     trade_off_listing = make_listing(
         id="tradeoff",
         deposit_toman=0,
-        rent_toman=11_800_000,
+        rent_toman=11_000_000,
         metro_walk_mins=2.0,
         area_sqm=105,
-        building_age_years=1,
+        building_age_years=20,
     )
     pruned_listing = make_listing(id="pruned", floor=5, has_elevator=False)
 
@@ -386,3 +402,15 @@ async def test_rank_listings_splits_tiers_and_attaches_trade_off_rationale(clien
     tradeoff_result = next(s for s in tier2 if s.listing.id == "tradeoff")
     assert tradeoff_result.trade_off_rationale is not None
     assert "متر" in tradeoff_result.trade_off_rationale
+    # The overrun is stated against the *user's* budget, not against the
+    # reference listing's price, and it is the figure the band admitted.
+    assert "۱۰٪ بالاتر از بودجهٔ شماست" in tradeoff_result.trade_off_rationale
+
+    # Past that band the nudge says nothing at all, rather than dropping the
+    # budget clause and presenting what is left as a bargain.
+    _, over_budget_tier2 = await rank_listings(
+        client,
+        [tier1_listing, trade_off_listing.model_copy(update={"rent_toman": 11_800_000}), pruned_listing],
+        intent_with_elevator,
+    )
+    assert next(s for s in over_budget_tier2 if s.listing.id == "tradeoff").trade_off_rationale is None

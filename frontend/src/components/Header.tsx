@@ -68,6 +68,7 @@ function CitySelect() {
 export default function Header() {
   const mode = useSearchStore((state) => state.mode);
   const setMode = useSearchStore((state) => state.setMode);
+  const aiSearchEnabled = useSearchStore((state) => state.aiSearchEnabled);
 
   return (
     // Nothing here is allowed to push the bar wider than the window. At 360px
@@ -91,28 +92,55 @@ export default function Header() {
       <nav className="flex shrink-0 items-center gap-0.5 rounded-full bg-slate-100 p-1 text-sm font-medium">
         {MODES.map(({ value, label, Icon, badge, desktopOnly }) => {
           const active = mode === value;
+          // The conversational mode is the one thing here that a deployment
+          // can be missing (it needs an OpenRouter key). Shown, not hidden --
+          // its absence would look like a feature that was never built --
+          // but visibly unavailable, and saying so in the tooltip, which is
+          // the only place there is room to say why.
+          const disabled = value === "intelligent" && !aiSearchEnabled;
+          const shownBadge = disabled ? "غیرفعال" : badge;
           return (
             <button
               key={value}
               type="button"
               onClick={() => setMode(value)}
+              disabled={disabled}
               aria-current={active ? "page" : undefined}
-              title={badge ? `${label} (${badge})` : label}
+              title={
+                disabled
+                  ? "جستجوی هوشمند روی این سرور پیکربندی نشده است؛ از فیلترهای کلاسیک استفاده کنید."
+                  : badge
+                    ? `${label} (${badge})`
+                    : label
+              }
               className={`items-center gap-1.5 rounded-full px-2.5 py-1.5 transition-all sm:px-3 ${
                 desktopOnly ? "hidden lg:flex" : "flex"
-              } ${active ? "bg-white text-tier1 shadow-sm" : "text-slate-600 hover:text-slate-900"}`}
+              } ${
+                disabled
+                  ? "cursor-not-allowed text-slate-400"
+                  : active
+                    ? "bg-white text-tier1 shadow-sm"
+                    : "text-slate-600 hover:text-slate-900"
+              }`}
             >
               <Icon size={15} />
               <span className="hidden sm:inline">{label}</span>
-              {badge && (
+              {shownBadge && (
                 // A dot where the label is hidden: the badge has to survive
                 // the narrow layout, or the one mode that comes with a caveat
                 // loses it on exactly the screens that get no tooltip either.
                 <>
-                  <span className="hidden rounded-full bg-amber-100 px-1.5 py-px text-xs font-bold text-amber-700 sm:inline">
-                    {badge}
+                  <span
+                    className={`hidden rounded-full px-1.5 py-px text-xs font-bold sm:inline ${
+                      disabled ? "bg-slate-200 text-slate-500" : "bg-amber-100 text-amber-700"
+                    }`}
+                  >
+                    {shownBadge}
                   </span>
-                  <span className="h-1.5 w-1.5 rounded-full bg-amber-500 sm:hidden" aria-hidden />
+                  <span
+                    className={`h-1.5 w-1.5 rounded-full sm:hidden ${disabled ? "bg-slate-400" : "bg-amber-500"}`}
+                    aria-hidden
+                  />
                 </>
               )}
             </button>

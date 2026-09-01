@@ -1,4 +1,5 @@
 import type {
+  AppConfig,
   ChatSSEEvent,
   ChatStreamRequest,
   CityBoundary,
@@ -175,6 +176,14 @@ export async function searchListings(payload: UnifiedSearchRequest): Promise<Sea
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
+  if (!response.ok) {
+    throw new Error(await parseErrorDetail(response));
+  }
+  return response.json();
+}
+
+export async function getAppConfig(): Promise<AppConfig> {
+  const response = await fetch(`${API_BASE_URL}/config`);
   if (!response.ok) {
     throw new Error(await parseErrorDetail(response));
   }

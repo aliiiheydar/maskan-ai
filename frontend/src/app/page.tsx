@@ -44,6 +44,7 @@ export default function Home() {
   const mode = useSearchStore((state) => state.mode);
   const setMode = useSearchStore((state) => state.setMode);
   const runSearch = useSearchStore((state) => state.runSearch);
+  const loadAppConfig = useSearchStore((state) => state.loadAppConfig);
   const isPicking = useSearchStore(
     (state) => state.isPickingWorkplace || state.isPickingNeighborhood,
   );
@@ -62,6 +63,10 @@ export default function Home() {
 
   useEffect(() => {
     runSearch();
+    // Which optional features this backend actually has, asked once. The mode
+    // switch renders off it, so it is fetched here rather than by the header:
+    // the answer outlives any one component.
+    void loadAppConfig();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

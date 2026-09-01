@@ -46,11 +46,17 @@ $$S_{\text{workplace\_commute}}(L, U) = \frac{1}{1 + \exp\left( 0.20 \times (T_{
 $$S_{\text{commute}}(L, U) = 0.50 \cdot S_{\text{metro\_walk}}(L) + 0.50 \cdot S_{\text{workplace\_commute}}(L, U)$$
 
 ### 3.3 Price Score ($S_{\text{price}}$)
-Continuous exponential penalty for listings exceeding the base target budget:
+Measured against the user's stated ceiling where there is one, and against the market where there is not. With a budget $C_{\text{target}}(U)$ — the post-تبدیل effective cost of the ودیعه/اجاره pair the user typed — the ratio $\rho = C_{\text{eff}}(L) / C_{\text{target}}(U)$ scores linearly under the cap and decays exponentially over it, so being comfortably cheaper is rewarded and a listing at the edge of the elastic window cannot outrank one that genuinely fits:
 
-$$\Delta C = \max(0, C_{\text{eff}}(L) - C_{\text{target}}(U))$$
+$$S_{\text{price}}(L, U) = \begin{cases} 1 - 0.2\rho & \rho \le 1 \\ 0.8 \, e^{-\lambda (\rho - 1)}, \; \lambda = 5 & \rho > 1 \end{cases}$$
 
-$$S_{\text{price}}(L, U) = \exp\left( - \left( \frac{\Delta C}{0.15 \times C_{\text{target}}(U) + \epsilon} \right)^2 \right)$$
+With only one axis stated, $\rho$ is taken on that axis alone; a floor (از) is a filter and never a price score.
+
+**With no budget at all**, the corpus median $C_{\text{median}}$ stands in for the ceiling the user never typed. An empty budget field means "I did not say", not "I do not care", so price — the heaviest single criterion — keeps its weight rather than being zeroed:
+
+$$S_{\text{price}}(L) = \frac{C_{\text{median}}}{C_{\text{median}} + C_{\text{eff}}(L)}$$
+
+A median-priced flat scores $0.5$ and the curve falls off either side of it. This is a logistic in log-price, which is the scale rents are actually spread on: the 99th-percentile listing (~17× the median) scores $0.05$ rather than $0$, so price pushes it down the list without pretending it does not exist. The reference is the **city-wide** median, not the neighborhood's — how a listing prices against its own neighborhood is $S_{\text{value}}$'s question, and asking it twice would count one fact twice while leaving "this is an expensive flat" unsaid.
 
 ### 3.4 Semantic Soft Preference Score ($S_{\text{soft}}$)
 Cosine similarity between the OpenRouter embedding of the user's soft preference summary and the listing description:
@@ -79,5 +85,11 @@ Listings passing the hard mask are partitioned into two tiers:
 ```
 
 ### Trade-Off Nudge Identifier
-If a Tier 2 listing offers $\ge 25\%$ larger area with $\le 10\%$ budget increase or $\le 7\text{ min}$ additional transit time compared to Tier 1 items, the engine tags it with a Persian trade-off rationale:
-> *"این مورد ۱۰٪ بالاتر از بودجه است اما ۲۵ متر متراژ بزرگتر و دسترسی مستقیم به خط ۷ مترو دارد."*
+A Tier 2 listing earns a Persian trade-off rationale when it offers $\ge 25\%$ larger area than the **median** Tier 1 pick and the price of that space is small on every axis the user actually weighs:
+
+* **Budget** — measured against the *user's own stated ceiling* (post-تبدیل, via the same ratio the financial sub-utility uses), never against another listing's price. Overrun must be $\le 10\%$. Omitted entirely when no budget was stated.
+* **Metro** — $\le 7\text{ min}$ additional walk versus the median Tier 1 pick.
+
+An axis carrying less than `TRADE_OFF_MIN_AXIS_WEIGHT` of the resolved ranking weights is one the user dialled down (کم) or never engaged: it is neither named in the sentence nor allowed to disqualify the nudge. An axis that *is* weighed and falls outside its band suppresses the rationale altogether, rather than being dropped from the sentence and leaving a one-sided claim.
+
+> *"این مورد ۲۵ متر بزرگ‌تر است و دسترسی مشابه یا بهتری به مترو دارد، اما ۱۰٪ بالاتر از بودجهٔ شماست."*

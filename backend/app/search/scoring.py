@@ -36,6 +36,7 @@ import numpy as np
 
 from app.core import constants, neighborhood_quality
 from app.core.models import CriteriaWeights, ExtractedSearchIntent, Listing
+from app.core.normalizers import to_persian_digits
 from app.core.pricing import calculate_effective_monthly_cost
 from app.spatial import neighborhoods
 from app.spatial.transit import estimate_commute_time
@@ -55,7 +56,8 @@ class EmbeddingClient(Protocol):
 
 @dataclass(frozen=True)
 class MarketBaselines:
-    """Median total monthly cost per square metre, per neighborhood.
+    """What this corpus costs: median monthly cost per square metre per
+    neighborhood, and the median monthly cost of a Tehran flat outright.
 
     Precomputed once when the repository is seeded rather than derived per
     request ("architectural suggestion.md" SS7.2): U_value needs a baseline for
@@ -65,6 +67,11 @@ class MarketBaselines:
 
     per_neighborhood: Mapping[str, float] = field(default_factory=dict)
     city: float = 0.0
+    #: Median TMC of the whole corpus, in Tomans. The reference price for a
+    #: user who never stated a budget -- see financial_utility. Kept separate
+    #: from `city` above, which is a per-square-metre figure and answers a
+    #: different question (value for money, not affordability).
+    city_monthly_cost: float = 0.0
     # Memo for the sub-utilities that depend only on the listing and on this
     # baseline set -- never on what the user asked for. Filled lazily by
     # _static_utilities and keyed by listing id. It lives here, rather than in
@@ -86,7 +93,9 @@ class MarketBaselines:
     def from_listings(cls, listings: Iterable[Listing]) -> "MarketBaselines":
         samples: dict[str, list[float]] = {}
         everything: list[float] = []
+        monthly_costs: list[float] = []
         for listing in listings:
+            monthly_costs.append(float(total_monthly_cost(listing.deposit_toman, listing.rent_toman)))
             if listing.area_sqm <= 0:
                 continue
             per_sqm = total_monthly_cost(listing.deposit_toman, listing.rent_toman) / listing.area_sqm
@@ -98,6 +107,10 @@ class MarketBaselines:
             # those neighborhoods fall back to the city figure.
             per_neighborhood={key: median(values) for key, values in samples.items() if len(values) >= 5},
             city=median(everything) if everything else 0.0,
+            # A median rather than a mean: rents in Tehran have a long right
+            # tail (the top percentile is ~17x the middle of the market), and a
+            # mean dragged up by it would call an ordinary flat cheap.
+            city_monthly_cost=median(monthly_costs) if monthly_costs else 0.0,
         )
 
 
@@ -304,18 +317,50 @@ def hard_constraint_mask(listing: Listing, intent: ExtractedSearchIntent) -> boo
 # --------------------------------------------------------------------------
 
 
-def financial_utility(listing: Listing, intent: ExtractedSearchIntent) -> float:
-    """U_financial: how the listing's total monthly cost sits against the
-    user's budget, decaying exponentially once it goes over.
+def financial_utility(listing: Listing, intent: ExtractedSearchIntent, baselines: MarketBaselines) -> float:
+    """U_financial: how expensive this listing is, measured against the user's
+    budget when they stated one and against the Tehran market when they did
+    not.
 
-    Under budget the score runs from 1.0 (free) down to 0.8 (exactly at the
-    cap), so being comfortably cheaper is always rewarded; past the cap it
-    falls away at lambda=5, which is steep enough that a listing at the very
-    edge of the elastic window cannot outrank a listing that genuinely fits.
+    *With* a budget the score decays exponentially past it. Under budget it
+    runs from 1.0 (free) down to 0.8 (exactly at the cap), so being
+    comfortably cheaper is always rewarded; past the cap it falls away at
+    lambda=5, which is steep enough that a listing at the very edge of the
+    elastic window cannot outrank a listing that genuinely fits.
+
+    *Without* one this used to return a flat 1.0 and resolve_weights then
+    zeroed the criterion, so price -- the single heaviest term in the ranking
+    -- stopped counting entirely the moment the user cleared the ودیعه and
+    اجاره fields. That is not what an empty budget field means: "I did not say"
+    is not "I do not care", and of two otherwise identical flats the cheaper
+    one is the better result whether or not anyone typed a ceiling. So the
+    market answers in the user's place: the corpus median TMC scores 0.5 and
+    the curve falls off either side of it,
+
+        U = C_median / (C_median + C_eff)
+
+    which is a logistic in log-price -- the scale rents are actually spread on.
+    It is bounded, strictly decreasing, and has no cliff: the flat at 17x the
+    median (the 99th percentile) scores 0.05 rather than 0, so price pushes
+    such a listing down the list without pretending it does not exist.
+
+    The reference is the whole city's median, not the neighborhood's. What a
+    listing costs relative to its own neighborhood is U_value's question, and
+    asking it twice would count the same fact twice while leaving the plain
+    "this is an expensive flat" unsaid.
     """
     ratio = _budget_ratio(listing, intent)
     if ratio is None:
-        return 1.0
+        reference = baselines.city_monthly_cost
+        if reference <= 0:
+            # No corpus to compare against (an empty or unseeded baseline set).
+            # Neutral, exactly as before.
+            return 1.0
+        # The advertised split, not the تبدیل-adjusted one: TMC is invariant
+        # under the conversion, so there is nothing for resolve_tabdil to
+        # change here (see this module's docstring).
+        cost = total_monthly_cost(listing.deposit_toman, listing.rent_toman)
+        return reference / (reference + cost)
     if ratio <= 1.0:
         return 1.0 - 0.2 * ratio
     return 0.8 * math.exp(-constants.FINANCIAL_DECAY_LAMBDA * (ratio - 1.0))
@@ -592,6 +637,11 @@ def resolve_weights(intent: ExtractedSearchIntent) -> CriteriaWeights:
     # make the tier thresholds meaningless: with no budget stated, a listing
     # would carry the full budget weight for free. Their share is redistributed
     # over the criteria that actually discriminate.
+    #
+    # Budget is deliberately not on that list. It has no stated ceiling to
+    # score against half the time, but it still discriminates: without one
+    # financial_utility measures the listing against the market instead of
+    # against the user (see there), so the criterion keeps its weight.
     update: dict[str, float] = {}
     # Without a workplace there is no commute to score: every listing would
     # take the neutral 1.0 and the criterion would separate nothing.
@@ -599,8 +649,6 @@ def resolve_weights(intent: ExtractedSearchIntent) -> CriteriaWeights:
         update["commute"] = 0.0
     else:
         update["commute"] = base.commute * (intent.commute_importance / constants.COMMUTE_IMPORTANCE_DEFAULT)
-    if _cap(intent.max_deposit) is None and _cap(intent.max_rent) is None:
-        update["budget"] = 0.0
     if intent.min_area_sqm is None and intent.max_area_sqm is None:
         update["area"] = 0.0
     if not intent.soft_preference_summary:
@@ -671,7 +719,7 @@ def compute_utility(
 
     value, metro, quality, freshness = _static_utilities(listing, baselines)
     breakdown = {
-        "budget": financial_utility(listing, intent),
+        "budget": financial_utility(listing, intent, baselines),
         "value": value,
         "area": area_utility(listing, intent),
         "amenity": amenity_utility(listing, intent),
@@ -757,32 +805,123 @@ def pareto_frontier(scored: list[ScoredListing]) -> list[ScoredListing]:
     return [entry for entry, key in zip(scored, keys) if key in undominated]
 
 
-def _trade_off_rationale(listing: Listing, reference: Listing, intent: ExtractedSearchIntent) -> Optional[str]:
-    """Persian trade-off nudge per docs/ALGORITHMS.md SS4: qualifies when the
-    listing is >=25% larger than the Tier 1 reference AND either the budget
-    increase is <=10% or the extra metro-walk time is <=7 minutes."""
+@dataclass(frozen=True)
+class _Tier1Reference:
+    """What a typical Tier 1 pick looks like, per axis.
+
+    Medians over the whole Tier 1 set rather than the attributes of
+    ``tier1[0]``, which is what this used to compare against. The top-ranked
+    listing wins on *utility*, and its area and metro walk are incidental to
+    that -- so it could be an unusually small flat that ranked first on price
+    and freshness, and every Tier 2 card in the search was then measured
+    against that accident. Two searches differing by one filter could describe
+    the same listing quite differently. A median moves when the result set
+    genuinely moves and not otherwise, and it is also what docs/ALGORITHMS.md
+    SS4 asks for: "compared to Tier 1 items", plural.
+    """
+
+    area_sqm: float
+    metro_walk_mins: float
+
+
+def _tier1_reference(tier1: list["ScoredListing"]) -> Optional[_Tier1Reference]:
+    if not tier1:
+        return None
+    return _Tier1Reference(
+        area_sqm=median(entry.listing.area_sqm for entry in tier1),
+        metro_walk_mins=median(entry.listing.metro_walk_mins for entry in tier1),
+    )
+
+
+def _trade_off_rationale(
+    listing: Listing,
+    reference: _Tier1Reference,
+    intent: ExtractedSearchIntent,
+    weights: CriteriaWeights,
+) -> Optional[str]:
+    """The Persian trade-off nudge on a Tier 2 card (docs/ALGORITHMS.md SS4).
+
+    A near miss earns one when it is materially larger than a typical Tier 1
+    pick and the price of that space is small: at most a
+    TRADE_OFF_MAX_BUDGET_INCREASE overrun on the user's budget, or at most
+    TRADE_OFF_MAX_COMMUTE_INCREASE_MINS more walking to the metro.
+
+    Which axes it is allowed to speak about is decided by the ranking's own
+    weights, not by this function: an axis carrying less than
+    TRADE_OFF_MIN_AXIS_WEIGHT of the decision is one the user has told us they
+    do not weigh, so it is neither named nor allowed to disqualify the nudge.
+    That is what stops a search with مترو set to کم from being handed a
+    sentence whose closing clause is about the metro.
+
+    Three things this deliberately does not do, because it used to do all of
+    them:
+
+    * It does not call a comparison against another *listing* a comparison
+      against the user's *budget*. "بالاتر از بودجه" was measured against the
+      reference listing's cost, so a search capped at ۸۰۰ ودیعه / ۱ اجاره told
+      the user that a ۸۰۰/۰ listing -- inside their own ceiling, on the very
+      figures they typed -- was ۶٪ over their budget. The budget clause is now
+      measured against the budget, through the same _budget_ratio (and so the
+      same تبدیل) that the financial score uses, and is simply left out when
+      the user never stated one.
+
+    * It does not assert a leg that failed. The qualification used to be a
+      disjunction, so a listing could earn its nudge on price alone and still
+      be read out as "۴۳ دقیقه پیاده‌روی بیشتر تا مترو" -- a sentence offering,
+      as a bargain, a three-quarter-hour walk. Every axis the user weighs now
+      has to hold for the nudge to appear at all, rather than one holding and
+      the other being quietly dropped from the sentence: a card that stays
+      silent is honest, and a card that lists a gain while omitting a cost the
+      user cares about is not.
+    """
     if reference.area_sqm <= 0:
         return None
-
     area_increase = (listing.area_sqm - reference.area_sqm) / reference.area_sqm
-    reference_cost = total_monthly_cost(reference.deposit_toman, reference.rent_toman)
-    listing_cost = total_monthly_cost(listing.deposit_toman, listing.rent_toman)
-    budget_increase = (listing_cost - reference_cost) / reference_cost if reference_cost > 0 else 0.0
-    commute_increase = listing.metro_walk_mins - reference.metro_walk_mins
-
-    qualifies = area_increase >= constants.TRADE_OFF_MIN_AREA_INCREASE and (
-        budget_increase <= constants.TRADE_OFF_MAX_BUDGET_INCREASE
-        or commute_increase <= constants.TRADE_OFF_MAX_COMMUTE_INCREASE_MINS
-    )
-    if not qualifies:
+    if area_increase < constants.TRADE_OFF_MIN_AREA_INCREASE:
         return None
 
-    budget_clause = f"{round(budget_increase * 100)}٪ بالاتر از بودجه است" if budget_increase > 0 else "در محدوده بودجه است"
-    area_clause = f"{listing.area_sqm - reference.area_sqm} متر متراژ بزرگتر"
-    commute_clause = (
-        f"{round(commute_increase)} دقیقه پیاده‌روی بیشتر تا مترو" if commute_increase > 0 else "دسترسی مشابه یا بهتر به مترو"
-    )
-    return f"این مورد {budget_clause} اما {area_clause} و {commute_clause} دارد."
+    # The extra space is the nudge itself and always leads, weighted or not:
+    # a user who set no area filter is exactly the one this sentence exists to
+    # surprise. What it *costs* them is only reported in the terms they weigh.
+    gains = [f"{to_persian_digits(round(listing.area_sqm - reference.area_sqm))} متر بزرگ‌تر است"]
+    costs: list[str] = []
+
+    budget_ratio = _budget_ratio(listing, intent)
+    if budget_ratio is not None and weights.budget >= constants.TRADE_OFF_MIN_AXIS_WEIGHT:
+        # Judged on the rounded percentage, for the same reason the walk is
+        # judged on rounded minutes: the sentence prints that figure, so a
+        # listing shown as "۱۰٪ بالاتر" must be one the ۱۰٪ band admits. Taken
+        # raw, a ratio of exactly 1.1 is 1.1000000000000001 and fell outside a
+        # band it sits precisely on.
+        overrun_percent = round((budget_ratio - 1.0) * 100)
+        if overrun_percent <= 0:
+            gains.append("در بودجهٔ شما می‌گنجد")
+        elif overrun_percent <= round(constants.TRADE_OFF_MAX_BUDGET_INCREASE * 100):
+            costs.append(f"{to_persian_digits(overrun_percent)}٪ بالاتر از بودجهٔ شماست")
+        else:
+            return None
+
+    if weights.metro >= constants.TRADE_OFF_MIN_AXIS_WEIGHT:
+        commute_increase = listing.metro_walk_mins - reference.metro_walk_mins
+        # Tested on the rounded figure, because that is the figure the sentence
+        # prints: half a minute further is "دسترسی مشابه", not a cost of ۰ دقیقه.
+        extra_walk = round(commute_increase)
+        if extra_walk <= 0:
+            gains.append("دسترسی مشابه یا بهتری به مترو دارد")
+        elif commute_increase <= constants.TRADE_OFF_MAX_COMMUTE_INCREASE_MINS:
+            costs.append(f"{to_persian_digits(extra_walk)} دقیقه پیاده‌روی بیشتری تا مترو دارد")
+        else:
+            return None
+
+    # Nothing but the area to say. True, but it is the whole Tier 2 tail rather
+    # than a find worth pointing at, so it stays quiet.
+    if len(gains) == 1 and not costs:
+        return None
+
+    sentence = "این مورد " + " و ".join(gains)
+    if costs:
+        sentence += "، اما " + " و ".join(costs)
+    return sentence + "."
 
 
 async def rank_listings(
@@ -849,9 +988,11 @@ async def rank_listings(
     for scored_listing in tier2:
         scored_listing.tier = 2
 
-    if tier1:
-        reference = tier1[0].listing
+    reference = _tier1_reference(tier1)
+    if reference is not None:
         for scored_listing in tier2:
-            scored_listing.trade_off_rationale = _trade_off_rationale(scored_listing.listing, reference, intent)
+            scored_listing.trade_off_rationale = _trade_off_rationale(
+                scored_listing.listing, reference, intent, weights
+            )
 
     return tier1, tier2

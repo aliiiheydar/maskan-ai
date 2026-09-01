@@ -164,10 +164,23 @@ TIER_2_UTILITY_THRESHOLD: float = 0.45
 # listing fits the user's cash position at all.
 TABDIL_MIN_DEPOSIT_FRACTION: float = 0.20
 
-# Trade-off nudge identifier: Tier 2 vs. the top Tier 1 reference listing.
+# Trade-off nudge identifier: a Tier 2 near miss measured against the median
+# Tier 1 pick, and against the user's own budget.
 TRADE_OFF_MIN_AREA_INCREASE: float = 0.25
 TRADE_OFF_MAX_BUDGET_INCREASE: float = 0.10
 TRADE_OFF_MAX_COMMUTE_INCREASE_MINS: float = 7.0
+
+#: How much of the ranking an axis must carry before the nudge will talk about
+#: it. The sentence is meant to be read in the user's own terms, so a criterion
+#: they dialled down to کم -- or never engaged at all -- has no business
+#: appearing in it: telling someone who does not care about the metro that a
+#: listing has "دسترسی مشابه یا بهتر به مترو" spends the one line the card has
+#: on the one fact they have said they do not weigh.
+#:
+#: Set between the normalized shares a criterion lands on at کم and at normal
+#: (~0.04 and ~0.10 for مترو in a typical classic search), so the dial the user
+#: turned is exactly what decides it.
+TRADE_OFF_MIN_AXIS_WEIGHT: float = 0.08
 
 
 # --- Public-transport routing (app/spatial/routing.py) ---

@@ -345,6 +345,14 @@ export interface CityBoundary {
   geometry: GeoJSONGeometry;
 }
 
+/** What this backend was configured to be able to do (GET /config). */
+export interface AppConfig {
+  /** Whether the conversational search can answer at all. False when the
+   * deployment has no OpenRouter key, in which case the mode is offered
+   * disabled rather than left to fail on the first message. */
+  ai_search_enabled: boolean;
+}
+
 export interface TransitStation {
   id: string;
   name: string;

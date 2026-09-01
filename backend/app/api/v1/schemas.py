@@ -246,6 +246,17 @@ class CityBoundary(BaseModel):
     geometry: dict
 
 
+class AppConfig(BaseModel):
+    """The optional capabilities this deployment was configured with.
+
+    Only one so far, and it is the one that decides whether a mode is offered
+    at all: without an OpenRouter key the conversational search cannot answer,
+    so the client disables it up front instead of presenting it and failing.
+    """
+
+    ai_search_enabled: bool
+
+
 class TransitStation(BaseModel):
     id: str
     name: str

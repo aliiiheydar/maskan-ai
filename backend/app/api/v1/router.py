@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter
 
-from app.api.v1 import chat, geo, listings, media, search, transit
+from app.api.v1 import chat, config, geo, listings, media, search, transit
 
 api_router = APIRouter()
 api_router.include_router(search.router)
@@ -11,3 +11,4 @@ api_router.include_router(listings.router)
 api_router.include_router(transit.router)
 api_router.include_router(geo.router)
 api_router.include_router(media.router)
+api_router.include_router(config.router)
