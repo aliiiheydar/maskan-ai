@@ -11,6 +11,11 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    # One provider for everything: chat/intent completions and embeddings are
+    # both served from the OPENROUTER_* account. A second chat provider was
+    # tried and removed -- it ran a content filter that rejected any message
+    # with five or more non-ASCII characters, which is every Persian turn this
+    # product makes.
     openrouter_api_key: str = "your_openrouter_api_key_here"
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
     llm_model: str = "deepseek/deepseek-chat"

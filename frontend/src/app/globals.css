@@ -19,11 +19,215 @@ body {
   background: var(--background);
 }
 
+/* No scrollbars anywhere.
+
+   This app is a three-column workspace where nearly every column scrolls --
+   the filter panel, the feed, the neighborhood suggestions, the detail view --
+   so the default chrome draws a grey gutter down the middle of the layout
+   several times over and cuts into the right edge of RTL text. Scrolling
+   itself is untouched: the wheel, the trackpad, the keyboard and the
+   scrollbar's own drag-to-scroll all behave exactly as before; only the
+   painted track is gone. */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 /* Leaflet ships its own CSS via a separate import in NeshanMap.tsx; these
    overrides only fix RTL popup/attribution quirks Leaflet doesn't handle. */
 .leaflet-container {
   font-family: var(--font-vazirmatn), Tahoma, sans-serif;
   direction: ltr;
+}
+
+/* Each of these is a Leaflet divIcon whose width is its own content's, so it
+   has to be shifted onto its coordinate by hand -- Leaflet can only anchor an
+   icon whose size it was told up front.
+
+   The shift goes on the inner <span>, never on the icon element itself:
+   Leaflet positions a marker by writing `transform: translate3d(...)` inline
+   onto that element, so a `transform` here either loses to it (a plain
+   declaration) or, worse, wins and destroys the positioning (a keyframe --
+   see .neighborhood-label). So the icon is a zero-size point pinned on the
+   coordinate and the content is placed off it, the same shape as
+   .metro-station below. */
+
+/* Pill badge sitting on a congestion-zone outline (Tarh-e Terafik /
+   Aloodegi), anchored to a fixed vertex of the boundary -- mirrors Divar's. */
+.zone-badge {
+  width: 0 !important;
+  height: 0 !important;
+  direction: rtl;
+}
+.zone-badge > span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  display: block;
+  background: white;
+  border-radius: 9999px;
+  padding: 2px 10px;
+  font-family: var(--font-vazirmatn), Tahoma, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
+}
+
+/* "Open this one": the button that appears on a selected listing's pin. It
+   sits above the pin rather than on it, so the pin it belongs to stays
+   visible underneath, and it is the only thing on the map that opens the
+   detail view -- clicking a pin selects, this opens. On a phone, where the
+   feed and the map are separate tabs, it is the *only* way to open the
+   selected property (see SelectedListingAction). */
+.listing-action {
+  width: 0 !important;
+  height: 0 !important;
+  direction: rtl;
+}
+.listing-action > span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, calc(-100% - 18px));
+  display: block;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: #0f172a;
+  color: white;
+  font-family: var(--font-vazirmatn), Tahoma, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.35);
+  cursor: pointer;
+}
+.listing-action > span:hover {
+  background: #1e293b;
+}
+/* The little stem that ties the button to its pin. */
+.listing-action > span::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #0f172a;
+}
+
+/* Neighborhood / district name, centred on its polygon. Deliberately faint:
+   it labels the ground the listings sit on, and must never compete with a pin
+   or a street name.
+
+   The container is a zero-size point pinned on the polygon's centre, and the
+   name is centred off it -- the same shape as .metro-station below, and for a
+   reason worth spelling out: Leaflet positions a marker by writing
+   `transform: translate3d(...)` onto this element, so *nothing* here may set
+   `transform`. This rule used to, via an entry animation with
+   `animation-fill-mode: both`; a CSS animation outranks an inline style, so
+   the finished keyframe permanently overwrote Leaflet's positioning and every
+   name in the city piled up on one point. Only the inner span animates. */
+.neighborhood-label {
+  width: 0 !important;
+  height: 0 !important;
+  direction: rtl;
+  pointer-events: none;
+}
+.neighborhood-label > span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  font-family: var(--font-vazirmatn), Tahoma, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(51, 65, 85, 0.42);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.95), 0 0 3px rgba(255, 255, 255, 0.95);
+  /* Names arrive and leave with the zoom, so they ease in the way Divar's do
+     rather than snapping onto the map mid-gesture. */
+  animation: maskan-label-in 240ms ease-out both;
+}
+
+@keyframes maskan-label-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Metro station: the yellow Tehran Metro tile with the station name below.
+
+   The container is a zero-size point pinned exactly on the station's
+   coordinate, and the mark and the label are positioned off it -- rather than
+   centring the whole mark-plus-label block, which put the tile half a label's
+   height above the station and made the marker appear to slide as the label
+   width and the zoom changed. Only the tile is anchored; the name hangs below
+   it and is free to be as wide as it needs. */
+.metro-station {
+  width: 0 !important;
+  height: 0 !important;
+  direction: rtl;
+  /* Divar eases its station layer in rather than switching it on; the marker
+     is mounted through a zoom band around the threshold (see
+     TRANSIT_STATION_FADE_BAND) and only its opacity and scale move. */
+  opacity: 0;
+  transition: opacity 220ms ease-out;
+}
+.metro-station--visible {
+  opacity: 1;
+}
+.metro-station .metro-station__mark {
+  transform: translate(-50%, -50%) scale(0.7);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.metro-station--visible .metro-station__mark {
+  transform: translate(-50%, -50%) scale(1);
+}
+.metro-station .metro-station__name {
+  opacity: 0;
+  transition: opacity 200ms ease-out 60ms;
+}
+.metro-station--visible .metro-station__name {
+  opacity: 1;
+}
+.metro-station__mark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  /* Sampled from Divar's own tile: #f7d752 behind a #404041 glyph. */
+  background: #f7d752;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+}
+.metro-station__name {
+  position: absolute;
+  top: 13px;
+  left: 0;
+  transform: translateX(-50%);
+  font-family: var(--font-vazirmatn), Tahoma, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: #6b6b52;
+  white-space: nowrap;
+  text-shadow: 0 0 4px #fff, 0 0 2px #fff;
+  pointer-events: none;
 }
 
 @layer utilities {

@@ -54,3 +54,29 @@ def clean_for_llm(text: str) -> str:
     """Full normalization pipeline (char normalization, then digit conversion)
     applied to any Persian text before it is sent to an LLM."""
     return parse_persian_numbers(normalize_persian_text(text))
+
+
+# --- name matching ---------------------------------------------------------
+#
+# Place names are matched, not displayed, in a deliberately lossy form: users
+# type "یوسف آباد" for "یوسف‌آباد" and "تاتر شهر" for "تئاتر شهر", and neither
+# should miss. Diacritics carry no meaning here, the hamza carriers are typed
+# inconsistently, and ZWNJ is a word-internal break people write as a space or
+# as nothing at all.
+_DIACRITICS = re.compile(r"[ً-ْٰ]")
+_ZWNJ = re.compile(r"[​-‏]")
+_HAMZA_FORMS = {"آ": "ا", "أ": "ا", "إ": "ا", "ٱ": "ا", "ئ": "ی", "ؤ": "و", "ء": "", "ة": "ه", "ۀ": "ه"}
+
+
+def normalize_for_match(text: str) -> str:
+    """Persian text reduced to the form two spellings of one name share."""
+    cleaned = _ZWNJ.sub(" ", _DIACRITICS.sub("", text or ""))
+    for form, plain in _HAMZA_FORMS.items():
+        cleaned = cleaned.replace(form, plain)
+    return re.sub(r"\s+", " ", normalize_persian_text(cleaned)).strip()
+
+
+def squash_for_match(text: str) -> str:
+    """`normalize_for_match` with spacing removed entirely -- the form in which
+    "یوسف آباد" and "یوسف‌آباد" finally compare equal."""
+    return normalize_for_match(text).replace(" ", "")

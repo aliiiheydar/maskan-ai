@@ -1,0 +1,981 @@
+02:16:18 I sampling ~10000 listings with seed 910083982
+02:16:18 I resuming with 12 listings, 12 crawled tokens, 0 queued
+02:16:19 I 453 Tehran district shards available
+02:16:19 I 453 districts x 23 listings each
+02:16:25 I [1/453] shahrak-mokhaberat -> +23 of 24 seen (23 total)
+02:17:19 I [4/453] aghadasiye -> +23 of 24 seen (46 total)
+02:17:23 I [5/453] tehransar-shomali -> +23 of 24 seen (69 total)
+02:17:26 I [6/453] hashemi -> +23 of 24 seen (92 total)
+02:17:27 I [7/453] hafezie -> +23 of 24 seen (115 total)
+02:17:54 I [9/453] shiva -> +23 of 24 seen (138 total)
+02:17:55 I [10/453] tehran-iran -> +23 of 24 seen (161 total)
+02:17:56 I [11/453] bagh-ferdows -> +23 of 24 seen (184 total)
+02:17:58 I [12/453] araj -> +23 of 26 seen (207 total)
+02:17:59 I [13/453] khaje-nezam-molk -> +23 of 25 seen (230 total)
+02:18:01 I [14/453] moqadam -> +23 of 24 seen (253 total)
+02:18:02 I [15/453] motahhari-tehran -> +23 of 24 seen (276 total)
+02:18:04 I [16/453] nezam-abad -> +23 of 24 seen (299 total)
+02:18:05 I [17/453] elahiyeh -> +22 of 24 seen (321 total)
+02:18:06 I [18/453] darakeh -> +23 of 24 seen (344 total)
+02:18:08 I [19/453] salehabad-sharghi -> +23 of 30 seen (367 total)
+02:18:09 I [20/453] azadshahr-tehran -> +23 of 24 seen (390 total)
+02:18:10 I [21/453] darband -> +23 of 24 seen (413 total)
+02:18:14 I [22/453] safaayie-cheshme-ali -> +23 of 40 seen (436 total)
+02:18:15 I [23/453] tehran-hesarak -> +23 of 24 seen (459 total)
+02:18:17 I [24/453] esteghlal -> +23 of 24 seen (482 total)
+02:18:20 I [25/453] university-of-sharif -> +23 of 24 seen (505 total)
+02:18:23 I [26/453] lavizan -> +23 of 24 seen (528 total)
+02:18:26 I [27/453] lalezar -> +23 of 24 seen (551 total)
+02:18:28 I [28/453] shahrak-naft -> +23 of 24 seen (574 total)
+02:18:29 I [29/453] kosar -> +22 of 24 seen (596 total)
+02:18:56 I [31/453] sar-asiyab-mehr-abad -> +23 of 24 seen (619 total)
+02:18:57 I [32/453] kuy-nasr-mehrabad -> +3 of 24 seen (622 total)
+02:18:59 I [33/453] meydan-mive-va-terehbar-markazi -> +23 of 25 seen (645 total)
+02:19:00 I [34/453] gomrok -> +23 of 30 seen (668 total)
+02:19:03 I [35/453] vanak-village -> +23 of 45 seen (691 total)
+02:19:04 I [36/453] majidiyeh -> +23 of 24 seen (714 total)
+02:19:33 I [38/453] shahrak-ati-shahr -> +23 of 27 seen (737 total)
+02:19:36 I [39/453] shahrak-yas-tehran -> +23 of 24 seen (760 total)
+02:19:39 I [40/453] habibollah -> +23 of 24 seen (783 total)
+02:19:41 I [41/453] oghaf -> +23 of 24 seen (806 total)
+02:19:44 I [42/453] hezarsang -> +21 of 31 seen (827 total)
+02:19:45 I [43/453] fath -> +9 of 26 seen (836 total)
+02:19:46 I [44/453] valiabad -> +23 of 24 seen (859 total)
+02:19:48 I [45/453] eram -> +23 of 25 seen (882 total)
+02:20:42 I [48/453] dezhkam -> +23 of 24 seen (905 total)
+02:20:46 I [49/453] marzdaran -> +23 of 24 seen (928 total)
+02:20:50 I [50/453] velenjak -> +23 of 24 seen (951 total)
+02:21:17 I [52/453] sadeghiyeh -> +23 of 24 seen (974 total)
+02:21:21 I [53/453] shahrak-baasat -> +23 of 34 seen (997 total)
+02:21:22 I [54/453] javadiyeh-tehran-pars -> +23 of 24 seen (1020 total)
+02:21:24 I [55/453] anbar-naft -> +23 of 24 seen (1043 total)
+02:21:25 I [56/453] behjat-abad -> +23 of 24 seen (1066 total)
+02:21:56 I [58/453] javanmard-ghassab -> +22 of 39 seen (1088 total)
+02:21:59 I [59/453] niroo-havayi -> +23 of 24 seen (1111 total)
+02:22:02 I [60/453] shahrak-azmayesh-tehran -> +23 of 24 seen (1134 total)
+02:22:03 I [61/453] ferdowsi -> +3 of 24 seen (1137 total)
+02:22:05 I [62/453] hakimiyeh -> +23 of 24 seen (1160 total)
+02:22:06 I [63/453] shahadat-rey -> +16 of 25 seen (1176 total)
+02:22:08 I [64/453] minabi -> +23 of 24 seen (1199 total)
+02:23:02 I [67/453] etehad -> +17 of 24 seen (1216 total)
+02:23:05 I [68/453] tehran-lashkar -> +23 of 24 seen (1239 total)
+02:23:57 I [71/453] shahid-dastgheyb -> +23 of 24 seen (1262 total)
+02:23:59 I [72/453] darb-dowom -> +23 of 24 seen (1285 total)
+02:24:02 I [73/453] vardavard -> +23 of 24 seen (1308 total)
+02:24:05 I [74/453] sizdah-aban-rey -> +19 of 27 seen (1327 total)
+02:24:09 I [75/453] karevan -> +23 of 24 seen (1350 total)
+02:25:03 I [78/453] north-shahran -> +23 of 24 seen (1373 total)
+02:25:06 I [79/453] chitgar -> +23 of 24 seen (1396 total)
+02:25:58 I [82/453] tarasht -> +23 of 24 seen (1419 total)
+02:25:59 I [83/453] khak-sefid -> +21 of 24 seen (1440 total)
+02:26:01 I [84/453] shahid-fakuri -> +23 of 25 seen (1463 total)
+02:26:04 I [85/453] dolatkhah-shomali -> +23 of 24 seen (1486 total)
+02:26:33 I [87/453] makhsous -> +23 of 24 seen (1509 total)
+02:26:35 I [88/453] dowlatabad-rey -> +23 of 25 seen (1532 total)
+02:26:38 I [89/453] peykan-shahr -> +9 of 42 seen (1541 total)
+02:27:31 I [92/453] darya -> +23 of 24 seen (1564 total)
+02:29:15 I [97/453] sabalan -> +9 of 26 seen (1573 total)
+02:29:16 I [98/453] namayeshgah-beyn-olmelali -> +11 of 29 seen (1584 total)
+02:29:45 I [100/453] farahzad -> +23 of 43 seen (1607 total)
+02:30:39 I [103/453] daryan-no -> +23 of 24 seen (1630 total)
+02:31:31 I [106/453] afsariyeh -> +23 of 24 seen (1653 total)
+02:31:32 I [107/453] shabiri -> +2 of 26 seen (1655 total)
+02:31:34 I [108/453] tehran-zanjan -> +23 of 25 seen (1678 total)
+02:31:37 I [109/453] havanirooz -> +23 of 24 seen (1701 total)
+02:31:40 I [110/453] emam-zade-abdollah -> +23 of 24 seen (1724 total)
+02:31:43 I [111/453] tehransar-markazi -> +23 of 24 seen (1747 total)
+02:31:45 I [112/453] hesar-booali -> +23 of 24 seen (1770 total)
+02:32:11 I [114/453] khazaneh -> +15 of 24 seen (1785 total)
+02:32:41 I [116/453] fadak -> +23 of 24 seen (1808 total)
+02:32:47 I [117/453] shoosh -> +16 of 46 seen (1824 total)
+02:33:42 I [120/453] ahang -> +23 of 24 seen (1847 total)
+02:33:45 I [121/453] arjantin -> +23 of 24 seen (1870 total)
+02:34:40 I [124/453] bustan-jangali-lavizan -> +23 of 25 seen (1893 total)
+02:34:45 I [125/453] eivanak -> +23 of 24 seen (1916 total)
+02:35:12 I [127/453] farzane -> +23 of 24 seen (1939 total)
+02:35:13 I [128/453] sartakht-rey -> +23 of 24 seen (1962 total)
+02:36:08 I [131/453] tous -> +17 of 24 seen (1979 total)
+02:36:14 I [132/453] nejatollahi -> +15 of 35 seen (1994 total)
+02:36:17 I [133/453] kuy-nobonyad -> +22 of 24 seen (2016 total)
+02:36:18 I [134/453] tayeb -> +23 of 24 seen (2039 total)
+02:36:20 I [135/453] alayiin -> +23 of 24 seen (2062 total)
+02:36:23 I [136/453] saadat-abad -> +23 of 25 seen (2085 total)
+02:36:26 I [137/453] kashanak -> +23 of 24 seen (2108 total)
+02:36:30 I [138/453] qalamestan -> +23 of 24 seen (2131 total)
+02:36:35 I [139/453] khalazir -> +9 of 25 seen (2140 total)
+02:36:38 I [140/453] qezel-qaleh -> +23 of 24 seen (2163 total)
+02:36:42 I [141/453] qiam -> +23 of 24 seen (2186 total)
+02:37:10 I [143/453] dardasht -> +23 of 24 seen (2209 total)
+02:37:13 I [144/453] shahin -> +23 of 24 seen (2232 total)
+02:37:17 I [145/453] amir-bahador -> +23 of 24 seen (2255 total)
+02:37:19 I [146/453] taxirani -> +23 of 24 seen (2278 total)
+02:37:46 I [148/453] abbasi -> +15 of 24 seen (2293 total)
+02:37:48 I [149/453] jey -> +23 of 24 seen (2316 total)
+02:37:49 I [150/453] vanak -> +5 of 25 seen (2321 total)
+02:37:51 I [151/453] harandi -> +23 of 24 seen (2344 total)
+02:38:19 I [153/453] abdollah-abad -> +0 of 24 seen (2344 total)
+02:38:33 I [154/453] shahrak-nezami -> +10 of 10 seen (2354 total)
+02:38:36 I [155/453] chub-tarash -> +23 of 24 seen (2377 total)
+02:38:38 I [156/453] shahrak-farhangian -> +23 of 31 seen (2400 total)
+02:38:39 I [157/453] tehran-gorgan -> +23 of 24 seen (2423 total)
+02:38:42 I [158/453] estakhr -> +23 of 24 seen (2446 total)
+02:39:08 I [160/453] shahrak-almahdi-tehran -> +13 of 24 seen (2459 total)
+02:39:37 I [162/453] shahid-borujerdi -> +23 of 24 seen (2482 total)
+02:39:42 I [163/453] shokufe-abdol-abad -> +20 of 40 seen (2502 total)
+02:40:10 I [165/453] shahrak-kharazi -> +21 of 24 seen (2523 total)
+02:40:11 I [166/453] amaniyeh -> +23 of 24 seen (2546 total)
+02:40:12 I [167/453] shahrak-elm-va-fanavari -> +2 of 24 seen (2548 total)
+02:40:14 I [168/453] tehran-police -> +23 of 25 seen (2571 total)
+02:40:15 I [169/453] dahom-farvardin -> +22 of 25 seen (2593 total)
+02:40:44 I [171/453] shokoofeh -> +23 of 24 seen (2616 total)
+02:40:47 I [172/453] shahrak-homa -> +23 of 24 seen (2639 total)
+02:40:50 I [173/453] bahar -> +23 of 24 seen (2662 total)
+02:40:52 I [174/453] bashgah-naft -> +23 of 24 seen (2685 total)
+02:40:54 I [175/453] south-shahran -> +23 of 25 seen (2708 total)
+02:41:21 I [177/453] nazi-abad -> +23 of 25 seen (2731 total)
+02:41:50 I [179/453] helal-ahmar-tehran -> +23 of 24 seen (2754 total)
+02:41:54 I [180/453] sattarkhan -> +23 of 24 seen (2777 total)
+02:41:57 I [181/453] tehransar-gharbi -> +23 of 24 seen (2800 total)
+02:41:59 I [182/453] jaberi -> +23 of 24 seen (2823 total)
+02:42:26 I [184/453] hamzeabad -> +23 of 24 seen (2846 total)
+02:42:27 I [185/453] azari -> +23 of 24 seen (2869 total)
+02:42:28 I [186/453] ozgol -> +22 of 25 seen (2891 total)
+02:42:36 I [187/453] shahed -> +4 of 26 seen (2895 total)
+02:43:05 I [189/453] tehran-emamat -> +23 of 24 seen (2918 total)
+02:43:20 I [190/453] pamenar -> +20 of 21 seen (2938 total)
+02:43:23 I [191/453] jamaran -> +23 of 24 seen (2961 total)
+02:43:24 I [192/453] bagh-feyz -> +23 of 24 seen (2984 total)
+02:43:26 I [193/453] mirdamad -> +23 of 25 seen (3007 total)
+02:43:28 I [194/453] abshar-tehran -> +23 of 24 seen (3030 total)
+02:43:29 I [195/453] firoozabadi -> +2 of 26 seen (3032 total)
+02:43:34 I [196/453] bostan-chitgar -> +8 of 36 seen (3040 total)
+02:43:35 I [197/453] qoba -> +23 of 25 seen (3063 total)
+02:44:02 I [199/453] salamat -> +23 of 24 seen (3086 total)
+02:44:06 I [200/453] dehqan -> +23 of 24 seen (3109 total)
+02:44:11 I [201/453] bolursazi -> +23 of 24 seen (3132 total)
+02:44:17 I [202/453] mina -> +23 of 42 seen (3155 total)
+02:44:19 I [203/453] soleymani -> +22 of 24 seen (3177 total)
+02:44:47 I [205/453] chitgar-lake -> +15 of 24 seen (3192 total)
+02:45:15 I [207/453] jamalzadeh -> +23 of 24 seen (3215 total)
+02:45:20 I [208/453] firuzabad-rey -> +23 of 24 seen (3238 total)
+02:45:30 I [209/453] moshiriyeh -> +23 of 24 seen (3261 total)
+02:45:38 I [210/453] atabak -> +23 of 24 seen (3284 total)
+02:45:55 I [211/453] padgan-emam-hossein -> +0 of 2 seen (3284 total)
+02:45:57 I [212/453] nosrat -> +23 of 24 seen (3307 total)
+02:46:03 I [213/453] zahed-gilani -> +23 of 24 seen (3330 total)
+02:47:27 I [217/453] kan -> +19 of 41 seen (3349 total)
+02:47:33 I [218/453] kamraniyeh -> +22 of 24 seen (3371 total)
+02:48:27 I [221/453] hashemabad -> +16 of 29 seen (3387 total)
+02:48:35 I [222/453] shahrerey -> +23 of 24 seen (3410 total)
+02:48:42 I [223/453] eskandari -> +23 of 24 seen (3433 total)
+02:48:46 I [224/453] tehransar -> +23 of 24 seen (3456 total)
+02:49:14 I [226/453] aramaneh -> +23 of 24 seen (3479 total)
+02:49:22 I [227/453] bostan-besat-bagh-azari -> +6 of 24 seen (3485 total)
+02:49:53 I [229/453] behdasht -> +23 of 24 seen (3508 total)
+02:49:59 I [230/453] deylaman-rey -> +23 of 24 seen (3531 total)
+02:50:02 I [231/453] khani-abad -> +23 of 24 seen (3554 total)
+02:50:19 I [232/453] emam-khomeyni-tehran -> +3 of 12 seen (3557 total)
+02:50:47 I [234/453] arjamandi-rad -> +16 of 33 seen (3573 total)
+02:51:16 I [236/453] tehran-hosein-abad -> +23 of 24 seen (3596 total)
+02:51:23 I [237/453] amiriyeh -> +23 of 24 seen (3619 total)
+02:51:26 I [238/453] malekabad-rey -> +11 of 24 seen (3630 total)
+02:51:33 I [239/453] terminal-gharb -> +23 of 27 seen (3653 total)
+02:52:01 I [241/453] nabi-akram -> +23 of 24 seen (3676 total)
+02:52:06 I [242/453] yaftabad -> +23 of 24 seen (3699 total)
+02:52:11 I [243/453] dolat-abad -> +5 of 26 seen (3704 total)
+02:52:17 I [244/453] shahrak-shahrdari -> +9 of 26 seen (3713 total)
+02:52:24 I [245/453] zafar -> +23 of 24 seen (3736 total)
+02:52:31 I [246/453] varzeshgah-azadi -> +20 of 34 seen (3756 total)
+02:52:41 I [247/453] mokhtari -> +23 of 24 seen (3779 total)
+02:52:44 I [248/453] vahidiyeh -> +23 of 24 seen (3802 total)
+02:52:50 I [249/453] kuhsar-tehran -> +16 of 24 seen (3818 total)
+02:52:55 I [250/453] jomhouri -> +23 of 24 seen (3841 total)
+02:52:59 I [251/453] tajrish -> +23 of 24 seen (3864 total)
+02:53:04 I [252/453] darrous -> +23 of 24 seen (3887 total)
+02:53:34 I [254/453] vasfenard -> +23 of 34 seen (3910 total)
+02:53:38 I [255/453] bazaar -> +20 of 24 seen (3930 total)
+02:53:41 I [256/453] qasemabad -> +23 of 24 seen (3953 total)
+02:53:42 I [257/453] afsariye-jonubi -> +23 of 24 seen (3976 total)
+02:53:44 I [258/453] saleh-abad-jonubi-bagh-rezvan -> +4 of 24 seen (3980 total)
+02:53:46 I [259/453] zargandeh -> +23 of 24 seen (4003 total)
+02:53:47 I [260/453] shahid-ghiyuri-ebn-baviye -> +20 of 24 seen (4023 total)
+02:53:49 I [261/453] sorkhe-hesar -> +4 of 29 seen (4027 total)
+02:53:51 I [262/453] khani-abad-no -> +22 of 23 seen (4049 total)
+02:53:53 I [263/453] south-narmak -> +23 of 24 seen (4072 total)
+02:54:20 I [265/453] rah-ahan-tehran -> +21 of 24 seen (4093 total)
+02:54:23 I [266/453] east-saleh-abad -> +1 of 26 seen (4094 total)
+02:54:26 I [267/453] valfajr-afsarieh -> +23 of 24 seen (4117 total)
+02:54:28 I [268/453] shahrak-pasdaran -> +23 of 24 seen (4140 total)
+02:54:31 I [269/453] safaiye -> +1 of 26 seen (4141 total)
+02:54:37 I [270/453] imam-sajjad -> +23 of 24 seen (4164 total)
+02:54:42 I [271/453] khavaran -> +10 of 41 seen (4174 total)
+02:55:09 I [273/453] firuzabadi -> +14 of 24 seen (4188 total)
+02:55:10 I [274/453] shahrak-golha -> +23 of 24 seen (4211 total)
+02:55:39 I [276/453] sirous -> +10 of 24 seen (4221 total)
+02:56:10 I [278/453] zehtabi -> +20 of 44 seen (4241 total)
+02:56:12 I [279/453] almahdi -> +23 of 24 seen (4264 total)
+02:56:14 I [280/453] amir-abad -> +23 of 24 seen (4287 total)
+02:56:16 I [281/453] ashtiyani -> +23 of 24 seen (4310 total)
+02:56:17 I [282/453] sarasiab-doolab -> +23 of 24 seen (4333 total)
+02:56:18 I [283/453] sahebgharanieh -> +23 of 24 seen (4356 total)
+02:56:22 I [284/453] hekmat -> +23 of 24 seen (4379 total)
+02:56:26 I [285/453] shahid-beheshti-rey -> +4 of 43 seen (4383 total)
+02:56:28 I [286/453] haftchenar -> +22 of 24 seen (4405 total)
+02:56:31 I [287/453] shahrak-shahid-bagheri -> +22 of 24 seen (4427 total)
+02:56:33 I [288/453] terminal-jonub -> +0 of 24 seen (4427 total)
+02:56:37 I [289/453] abdol-abad -> +18 of 42 seen (4445 total)
+02:57:06 I [291/453] hashem-abad -> +23 of 24 seen (4468 total)
+02:58:00 I [294/453] zahireabad -> +23 of 24 seen (4491 total)
+02:58:04 I [295/453] mesgar-abad -> +9 of 24 seen (4500 total)
+02:58:08 I [296/453] morad-abad -> +19 of 24 seen (4519 total)
+02:58:11 I [297/453] zahir-abad -> +3 of 26 seen (4522 total)
+02:58:41 I [299/453] taghi-abad -> +10 of 53 seen (4532 total)
+02:58:45 I [300/453] shamshiri -> +22 of 24 seen (4554 total)
+02:58:56 I [301/453] saheb-al-zaman -> +22 of 25 seen (4576 total)
+02:59:05 I [302/453] shirazi -> +23 of 24 seen (4599 total)
+02:59:18 I [303/453] barut-kubi -> +7 of 24 seen (4606 total)
+02:59:45 I [305/453] jahad -> +23 of 24 seen (4629 total)
+02:59:47 I [306/453] sohanak -> +23 of 25 seen (4652 total)
+03:00:42 I [309/453] arazi-abbas-abad -> +23 of 24 seen (4675 total)
+03:00:46 I [310/453] golchin -> +23 of 24 seen (4698 total)
+03:00:47 I [311/453] beryanak -> +22 of 25 seen (4720 total)
+03:01:44 I [314/453] mazaheri -> +10 of 24 seen (4730 total)
+03:01:47 I [315/453] andisheh -> +23 of 24 seen (4753 total)
+03:01:48 I [316/453] chizar -> +23 of 24 seen (4776 total)
+03:01:55 I [317/453] ararat -> +11 of 36 seen (4787 total)
+03:01:57 I [318/453] nemat-abad -> +8 of 24 seen (4795 total)
+03:01:59 I [319/453] aref -> +21 of 24 seen (4816 total)
+03:02:01 I [320/453] sardar-e-jangal -> +23 of 24 seen (4839 total)
+03:02:30 I [322/453] simaye-iran -> +23 of 24 seen (4862 total)
+03:02:34 I [323/453] shahrak-booli -> +10 of 29 seen (4872 total)
+03:02:39 I [324/453] heravi -> +19 of 24 seen (4891 total)
+03:02:41 I [325/453] shahrak-valiasr-shomali -> +22 of 24 seen (4913 total)
+03:03:10 I [327/453] shahrak-sadeghieh -> +21 of 39 seen (4934 total)
+03:03:12 I [328/453] bostan-velayat -> +12 of 27 seen (4946 total)
+03:03:14 I [329/453] mahestan -> +23 of 24 seen (4969 total)
+03:04:09 I [332/453] hamzeh-abad -> +0 of 24 seen (4969 total)
+03:04:12 I [333/453] baharan -> +23 of 24 seen (4992 total)
+03:04:17 I [334/453] saeed-abad -> +11 of 42 seen (5003 total)
+03:04:18 I [335/453] javadiyeh -> +23 of 25 seen (5026 total)
+03:04:19 I [336/453] taslihat -> +23 of 25 seen (5049 total)
+03:04:21 I [337/453] narmak -> +23 of 24 seen (5072 total)
+03:04:23 I [338/453] imamzadeh-hasan -> +23 of 24 seen (5095 total)
+03:05:18 I [341/453] pasdaran -> +23 of 24 seen (5118 total)
+03:05:22 I [342/453] minay-shomali-mokhber -> +23 of 24 seen (5141 total)
+03:05:24 I [343/453] tehran-khaghani -> +23 of 24 seen (5164 total)
+03:05:27 I [344/453] shams-abad -> +23 of 24 seen (5187 total)
+03:05:28 I [345/453] sad-dastgah -> +23 of 24 seen (5210 total)
+03:05:30 I [346/453] sharifabad -> +0 of 26 seen (5210 total)
+03:05:59 I [348/453] negin-gharb -> +22 of 28 seen (5232 total)
+03:06:27 I [350/453] tavanir -> +23 of 24 seen (5255 total)
+03:06:30 I [351/453] zafaraniyeh -> +23 of 24 seen (5278 total)
+03:06:34 I [352/453] aminhozour -> +20 of 35 seen (5298 total)
+03:06:39 I [353/453] khaniabad-no-shomali -> +17 of 24 seen (5315 total)
+03:06:40 I [354/453] shahrak-naft-district5 -> +11 of 24 seen (5326 total)
+03:06:42 I [355/453] karkhane-siman -> +3 of 24 seen (5329 total)
+03:06:44 I [356/453] niloufar -> +17 of 24 seen (5346 total)
+03:06:45 I [357/453] sharif -> +18 of 24 seen (5364 total)
+03:07:25 I [359/453] bibi-shahr-banoo -> +0 of 0 seen (5364 total)
+03:07:39 I [360/453] bazar-ahan-rey -> +2 of 9 seen (5366 total)
+03:07:45 I [361/453] moniriyeh -> +23 of 24 seen (5389 total)
+03:07:47 I [362/453] niavaran -> +23 of 25 seen (5412 total)
+03:09:08 I [366/453] chitgar-shomali -> +7 of 24 seen (5419 total)
+03:09:11 I [367/453] dezashib -> +23 of 24 seen (5442 total)
+03:10:06 I [370/453] sepehr -> +23 of 24 seen (5465 total)
+03:10:11 I [371/453] yakhchi-abad -> +23 of 24 seen (5488 total)
+03:10:39 I [373/453] abbas-abad -> +23 of 25 seen (5511 total)
+03:10:44 I [374/453] sazman-barname-jonubi -> +23 of 24 seen (5534 total)
+03:10:48 I [375/453] abbasabad-rey -> +0 of 24 seen (5534 total)
+03:10:50 I [376/453] park-shahr -> +20 of 24 seen (5554 total)
+03:10:52 I [377/453] selsebil-shomali -> +22 of 25 seen (5576 total)
+03:11:19 I [379/453] majid-abad -> +23 of 24 seen (5599 total)
+03:11:21 I [380/453] tehran-jolfa -> +19 of 24 seen (5618 total)
+03:11:22 I [381/453] tolid-daroo -> +23 of 24 seen (5641 total)
+03:11:51 I [383/453] mansuriye-mangal -> +23 of 24 seen (5664 total)
+03:11:55 I [384/453] karim-abad -> +0 of 24 seen (5664 total)
+03:11:58 I [385/453] dolatkhah -> +1 of 24 seen (5665 total)
+03:11:59 I [386/453] bagh-khazaneh -> +23 of 24 seen (5688 total)
+03:12:26 I [388/453] shahid-avini -> +1 of 26 seen (5689 total)
+03:12:28 I [389/453] ekbatan -> +23 of 24 seen (5712 total)
+03:12:29 I [390/453] sizdah-aban -> +1 of 26 seen (5713 total)
+03:13:24 I [393/453] morvarid-shahr -> +23 of 24 seen (5736 total)
+03:13:29 I [394/453] kuy-faraz -> +13 of 44 seen (5749 total)
+03:13:30 I [395/453] aseman -> +18 of 24 seen (5767 total)
+03:13:32 I [396/453] shahrak-valfajr -> +23 of 24 seen (5790 total)
+03:13:33 I [397/453] jalili -> +14 of 24 seen (5804 total)
+03:13:36 I [398/453] baharestan -> +23 of 24 seen (5827 total)
+03:13:37 I [399/453] dr-hoshyar -> +23 of 25 seen (5850 total)
+03:14:06 I [401/453] east-shareq -> +23 of 24 seen (5873 total)
+03:14:34 I [403/453] mahmoodiyeh -> +23 of 24 seen (5896 total)
+03:14:35 I [404/453] tehran-pars -> +3 of 24 seen (5899 total)
+03:16:21 I [409/453] shahrak-golha-tehransar -> +19 of 24 seen (5918 total)
+03:16:22 I [410/453] parvaz -> +18 of 24 seen (5936 total)
+03:16:25 I [411/453] parastar -> +23 of 25 seen (5959 total)
+03:16:53 I [413/453] zarkesh -> +23 of 24 seen (5982 total)
+03:16:57 I [414/453] ebn-babevayh -> +0 of 24 seen (5982 total)
+03:17:01 I [415/453] jordan -> +23 of 24 seen (6005 total)
+03:17:02 I [416/453] tehran-shandiz -> +20 of 24 seen (6025 total)
+03:17:04 I [417/453] evin -> +23 of 24 seen (6048 total)
+03:17:31 I [419/453] abshar -> +11 of 24 seen (6059 total)
+03:17:43 I [420/453] shahrak-daneshgahi -> +12 of 15 seen (6071 total)
+03:17:45 I [421/453] gisha -> +23 of 24 seen (6094 total)
+03:18:13 I [423/453] doolab -> +23 of 24 seen (6117 total)
+03:18:42 I [425/453] shahrak-elahiye-gharb -> +23 of 24 seen (6140 total)
+03:18:46 I [426/453] zamzam -> +17 of 46 seen (6157 total)
+03:18:48 I [427/453] shahrak-daneshgah-tehran -> +2 of 26 seen (6159 total)
+03:18:52 I [428/453] shahadat -> +1 of 26 seen (6160 total)
+03:19:21 I [430/453] sartakht -> +0 of 24 seen (6160 total)
+03:19:49 I [432/453] shahid-asadi -> +23 of 24 seen (6183 total)
+03:19:50 I [433/453] shian -> +21 of 24 seen (6204 total)
+03:20:18 I [435/453] dabestan -> +23 of 24 seen (6227 total)
+03:20:23 I [436/453] yousef-abad -> +23 of 24 seen (6250 total)
+03:21:44 I [440/453] bisim -> +11 of 38 seen (6261 total)
+03:21:48 I [441/453] ostad-moein -> +23 of 24 seen (6284 total)
+03:22:15 I [443/453] sheykh-hadi -> +23 of 24 seen (6307 total)
+03:22:16 I [444/453] aminabad-rey -> +0 of 24 seen (6307 total)
+03:23:10 I [447/453] tehran-kerman -> +23 of 24 seen (6330 total)
+03:23:14 I [448/453] shahrak-pardisan-tehran -> +10 of 24 seen (6340 total)
+03:23:41 I [450/453] kazem-abad -> +23 of 24 seen (6363 total)
+03:24:35 I [453/453] niruye-daryaei -> +23 of 24 seen (6386 total)
+03:24:35 I discovery finished: 6385 tokens queued
+03:24:35 I fetching 6385 posts
+03:24:56 I [10/6385] saved, 22 listings total
+03:25:17 I [20/6385] saved, 32 listings total
+03:25:38 I [30/6385] saved, 42 listings total
+03:26:01 I [40/6385] saved, 52 listings total
+03:26:23 I [50/6385] saved, 62 listings total
+03:26:43 I [60/6385] saved, 72 listings total
+03:27:05 I [70/6385] saved, 82 listings total
+03:27:25 I [80/6385] saved, 92 listings total
+03:27:47 I [90/6385] saved, 102 listings total
+03:28:10 I [100/6385] saved, 112 listings total
+03:28:31 I [110/6385] saved, 122 listings total
+03:28:52 I [120/6385] saved, 132 listings total
+03:29:12 I [130/6385] saved, 142 listings total
+03:29:34 I [140/6385] saved, 152 listings total
+03:30:00 I [150/6385] saved, 162 listings total
+03:30:22 I [160/6385] saved, 172 listings total
+03:30:43 I [170/6385] saved, 182 listings total
+03:31:05 I [180/6385] saved, 192 listings total
+03:31:26 I [190/6385] saved, 202 listings total
+03:31:46 I [200/6385] saved, 212 listings total
+03:32:08 I [210/6385] saved, 222 listings total
+03:32:29 I [220/6385] saved, 232 listings total
+03:32:51 I [230/6385] saved, 242 listings total
+03:33:12 I [240/6385] saved, 252 listings total
+03:33:32 I [250/6385] saved, 262 listings total
+03:33:53 I [260/6385] saved, 272 listings total
+03:34:13 I [270/6385] saved, 282 listings total
+03:34:33 I [280/6385] saved, 292 listings total
+03:34:53 I [290/6385] saved, 302 listings total
+03:35:13 I [300/6385] saved, 312 listings total
+03:35:33 I [310/6385] saved, 322 listings total
+03:35:53 I [320/6385] saved, 332 listings total
+03:36:11 I [330/6385] saved, 342 listings total
+03:36:34 I [340/6385] saved, 352 listings total
+03:36:56 I [350/6385] saved, 362 listings total
+03:37:16 I [360/6385] saved, 372 listings total
+03:37:36 I [370/6385] saved, 382 listings total
+03:37:57 I [380/6385] saved, 392 listings total
+03:38:18 I [390/6385] saved, 402 listings total
+03:38:40 I [400/6385] saved, 412 listings total
+03:39:00 I [410/6385] saved, 422 listings total
+03:39:21 I [420/6385] saved, 432 listings total
+03:39:40 I [430/6385] saved, 442 listings total
+03:40:01 I [440/6385] saved, 452 listings total
+03:40:22 I [450/6385] saved, 462 listings total
+03:40:43 I [460/6385] saved, 472 listings total
+03:41:02 I [470/6385] saved, 482 listings total
+03:41:23 I [480/6385] saved, 492 listings total
+03:41:43 I [490/6385] saved, 502 listings total
+03:42:05 I [500/6385] saved, 512 listings total
+03:42:26 I [510/6385] saved, 522 listings total
+03:42:45 I [520/6385] saved, 532 listings total
+03:43:05 I [530/6385] saved, 542 listings total
+03:43:27 I [540/6385] saved, 552 listings total
+03:43:50 I [550/6385] saved, 562 listings total
+03:44:12 I [560/6385] saved, 572 listings total
+03:44:34 I [570/6385] saved, 582 listings total
+03:44:56 I [580/6385] saved, 592 listings total
+03:45:16 I [590/6385] saved, 602 listings total
+03:45:37 I [600/6385] saved, 612 listings total
+03:45:58 I [610/6385] saved, 622 listings total
+03:46:20 I [620/6385] saved, 632 listings total
+03:46:40 I [630/6385] saved, 642 listings total
+03:47:01 I [640/6385] saved, 652 listings total
+03:47:19 I [650/6385] saved, 662 listings total
+03:47:40 I [660/6385] saved, 672 listings total
+03:48:01 I [670/6385] saved, 682 listings total
+03:48:22 I [680/6385] saved, 692 listings total
+03:48:42 I [690/6385] saved, 702 listings total
+03:49:03 I [700/6385] saved, 712 listings total
+03:49:23 I [710/6385] saved, 722 listings total
+03:49:44 I [720/6385] saved, 732 listings total
+03:50:08 I [730/6385] saved, 742 listings total
+03:50:30 I [740/6385] saved, 752 listings total
+03:50:49 I [750/6385] saved, 762 listings total
+03:51:13 I [760/6385] saved, 772 listings total
+03:51:34 I [770/6385] saved, 782 listings total
+03:51:54 I [780/6385] saved, 792 listings total
+03:52:15 I [790/6385] saved, 802 listings total
+03:52:35 I [800/6385] saved, 812 listings total
+03:52:57 I [810/6385] saved, 822 listings total
+03:53:19 I [820/6385] saved, 832 listings total
+03:53:40 I [830/6385] saved, 842 listings total
+03:54:02 I [840/6385] saved, 852 listings total
+03:54:23 I [850/6385] saved, 862 listings total
+03:54:43 I [860/6385] saved, 872 listings total
+03:55:06 I [870/6385] saved, 882 listings total
+03:55:27 I [880/6385] saved, 892 listings total
+03:55:47 I [890/6385] saved, 902 listings total
+03:56:13 I [900/6385] saved, 912 listings total
+03:56:33 I [910/6385] saved, 922 listings total
+03:56:53 I [920/6385] saved, 932 listings total
+03:57:16 I [930/6385] saved, 942 listings total
+03:57:40 I [940/6385] saved, 952 listings total
+03:58:02 I [950/6385] saved, 962 listings total
+03:58:25 I [960/6385] saved, 972 listings total
+03:58:45 I [970/6385] saved, 982 listings total
+03:59:07 I [980/6385] saved, 992 listings total
+03:59:29 I [990/6385] saved, 1002 listings total
+03:59:50 I [1000/6385] saved, 1012 listings total
+04:00:12 I [1010/6385] saved, 1022 listings total
+04:00:34 I [1020/6385] saved, 1032 listings total
+04:00:57 I [1030/6385] saved, 1042 listings total
+04:01:20 I [1040/6385] saved, 1052 listings total
+04:01:40 I [1050/6385] saved, 1062 listings total
+04:02:02 I [1060/6385] saved, 1072 listings total
+04:02:23 I [1070/6385] saved, 1082 listings total
+04:02:44 I [1080/6385] saved, 1092 listings total
+04:03:05 I [1090/6385] saved, 1102 listings total
+04:03:26 I [1100/6385] saved, 1112 listings total
+04:03:48 I [1110/6385] saved, 1122 listings total
+04:04:08 I [1120/6385] saved, 1132 listings total
+04:04:30 I [1130/6385] saved, 1142 listings total
+04:04:52 I [1140/6385] saved, 1152 listings total
+04:05:12 I [1150/6385] saved, 1162 listings total
+04:05:33 I [1160/6385] saved, 1172 listings total
+04:05:54 I [1170/6385] saved, 1182 listings total
+04:06:15 I [1180/6385] saved, 1192 listings total
+04:06:36 I [1190/6385] saved, 1202 listings total
+04:06:59 I [1200/6385] saved, 1212 listings total
+04:07:21 I [1210/6385] saved, 1222 listings total
+04:07:40 I [1220/6385] saved, 1232 listings total
+04:08:01 I [1230/6385] saved, 1242 listings total
+04:08:24 I [1240/6385] saved, 1252 listings total
+04:08:44 I [1250/6385] saved, 1262 listings total
+04:09:06 I [1260/6385] saved, 1272 listings total
+04:09:28 I [1270/6385] saved, 1282 listings total
+04:09:49 I [1280/6385] saved, 1292 listings total
+04:10:12 I [1290/6385] saved, 1302 listings total
+04:10:33 I [1300/6385] saved, 1312 listings total
+04:10:53 I [1310/6385] saved, 1322 listings total
+04:11:15 I [1320/6385] saved, 1332 listings total
+04:11:36 I [1330/6385] saved, 1342 listings total
+04:11:57 I [1340/6385] saved, 1352 listings total
+04:12:17 I [1350/6385] saved, 1362 listings total
+04:12:36 I [1360/6385] saved, 1372 listings total
+04:12:57 I [1370/6385] saved, 1382 listings total
+04:13:20 I [1380/6385] saved, 1392 listings total
+04:13:40 I [1390/6385] saved, 1402 listings total
+04:14:03 I [1400/6385] saved, 1412 listings total
+04:14:24 I [1410/6385] saved, 1422 listings total
+04:14:45 I [1420/6385] saved, 1432 listings total
+04:15:09 I [1430/6385] saved, 1442 listings total
+04:15:30 I [1440/6385] saved, 1452 listings total
+04:15:51 I [1450/6385] saved, 1462 listings total
+04:16:12 I [1460/6385] saved, 1472 listings total
+04:16:34 I [1470/6385] saved, 1482 listings total
+04:16:56 I [1480/6385] saved, 1492 listings total
+04:17:17 I [1490/6385] saved, 1502 listings total
+04:17:40 I [1500/6385] saved, 1512 listings total
+04:18:01 I [1510/6385] saved, 1522 listings total
+04:18:23 I [1520/6385] saved, 1532 listings total
+04:18:44 I [1530/6385] saved, 1542 listings total
+04:19:05 I [1540/6385] saved, 1552 listings total
+04:19:27 I [1550/6385] saved, 1562 listings total
+04:19:48 I [1560/6385] saved, 1572 listings total
+04:20:09 I [1570/6385] saved, 1582 listings total
+04:20:31 I [1580/6385] saved, 1592 listings total
+04:20:53 I [1590/6385] saved, 1602 listings total
+04:21:17 I [1600/6385] saved, 1612 listings total
+04:21:39 I [1610/6385] saved, 1622 listings total
+04:22:00 I [1620/6385] saved, 1632 listings total
+04:22:22 I [1630/6385] saved, 1642 listings total
+04:22:43 I [1640/6385] saved, 1652 listings total
+04:23:04 I [1650/6385] saved, 1662 listings total
+04:23:24 I [1660/6385] saved, 1672 listings total
+04:23:46 I [1670/6385] saved, 1682 listings total
+04:24:05 I [1680/6385] saved, 1692 listings total
+04:24:27 I [1690/6385] saved, 1702 listings total
+04:24:47 I [1700/6385] saved, 1712 listings total
+04:25:09 I [1710/6385] saved, 1722 listings total
+04:25:30 I [1720/6385] saved, 1732 listings total
+04:25:50 I [1730/6385] saved, 1742 listings total
+04:26:10 I [1740/6385] saved, 1752 listings total
+04:26:31 I [1750/6385] saved, 1762 listings total
+04:26:50 I [1760/6385] saved, 1772 listings total
+04:27:12 I [1770/6385] saved, 1782 listings total
+04:27:33 I [1780/6385] saved, 1792 listings total
+04:27:55 I [1790/6385] saved, 1802 listings total
+04:28:17 I [1800/6385] saved, 1812 listings total
+04:28:40 I [1810/6385] saved, 1822 listings total
+04:29:01 I [1820/6385] saved, 1832 listings total
+04:29:23 I [1830/6385] saved, 1842 listings total
+04:29:45 I [1840/6385] saved, 1852 listings total
+04:30:06 I [1850/6385] saved, 1862 listings total
+04:30:29 I [1860/6385] saved, 1872 listings total
+04:30:51 I [1870/6385] saved, 1882 listings total
+04:31:12 I [1880/6385] saved, 1892 listings total
+04:31:33 I [1890/6385] saved, 1902 listings total
+04:31:53 I [1900/6385] saved, 1912 listings total
+04:32:13 I [1910/6385] saved, 1922 listings total
+04:32:34 I [1920/6385] saved, 1932 listings total
+04:32:55 I [1930/6385] saved, 1942 listings total
+04:33:16 I [1940/6385] saved, 1952 listings total
+04:33:37 I [1950/6385] saved, 1962 listings total
+04:33:56 I [1960/6385] saved, 1972 listings total
+04:34:19 I [1970/6385] saved, 1982 listings total
+04:34:38 I [1980/6385] saved, 1992 listings total
+04:34:59 I [1990/6385] saved, 2002 listings total
+04:35:21 I [2000/6385] saved, 2012 listings total
+04:35:43 I [2010/6385] saved, 2022 listings total
+04:36:03 I [2020/6385] saved, 2032 listings total
+04:36:24 I [2030/6385] saved, 2042 listings total
+04:36:44 I [2040/6385] saved, 2052 listings total
+04:37:06 I [2050/6385] saved, 2062 listings total
+04:37:26 I [2060/6385] saved, 2072 listings total
+04:37:47 I [2070/6385] saved, 2082 listings total
+04:38:08 I [2080/6385] saved, 2092 listings total
+04:38:27 I [2090/6385] saved, 2102 listings total
+04:38:48 I [2100/6385] saved, 2112 listings total
+04:39:12 I [2110/6385] saved, 2122 listings total
+04:39:35 I [2120/6385] saved, 2132 listings total
+04:39:56 I [2130/6385] saved, 2142 listings total
+04:40:17 I [2140/6385] saved, 2152 listings total
+04:40:37 I [2150/6385] saved, 2162 listings total
+04:40:58 I [2160/6385] saved, 2172 listings total
+04:41:19 I [2170/6385] saved, 2182 listings total
+04:41:38 I [2180/6385] saved, 2192 listings total
+04:41:58 I [2190/6385] saved, 2202 listings total
+04:42:18 I [2200/6385] saved, 2212 listings total
+04:42:38 I [2210/6385] saved, 2222 listings total
+04:42:59 I [2220/6385] saved, 2232 listings total
+04:43:23 I [2230/6385] saved, 2242 listings total
+04:43:45 I [2240/6385] saved, 2252 listings total
+04:44:05 I [2250/6385] saved, 2262 listings total
+04:44:24 I [2260/6385] saved, 2272 listings total
+04:44:44 I [2270/6385] saved, 2282 listings total
+04:45:05 I [2280/6385] saved, 2292 listings total
+04:45:28 I [2290/6385] saved, 2302 listings total
+04:45:48 I [2300/6385] saved, 2312 listings total
+04:46:08 I [2310/6385] saved, 2322 listings total
+04:46:30 I [2320/6385] saved, 2332 listings total
+04:46:53 I [2330/6385] saved, 2342 listings total
+04:47:15 I [2340/6385] saved, 2352 listings total
+04:47:35 I [2350/6385] saved, 2362 listings total
+04:47:57 I [2360/6385] saved, 2372 listings total
+04:48:20 I [2370/6385] saved, 2382 listings total
+04:48:40 I [2380/6385] saved, 2392 listings total
+04:49:01 I [2390/6385] saved, 2402 listings total
+04:49:24 I [2400/6385] saved, 2412 listings total
+04:49:44 I [2410/6385] saved, 2422 listings total
+04:50:06 I [2420/6385] saved, 2432 listings total
+04:50:28 I [2430/6385] saved, 2442 listings total
+04:50:49 I [2440/6385] saved, 2452 listings total
+04:51:11 I [2450/6385] saved, 2462 listings total
+04:51:33 I [2460/6385] saved, 2472 listings total
+04:51:55 I [2470/6385] saved, 2482 listings total
+04:52:14 I [2480/6385] saved, 2492 listings total
+04:52:36 I [2490/6385] saved, 2502 listings total
+04:52:58 I [2500/6385] saved, 2512 listings total
+04:53:20 I [2510/6385] saved, 2522 listings total
+04:53:42 I [2520/6385] saved, 2532 listings total
+04:54:02 I [2530/6385] saved, 2542 listings total
+04:54:26 I [2540/6385] saved, 2552 listings total
+04:54:48 I [2550/6385] saved, 2562 listings total
+04:55:09 I [2560/6385] saved, 2572 listings total
+04:55:31 I [2570/6385] saved, 2582 listings total
+04:55:50 I [2580/6385] saved, 2592 listings total
+04:56:12 I [2590/6385] saved, 2602 listings total
+04:56:33 I [2600/6385] saved, 2612 listings total
+04:56:53 I [2610/6385] saved, 2622 listings total
+04:57:14 I [2620/6385] saved, 2632 listings total
+04:57:37 I [2630/6385] saved, 2642 listings total
+04:57:58 I [2640/6385] saved, 2652 listings total
+04:58:19 I [2650/6385] saved, 2662 listings total
+04:58:40 I [2660/6385] saved, 2672 listings total
+04:59:00 I [2670/6385] saved, 2682 listings total
+04:59:23 I [2680/6385] saved, 2692 listings total
+04:59:45 I [2690/6385] saved, 2702 listings total
+05:00:08 I [2700/6385] saved, 2712 listings total
+05:00:30 I [2710/6385] saved, 2722 listings total
+05:00:51 I [2720/6385] saved, 2732 listings total
+05:01:11 I [2730/6385] saved, 2742 listings total
+05:01:32 I [2740/6385] saved, 2752 listings total
+05:01:55 I [2750/6385] saved, 2762 listings total
+05:02:16 I [2760/6385] saved, 2772 listings total
+05:02:38 I [2770/6385] saved, 2782 listings total
+05:02:59 I [2780/6385] saved, 2792 listings total
+05:03:20 I [2790/6385] saved, 2802 listings total
+05:03:43 I [2800/6385] saved, 2812 listings total
+05:04:07 I [2810/6385] saved, 2822 listings total
+05:04:28 I [2820/6385] saved, 2831 listings total
+05:04:49 I [2830/6385] saved, 2841 listings total
+05:05:10 I [2840/6385] saved, 2851 listings total
+05:05:33 I [2850/6385] saved, 2861 listings total
+05:05:54 I [2860/6385] saved, 2871 listings total
+05:06:16 I [2870/6385] saved, 2881 listings total
+05:06:38 I [2880/6385] saved, 2891 listings total
+05:07:00 I [2890/6385] saved, 2901 listings total
+05:07:22 I [2900/6385] saved, 2911 listings total
+05:07:43 I [2910/6385] saved, 2921 listings total
+05:08:06 I [2920/6385] saved, 2931 listings total
+05:08:30 I [2930/6385] saved, 2941 listings total
+05:08:53 I [2940/6385] saved, 2951 listings total
+05:09:14 I [2950/6385] saved, 2961 listings total
+05:09:36 I [2960/6385] saved, 2971 listings total
+05:09:58 I [2970/6385] saved, 2981 listings total
+05:10:19 I [2980/6385] saved, 2991 listings total
+05:10:41 I [2990/6385] saved, 3001 listings total
+05:11:01 I [3000/6385] saved, 3011 listings total
+05:11:22 I [3010/6385] saved, 3021 listings total
+05:11:44 I [3020/6385] saved, 3031 listings total
+05:12:07 I [3030/6385] saved, 3041 listings total
+05:12:30 I [3040/6385] saved, 3051 listings total
+05:12:52 I [3050/6385] saved, 3061 listings total
+05:13:14 I [3060/6385] saved, 3071 listings total
+05:13:36 I [3070/6385] saved, 3081 listings total
+05:13:58 I [3080/6385] saved, 3091 listings total
+05:14:18 I [3090/6385] saved, 3101 listings total
+05:14:40 I [3100/6385] saved, 3111 listings total
+05:15:00 I [3110/6385] saved, 3121 listings total
+05:15:22 I [3120/6385] saved, 3131 listings total
+05:15:43 I [3130/6385] saved, 3141 listings total
+05:16:05 I [3140/6385] saved, 3151 listings total
+05:16:26 I [3150/6385] saved, 3161 listings total
+05:16:47 I [3160/6385] saved, 3171 listings total
+05:17:09 I [3170/6385] saved, 3181 listings total
+05:17:31 I [3180/6385] saved, 3191 listings total
+05:17:51 I [3190/6385] saved, 3201 listings total
+05:18:12 I [3200/6385] saved, 3211 listings total
+05:18:34 I [3210/6385] saved, 3221 listings total
+05:19:00 I [3220/6385] saved, 3231 listings total
+05:19:23 I [3230/6385] saved, 3241 listings total
+05:19:43 I [3240/6385] saved, 3251 listings total
+05:20:04 I [3250/6385] saved, 3261 listings total
+05:20:27 I [3260/6385] saved, 3271 listings total
+05:20:51 I [3270/6385] saved, 3281 listings total
+05:21:13 I [3280/6385] saved, 3291 listings total
+05:21:36 I [3290/6385] saved, 3301 listings total
+05:21:57 I [3300/6385] saved, 3311 listings total
+05:22:19 I [3310/6385] saved, 3321 listings total
+05:22:40 I [3320/6385] saved, 3331 listings total
+05:23:00 I [3330/6385] saved, 3341 listings total
+05:23:23 I [3340/6385] saved, 3351 listings total
+05:23:47 I [3350/6385] saved, 3361 listings total
+05:24:10 I [3360/6385] saved, 3371 listings total
+05:24:34 I [3370/6385] saved, 3381 listings total
+05:24:56 I [3380/6385] saved, 3391 listings total
+05:25:19 I [3390/6385] saved, 3401 listings total
+05:25:40 I [3400/6385] saved, 3411 listings total
+05:26:01 I [3410/6385] saved, 3421 listings total
+05:26:22 I [3420/6385] saved, 3431 listings total
+05:26:44 I [3430/6385] saved, 3441 listings total
+05:27:06 I [3440/6385] saved, 3451 listings total
+05:27:30 I [3450/6385] saved, 3461 listings total
+05:27:51 I [3460/6385] saved, 3471 listings total
+05:28:12 I [3470/6385] saved, 3481 listings total
+05:28:33 I [3480/6385] saved, 3491 listings total
+05:28:55 I [3490/6385] saved, 3501 listings total
+05:29:18 I [3500/6385] saved, 3511 listings total
+05:29:42 I [3510/6385] saved, 3521 listings total
+05:30:04 I [3520/6385] saved, 3531 listings total
+05:30:26 I [3530/6385] saved, 3541 listings total
+05:30:48 I [3540/6385] saved, 3551 listings total
+05:31:11 I [3550/6385] saved, 3561 listings total
+05:31:34 I [3560/6385] saved, 3571 listings total
+05:31:57 I [3570/6385] saved, 3581 listings total
+05:32:20 I [3580/6385] saved, 3591 listings total
+05:32:40 I [3590/6385] saved, 3601 listings total
+05:33:02 I [3600/6385] saved, 3611 listings total
+05:33:24 I [3610/6385] saved, 3621 listings total
+05:33:46 I [3620/6385] saved, 3631 listings total
+05:34:07 I [3630/6385] saved, 3641 listings total
+05:34:31 I [3640/6385] saved, 3651 listings total
+05:34:52 I [3650/6385] saved, 3661 listings total
+05:35:14 I [3660/6385] saved, 3671 listings total
+05:35:38 I [3670/6385] saved, 3681 listings total
+05:35:59 I [3680/6385] saved, 3691 listings total
+05:36:21 I [3690/6385] saved, 3701 listings total
+05:36:43 I [3700/6385] saved, 3711 listings total
+05:37:05 I [3710/6385] saved, 3721 listings total
+05:37:29 I [3720/6385] saved, 3731 listings total
+05:37:53 I [3730/6385] saved, 3741 listings total
+05:38:15 I [3740/6385] saved, 3751 listings total
+05:38:39 I [3750/6385] saved, 3761 listings total
+05:39:03 I [3760/6385] saved, 3771 listings total
+05:39:26 I [3770/6385] saved, 3781 listings total
+05:39:48 I [3780/6385] saved, 3791 listings total
+05:40:10 I [3790/6385] saved, 3801 listings total
+05:40:33 I [3800/6385] saved, 3811 listings total
+05:40:54 I [3810/6385] saved, 3821 listings total
+05:41:17 I [3820/6385] saved, 3831 listings total
+05:41:39 I [3830/6385] saved, 3841 listings total
+05:42:00 I [3840/6385] saved, 3851 listings total
+05:42:23 I [3850/6385] saved, 3861 listings total
+05:42:44 I [3860/6385] saved, 3871 listings total
+05:43:05 I [3870/6385] saved, 3881 listings total
+05:43:26 I [3880/6385] saved, 3891 listings total
+05:43:47 I [3890/6385] saved, 3901 listings total
+05:44:08 I [3900/6385] saved, 3911 listings total
+05:44:29 I [3910/6385] saved, 3921 listings total
+05:44:50 I [3920/6385] saved, 3931 listings total
+05:45:13 I [3930/6385] saved, 3941 listings total
+05:45:34 I [3940/6385] saved, 3951 listings total
+05:45:56 I [3950/6385] saved, 3961 listings total
+05:46:19 I [3960/6385] saved, 3971 listings total
+05:46:42 I [3970/6385] saved, 3981 listings total
+05:47:03 I [3980/6385] saved, 3991 listings total
+05:47:25 I [3990/6385] saved, 4001 listings total
+05:47:49 I [4000/6385] saved, 4011 listings total
+05:48:11 I [4010/6385] saved, 4021 listings total
+05:48:30 I [4020/6385] saved, 4031 listings total
+05:48:53 I [4030/6385] saved, 4040 listings total
+05:49:14 I [4040/6385] saved, 4050 listings total
+05:49:36 I [4050/6385] saved, 4060 listings total
+05:49:57 I [4060/6385] saved, 4070 listings total
+05:50:17 I [4070/6385] saved, 4080 listings total
+05:50:38 I [4080/6385] saved, 4090 listings total
+05:51:00 I [4090/6385] saved, 4100 listings total
+05:51:22 I [4100/6385] saved, 4110 listings total
+05:51:43 I [4110/6385] saved, 4120 listings total
+05:52:05 I [4120/6385] saved, 4130 listings total
+05:52:25 I [4130/6385] saved, 4140 listings total
+05:52:45 I [4140/6385] saved, 4150 listings total
+05:53:06 I [4150/6385] saved, 4160 listings total
+05:53:27 I [4160/6385] saved, 4170 listings total
+05:53:52 I [4170/6385] saved, 4180 listings total
+05:54:15 I [4180/6385] saved, 4190 listings total
+05:54:37 I [4190/6385] saved, 4200 listings total
+05:55:00 I [4200/6385] saved, 4210 listings total
+05:55:20 I [4210/6385] saved, 4220 listings total
+05:55:41 I [4220/6385] saved, 4230 listings total
+05:56:04 I [4230/6385] saved, 4240 listings total
+05:56:27 I [4240/6385] saved, 4250 listings total
+05:56:49 I [4250/6385] saved, 4260 listings total
+05:57:10 I [4260/6385] saved, 4270 listings total
+05:57:33 I [4270/6385] saved, 4280 listings total
+05:57:55 I [4280/6385] saved, 4290 listings total
+05:58:16 I [4290/6385] saved, 4300 listings total
+05:58:39 I [4300/6385] saved, 4310 listings total
+05:59:01 I [4310/6385] saved, 4320 listings total
+05:59:21 I [4320/6385] saved, 4330 listings total
+05:59:44 I [4330/6385] saved, 4340 listings total
+06:00:04 I [4340/6385] saved, 4350 listings total
+06:00:25 I [4350/6385] saved, 4360 listings total
+06:00:47 I [4360/6385] saved, 4370 listings total
+06:01:08 I [4370/6385] saved, 4380 listings total
+06:01:28 I [4380/6385] saved, 4390 listings total
+06:01:49 I [4390/6385] saved, 4400 listings total
+06:02:11 I [4400/6385] saved, 4410 listings total
+06:02:34 I [4410/6385] saved, 4420 listings total
+06:02:55 I [4420/6385] saved, 4430 listings total
+06:03:15 I [4430/6385] saved, 4440 listings total
+06:03:38 I [4440/6385] saved, 4450 listings total
+06:04:01 I [4450/6385] saved, 4460 listings total
+06:04:23 I [4460/6385] saved, 4470 listings total
+06:04:46 I [4470/6385] saved, 4480 listings total
+06:05:08 I [4480/6385] saved, 4490 listings total
+06:05:30 I [4490/6385] saved, 4500 listings total
+06:05:49 I [4500/6385] saved, 4510 listings total
+06:06:10 I [4510/6385] saved, 4520 listings total
+06:06:33 I [4520/6385] saved, 4530 listings total
+06:06:57 I [4530/6385] saved, 4540 listings total
+06:07:22 I [4540/6385] saved, 4550 listings total
+06:07:44 I [4550/6385] saved, 4560 listings total
+06:08:05 I [4560/6385] saved, 4570 listings total
+06:08:28 I [4570/6385] saved, 4580 listings total
+06:08:49 I [4580/6385] saved, 4590 listings total
+06:09:10 I [4590/6385] saved, 4600 listings total
+06:09:33 I [4600/6385] saved, 4610 listings total
+06:09:55 I [4610/6385] saved, 4620 listings total
+06:10:16 I [4620/6385] saved, 4630 listings total
+06:10:40 I [4630/6385] saved, 4640 listings total
+06:11:02 I [4640/6385] saved, 4650 listings total
+06:11:23 I [4650/6385] saved, 4660 listings total
+06:11:45 I [4660/6385] saved, 4670 listings total
+06:12:07 I [4670/6385] saved, 4680 listings total
+06:12:26 I [4680/6385] saved, 4690 listings total
+06:12:50 I [4690/6385] saved, 4700 listings total
+06:13:12 I [4700/6385] saved, 4710 listings total
+06:13:33 I [4710/6385] saved, 4720 listings total
+06:13:55 I [4720/6385] saved, 4730 listings total
+06:14:18 I [4730/6385] saved, 4740 listings total
+06:14:39 I [4740/6385] saved, 4750 listings total
+06:15:00 I [4750/6385] saved, 4760 listings total
+06:15:20 I [4760/6385] saved, 4770 listings total
+06:15:40 I [4770/6385] saved, 4780 listings total
+06:16:03 I [4780/6385] saved, 4790 listings total
+06:16:25 I [4790/6385] saved, 4800 listings total
+06:16:48 I [4800/6385] saved, 4810 listings total
+06:17:10 I [4810/6385] saved, 4820 listings total
+06:17:33 I [4820/6385] saved, 4830 listings total
+06:17:55 I [4830/6385] saved, 4840 listings total
+06:18:19 I [4840/6385] saved, 4850 listings total
+06:18:41 I [4850/6385] saved, 4860 listings total
+06:19:04 I [4860/6385] saved, 4870 listings total
+06:19:25 I [4870/6385] saved, 4880 listings total
+06:19:46 I [4880/6385] saved, 4890 listings total
+06:20:08 I [4890/6385] saved, 4900 listings total
+06:20:28 I [4900/6385] saved, 4910 listings total
+06:20:50 I [4910/6385] saved, 4920 listings total
+06:21:10 I [4920/6385] saved, 4930 listings total
+06:21:33 I [4930/6385] saved, 4940 listings total
+06:21:54 I [4940/6385] saved, 4950 listings total
+06:22:18 I [4950/6385] saved, 4960 listings total
+06:22:41 I [4960/6385] saved, 4970 listings total
+06:23:04 I [4970/6385] saved, 4980 listings total
+06:23:27 I [4980/6385] saved, 4989 listings total
+06:23:49 I [4990/6385] saved, 4999 listings total
+06:24:09 I [5000/6385] saved, 5009 listings total
+06:24:30 I [5010/6385] saved, 5019 listings total
+06:24:51 I [5020/6385] saved, 5029 listings total
+06:25:14 I [5030/6385] saved, 5039 listings total
+06:25:35 I [5040/6385] saved, 5049 listings total
+06:25:58 I [5050/6385] saved, 5059 listings total
+06:26:18 I [5060/6385] saved, 5069 listings total
+06:26:39 I [5070/6385] saved, 5079 listings total
+06:27:01 I [5080/6385] saved, 5089 listings total
+06:27:20 I [5090/6385] saved, 5099 listings total
+06:27:41 I [5100/6385] saved, 5109 listings total
+06:28:03 I [5110/6385] saved, 5119 listings total
+06:28:23 I [5120/6385] saved, 5129 listings total
+06:28:45 I [5130/6385] saved, 5139 listings total
+06:29:05 I [5140/6385] saved, 5149 listings total
+06:29:25 I [5150/6385] saved, 5159 listings total
+06:29:47 I [5160/6385] saved, 5169 listings total
+06:30:08 I [5170/6385] saved, 5179 listings total
+06:30:29 I [5180/6385] saved, 5189 listings total
+06:30:50 I [5190/6385] saved, 5199 listings total
+06:31:13 I [5200/6385] saved, 5209 listings total
+06:31:35 I [5210/6385] saved, 5219 listings total
+06:31:56 I [5220/6385] saved, 5229 listings total
+06:32:17 I [5230/6385] saved, 5239 listings total
+06:32:39 I [5240/6385] saved, 5249 listings total
+06:33:02 I [5250/6385] saved, 5259 listings total
+06:33:23 I [5260/6385] saved, 5269 listings total
+06:33:46 I [5270/6385] saved, 5279 listings total
+06:34:08 I [5280/6385] saved, 5289 listings total
+06:34:29 I [5290/6385] saved, 5299 listings total
+06:34:50 I [5300/6385] saved, 5309 listings total
+06:35:12 I [5310/6385] saved, 5319 listings total
+06:35:37 I [5320/6385] saved, 5329 listings total
+06:35:58 I [5330/6385] saved, 5339 listings total
+06:36:21 I [5340/6385] saved, 5349 listings total
+06:36:43 I [5350/6385] saved, 5359 listings total
+06:37:05 I [5360/6385] saved, 5369 listings total
+06:37:27 I [5370/6385] saved, 5379 listings total
+06:37:48 I [5380/6385] saved, 5389 listings total
+06:38:10 I [5390/6385] saved, 5399 listings total
+06:38:34 I [5400/6385] saved, 5409 listings total
+06:38:54 I [5410/6385] saved, 5419 listings total
+06:39:17 I [5420/6385] saved, 5429 listings total
+06:39:41 I [5430/6385] saved, 5439 listings total
+06:40:03 I [5440/6385] saved, 5449 listings total
+06:40:25 I [5450/6385] saved, 5459 listings total
+06:40:47 I [5460/6385] saved, 5469 listings total
+06:41:09 I [5470/6385] saved, 5479 listings total
+06:41:31 I [5480/6385] saved, 5489 listings total
+06:41:51 I [5490/6385] saved, 5499 listings total
+06:42:14 I [5500/6385] saved, 5509 listings total
+06:42:37 I [5510/6385] saved, 5519 listings total
+06:43:01 I [5520/6385] saved, 5529 listings total
+06:43:24 I [5530/6385] saved, 5539 listings total
+06:43:48 I [5540/6385] saved, 5549 listings total
+06:44:10 I [5550/6385] saved, 5559 listings total
+06:44:32 I [5560/6385] saved, 5568 listings total
+06:44:54 I [5570/6385] saved, 5578 listings total
+06:45:15 I [5580/6385] saved, 5588 listings total
+06:45:37 I [5590/6385] saved, 5598 listings total
+06:45:56 I [5600/6385] saved, 5608 listings total
+06:46:18 I [5610/6385] saved, 5618 listings total
+06:46:41 I [5620/6385] saved, 5628 listings total
+06:47:03 I [5630/6385] saved, 5638 listings total
+06:47:23 I [5640/6385] saved, 5648 listings total
+06:47:46 I [5650/6385] saved, 5658 listings total
+06:48:06 I [5660/6385] saved, 5668 listings total
+06:48:26 I [5670/6385] saved, 5678 listings total
+06:48:47 I [5680/6385] saved, 5688 listings total
+06:49:09 I [5690/6385] saved, 5697 listings total
+06:49:31 I [5700/6385] saved, 5707 listings total
+06:49:53 I [5710/6385] saved, 5717 listings total
+06:50:15 I [5720/6385] saved, 5727 listings total
+06:50:37 I [5730/6385] saved, 5737 listings total
+06:50:57 I [5740/6385] saved, 5747 listings total
+06:51:17 I [5750/6385] saved, 5757 listings total
+06:51:40 I [5760/6385] saved, 5767 listings total
+06:52:02 I [5770/6385] saved, 5777 listings total
+06:52:26 I [5780/6385] saved, 5787 listings total
+06:52:49 I [5790/6385] saved, 5797 listings total
+06:53:12 I [5800/6385] saved, 5807 listings total
+06:53:33 I [5810/6385] saved, 5817 listings total
+06:53:54 I [5820/6385] saved, 5827 listings total
+06:54:17 I [5830/6385] saved, 5837 listings total
+06:54:41 I [5840/6385] saved, 5847 listings total
+06:55:01 I [5850/6385] saved, 5857 listings total
+06:55:22 I [5860/6385] saved, 5867 listings total
+06:55:44 I [5870/6385] saved, 5877 listings total
+06:56:05 I [5880/6385] saved, 5887 listings total
+06:56:27 I [5890/6385] saved, 5897 listings total
+06:56:49 I [5900/6385] saved, 5907 listings total
+06:57:11 I [5910/6385] saved, 5917 listings total
+06:57:32 I [5920/6385] saved, 5927 listings total
+06:57:53 I [5930/6385] saved, 5937 listings total
+06:58:16 I [5940/6385] saved, 5947 listings total
+06:58:37 I [5950/6385] saved, 5957 listings total
+06:59:00 I [5960/6385] saved, 5967 listings total
+06:59:22 I [5970/6385] saved, 5977 listings total
+06:59:44 I [5980/6385] saved, 5987 listings total
+07:00:04 I [5990/6385] saved, 5997 listings total
+07:00:26 I [6000/6385] saved, 6007 listings total
+07:00:49 I [6010/6385] saved, 6017 listings total
+07:01:10 I [6020/6385] saved, 6027 listings total
+07:01:32 I [6030/6385] saved, 6037 listings total
+07:01:55 I [6040/6385] saved, 6047 listings total
+07:02:15 I [6050/6385] saved, 6057 listings total
+07:02:34 I [6060/6385] saved, 6067 listings total
+07:02:56 I [6070/6385] saved, 6077 listings total
+07:03:18 I [6080/6385] saved, 6087 listings total
+07:03:41 I [6090/6385] saved, 6097 listings total
+07:04:02 I [6100/6385] saved, 6107 listings total
+07:04:24 I [6110/6385] saved, 6117 listings total
+07:04:46 I [6120/6385] saved, 6127 listings total
+07:05:07 I [6130/6385] saved, 6137 listings total
+07:05:28 I [6140/6385] saved, 6147 listings total
+07:05:50 I [6150/6385] saved, 6157 listings total
+07:06:13 I [6160/6385] saved, 6167 listings total
+07:06:34 I [6170/6385] saved, 6177 listings total
+07:06:54 I [6180/6385] saved, 6187 listings total
+07:07:16 I [6190/6385] saved, 6197 listings total
+07:07:37 I [6200/6385] saved, 6207 listings total
+07:07:58 I [6210/6385] saved, 6217 listings total
+07:08:19 I [6220/6385] saved, 6227 listings total
+07:08:39 I [6230/6385] saved, 6237 listings total
+07:09:00 I [6240/6385] saved, 6247 listings total
+07:09:23 I [6250/6385] saved, 6257 listings total
+07:09:43 I [6260/6385] saved, 6267 listings total
+07:10:04 I [6270/6385] saved, 6277 listings total
+07:10:25 I [6280/6385] saved, 6287 listings total
+07:10:46 I [6290/6385] saved, 6297 listings total
+07:11:07 I [6300/6385] saved, 6307 listings total
+07:11:34 I [6310/6385] saved, 6317 listings total
+07:11:55 I [6320/6385] saved, 6327 listings total
+07:12:18 I [6330/6385] saved, 6337 listings total
+07:12:39 I [6340/6385] saved, 6347 listings total
+07:13:01 I [6350/6385] saved, 6357 listings total
+07:13:21 I [6360/6385] saved, 6367 listings total
+07:13:44 I [6370/6385] saved, 6377 listings total
+07:14:04 I [6380/6385] saved, 6387 listings total
+07:14:16 I [6385/6385] saved, 6392 listings total
+07:14:18 I done: 6392 listings stored in /home/alireza/Projects/AI/maskan-ai/crawler/divar_listings.json

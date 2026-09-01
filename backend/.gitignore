@@ -1,0 +1,7 @@
+app/data/embedding_cache.json
+app/data/maskan.db
+app/data/maskan.db-wal
+app/data/maskan.db-shm
+app/data/processed_listings.json
+__pycache__/
+.venv/

@@ -1,7 +1,7 @@
 import pytest
 
 from app.core.constants import TARH_TERAFIK_BBOX
-from app.spatial.distance import haversine_distance_km
+from app.spatial.distance import haversine_distance_km, manhattan_distance_m
 from app.spatial.transit import estimate_commute_time, find_nearest_metro_station, is_inside_tarh_terafik
 
 
@@ -35,17 +35,22 @@ def test_is_inside_tarh_terafik_false_outside_zone():
 
 
 def test_estimate_commute_time_walk_mode():
+    # Walking follows the street grid, so the distance is Manhattan, not the
+    # straight line -- see app/spatial/distance.py.
     minutes = estimate_commute_time(35.70, 51.40, 35.70, 51.401, mode="walk")
-    dist_km = haversine_distance_km(35.70, 51.40, 35.70, 51.401)
-    assert minutes == pytest.approx(dist_km * 1000 / 80.0)
+    meters = manhattan_distance_m(35.70, 51.40, 35.70, 51.401)
+    assert minutes == pytest.approx(meters / 80.0)
 
 
-def test_estimate_commute_time_transit_mode():
+def test_estimate_commute_time_transit_mode_is_routed_not_averaged():
     origin = (35.70, 51.40)
     dest = (35.75, 51.42)
     minutes = estimate_commute_time(*origin, *dest, mode="transit")
-    dist_km = haversine_distance_km(*origin, *dest)
-    assert minutes == pytest.approx(dist_km / 28.0 * 60.0 + 5.0)
+
+    # A real route: walk, wait, ride, maybe change, walk. It has to cost more
+    # than the ride alone and less than walking the whole way.
+    walk_all_the_way = manhattan_distance_m(*origin, *dest) / 80.0
+    assert 5.0 < minutes < walk_all_the_way
 
 
 def test_estimate_commute_time_drive_mode_applies_congestion_penalty():

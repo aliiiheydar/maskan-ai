@@ -8,16 +8,26 @@ from app.core.models import ExtractedSearchIntent, Listing
 from app.core.pricing import calculate_effective_monthly_cost
 from app.llm.client import OpenRouterClient
 from app.search.scoring import (
+    MarketBaselines,
     ScoredListing,
-    commute_score,
+    amenity_utility,
+    area_utility,
+    commute_utility,
+    metro_utility,
     compute_utility,
     cosine_similarity,
+    default_weights,
+    financial_utility,
+    freshness_utility,
     hard_constraint_mask,
     pareto_frontier,
-    price_score,
-    quality_score,
     rank_listings,
-    semantic_soft_score,
+    resolve_tabdil,
+    resolve_weights,
+    soft_utility,
+    elevator_penalty,
+    structural_penalty,
+    value_utility,
 )
 
 
@@ -64,10 +74,12 @@ async def client():
 # --- Hard constraint mask (docs/TESTING_GUIDE.md SS2.2) ---
 
 
-def test_hard_constraint_elevator_required_and_missing_prunes():
+def test_hard_constraint_keeps_a_walk_up_when_a_lift_was_asked_for():
+    # A missing lift is scored down by elevator_penalty, not pruned: a
+    # fourth-floor walk-up is a compromise, not a different kind of home.
     listing = make_listing(floor=4, has_elevator=False)
     intent = make_intent(must_have_elevator=True)
-    assert hard_constraint_mask(listing, intent) is False
+    assert hard_constraint_mask(listing, intent) is True
 
 
 def test_hard_constraint_ground_floor_not_pruned_without_elevator():
@@ -96,10 +108,18 @@ def test_hard_constraint_budget_ceiling_pruned_above_multiplier():
     intent = make_intent(max_deposit=0, max_rent=10_000_000)
     c_target = calculate_effective_monthly_cost(0, 10_000_000)
 
-    just_over = make_listing(deposit_toman=0, rent_toman=int(c_target * BUDGET_CEILING_MULTIPLIER) + 1)
+    # Non-convertible on purpose: this test is about the ceiling itself. A
+    # قابل تبدیل listing is measured at its converted split instead, and the
+    # rounding involved in moving along the conversion line makes an exact
+    # one-Toman boundary assertion meaningless there.
+    just_over = make_listing(
+        deposit_toman=0, rent_toman=int(c_target * BUDGET_CEILING_MULTIPLIER) + 1, can_convert=False
+    )
     assert hard_constraint_mask(just_over, intent) is False
 
-    at_boundary = make_listing(deposit_toman=0, rent_toman=int(c_target * BUDGET_CEILING_MULTIPLIER))
+    at_boundary = make_listing(
+        deposit_toman=0, rent_toman=int(c_target * BUDGET_CEILING_MULTIPLIER), can_convert=False
+    )
     assert hard_constraint_mask(at_boundary, intent) is True
 
 
@@ -109,60 +129,153 @@ def test_hard_constraint_passes_with_no_intent_constraints():
     assert hard_constraint_mask(listing, intent) is True
 
 
-# --- Commute score ---
+# --- Commute utility ---
 
 
-def test_commute_score_no_workplace_uses_metro_walk_only():
-    listing = make_listing(metro_walk_mins=8.0)
-    intent = make_intent()
-    score = commute_score(listing, intent)
-    # T_walk == midpoint -> sigmoid == 0.5; no workplace -> S_workplace defaults to 1.0
-    assert score == pytest.approx(0.5 * 0.5 + 0.5 * 1.0)
+def test_metro_utility_at_sigmoid_midpoint_is_half():
+    # T_walk == midpoint -> sigmoid == 0.5. Metro closeness is its own
+    # criterion; the commute term is about the stated workplace alone.
+    assert metro_utility(make_listing(metro_walk_mins=8.0)) == pytest.approx(0.5)
 
 
-def test_commute_score_with_workplace_close_by_scores_higher_than_far():
+def test_commute_utility_without_workplace_is_neutral():
+    assert commute_utility(make_listing(), make_intent()) == pytest.approx(1.0)
+
+
+def test_commute_utility_with_workplace_close_by_scores_higher_than_far():
     close_listing = make_listing(lat=35.700, lon=51.400)
     far_listing = make_listing(lat=35.780, lon=51.550)
     intent = make_intent(workplace_lat=35.702, workplace_lon=51.402, max_commute_mins=30)
 
-    assert commute_score(close_listing, intent) > commute_score(far_listing, intent)
+    assert commute_utility(close_listing, intent) > commute_utility(far_listing, intent)
 
 
-# --- Price score ---
+# --- Financial utility ---
 
 
-def test_price_score_no_budget_returns_neutral():
-    listing = make_listing()
-    intent = make_intent()
-    assert price_score(listing, intent) == 1.0
+def test_financial_utility_no_budget_returns_neutral():
+    assert financial_utility(make_listing(), make_intent()) == 1.0
 
 
-def test_price_score_at_target_is_one():
+def test_financial_utility_at_the_cap_is_zero_point_eight():
     intent = make_intent(max_deposit=100_000_000, max_rent=10_000_000)
     c_target = calculate_effective_monthly_cost(100_000_000, 10_000_000)
     listing = make_listing(deposit_toman=100_000_000, rent_toman=c_target - int(100_000_000 * 0.03))
-    assert price_score(listing, intent) == pytest.approx(1.0)
+    assert financial_utility(listing, intent) == pytest.approx(0.8, abs=1e-3)
 
 
-def test_price_score_decays_with_overage():
-    intent = make_intent(max_deposit=0, max_rent=10_000_000)
+def test_financial_utility_decays_exponentially_past_the_cap():
+    intent = make_intent(max_deposit=0, max_rent=10_000_000, can_convert=False)
     c_target = calculate_effective_monthly_cost(0, 10_000_000)
-    listing = make_listing(deposit_toman=0, rent_toman=c_target + 3_000_000)
+    listing = make_listing(deposit_toman=0, rent_toman=c_target + 1_000_000, can_convert=False)
 
-    delta_c = 3_000_000
-    expected = math.exp(-((delta_c / (0.15 * c_target + 1.0)) ** 2))
-    assert price_score(listing, intent) == pytest.approx(expected)
-
-
-# --- Quality score ---
+    ratio = (c_target + 1_000_000) / c_target
+    expected = 0.8 * math.exp(-5.0 * (ratio - 1.0))
+    assert financial_utility(listing, intent) == pytest.approx(expected)
 
 
-def test_quality_score_new_building_with_amenities_beats_old_bare_one():
-    fresh = make_listing(building_age_years=1, has_balcony=True, has_storage=True)
-    old = make_listing(building_age_years=25, has_balcony=False, has_storage=False)
-    assert quality_score(fresh) > quality_score(old)
-    assert 0.0 <= quality_score(fresh) <= 1.0
-    assert 0.0 <= quality_score(old) <= 1.0
+def test_financial_utility_rewards_being_well_under_budget():
+    intent = make_intent(max_deposit=0, max_rent=20_000_000)
+    cheap = make_listing(deposit_toman=0, rent_toman=5_000_000, can_convert=False)
+    pricey = make_listing(deposit_toman=0, rent_toman=19_000_000, can_convert=False)
+    assert financial_utility(cheap, intent) > financial_utility(pricey, intent)
+
+
+# --- Value / area / amenity / freshness utilities ---
+
+
+def test_value_utility_rewards_being_cheaper_than_the_neighborhood_median():
+    baselines = MarketBaselines(per_neighborhood={"n1": 200_000.0}, city=200_000.0)
+    bargain = make_listing(neighborhood_key="n1", deposit_toman=0, rent_toman=10_000_000, area_sqm=100)
+    overpriced = make_listing(neighborhood_key="n1", deposit_toman=0, rent_toman=30_000_000, area_sqm=100)
+    assert value_utility(bargain, baselines) > value_utility(overpriced, baselines)
+    assert 0.0 <= value_utility(overpriced, baselines) <= 1.0
+
+
+def test_area_utility_peaks_at_the_midpoint_of_a_stated_range():
+    intent = make_intent(min_area_sqm=70, max_area_sqm=90)
+    assert area_utility(make_listing(area_sqm=80), intent) == pytest.approx(1.0)
+    assert area_utility(make_listing(area_sqm=95), intent) < 1.0
+
+
+def test_area_utility_does_not_penalise_exceeding_a_bare_minimum():
+    intent = make_intent(min_area_sqm=70)
+    assert area_utility(make_listing(area_sqm=120), intent) == 1.0
+    assert area_utility(make_listing(area_sqm=60), intent) < 1.0
+
+
+def test_amenity_utility_is_the_weighted_sum():
+    everything = make_listing(has_parking=True, has_elevator=True, has_storage=True, has_balcony=True)
+    nothing = make_listing(has_parking=False, has_elevator=False, has_storage=False, has_balcony=False)
+    assert amenity_utility(everything) == pytest.approx(1.0)
+    assert amenity_utility(nothing) == pytest.approx(0.0)
+
+
+def test_freshness_utility_favours_the_newer_building():
+    assert freshness_utility(make_listing(building_age_years=1)) > freshness_utility(
+        make_listing(building_age_years=25)
+    )
+
+
+def test_structural_penalty_scales_with_the_floor_of_a_walk_up():
+    intent, weights = make_intent(), default_weights().normalized()
+
+    def penalty(**overrides):
+        return structural_penalty(make_listing(**overrides), intent, weights)
+
+    # No lift, and the higher the floor the worse it gets -- but never a cliff.
+    assert penalty(floor=2, has_elevator=False) > penalty(floor=4, has_elevator=False)
+    assert penalty(floor=4, has_elevator=False) > penalty(floor=6, has_elevator=False)
+    # A lift, or a floor that needs none, costs nothing at all.
+    assert penalty(floor=4, has_elevator=True) == pytest.approx(1.0)
+    assert penalty(floor=1, has_elevator=False) == pytest.approx(1.0)
+    assert penalty(floor=-1, has_elevator=True) == pytest.approx(0.8)
+
+
+def test_elevator_penalty_sharpens_when_a_lift_was_required():
+    listing = make_listing(floor=4, has_elevator=False)
+    weights = default_weights().normalized()
+    assert elevator_penalty(listing, make_intent(must_have_elevator=True), weights) < elevator_penalty(
+        listing, make_intent(), weights
+    )
+
+
+# --- Tabdil ---
+
+
+def test_resolve_tabdil_buys_the_deposit_down_to_fit_the_user_cash():
+    listing = make_listing(deposit_toman=500_000_000, rent_toman=5_000_000, can_convert=True)
+    intent = make_intent(max_deposit=200_000_000)
+    deposit, rent = resolve_tabdil(listing, intent)
+
+    assert deposit <= 200_000_000
+    assert rent > listing.rent_toman
+    # Conversion happens along the rate line, so the total monthly cost is
+    # unchanged -- only reachability moves.
+    assert calculate_effective_monthly_cost(deposit, rent) == pytest.approx(
+        calculate_effective_monthly_cost(listing.deposit_toman, listing.rent_toman), rel=0.01
+    )
+
+
+def test_resolve_tabdil_leaves_a_non_convertible_listing_alone():
+    listing = make_listing(deposit_toman=500_000_000, rent_toman=5_000_000, can_convert=False)
+    intent = make_intent(max_deposit=200_000_000)
+    assert resolve_tabdil(listing, intent) == (500_000_000, 5_000_000)
+
+
+# --- Weights ---
+
+
+def test_reachability_dial_at_zero_drops_the_commute_criterion():
+    weights = resolve_weights(make_intent(commute_importance=0.0, workplace_lat=35.7, workplace_lon=51.4))
+    assert weights.commute == 0.0
+    # The dropped share is redistributed, not lost.
+    assert weights.total() == pytest.approx(1.0)
+
+
+def test_reachability_dial_at_maximum_outweighs_the_default():
+    at_max = resolve_weights(make_intent(commute_importance=1.0, workplace_lat=35.7, workplace_lon=51.4))
+    assert at_max.commute > default_weights().commute
 
 
 # --- Cosine similarity / semantic soft score ---
@@ -176,43 +289,40 @@ def test_cosine_similarity_orthogonal_vectors_is_zero():
     assert cosine_similarity([1.0, 0.0], [0.0, 1.0]) == pytest.approx(0.0)
 
 
-async def test_semantic_soft_score_no_preference_returns_neutral(client):
-    listing = make_listing()
-    intent = make_intent(soft_preference_summary="")
-    assert await semantic_soft_score(client, intent, listing) == 1.0
+def test_soft_utility_without_a_stated_preference_is_neutral():
+    assert soft_utility(None, make_listing()) == 1.0
 
 
-async def test_semantic_soft_score_similar_text_scores_higher_than_unrelated(client):
-    listing = make_listing(description="واحد نوساز با نورگیر عالی، کوچه خلوت و سقف بلند")
-    close_intent = make_intent(soft_preference_summary="نورگیر عالی و کوچه خلوت می‌خواهم")
-    far_intent = make_intent(soft_preference_summary="پارکینگ دوبل و استخر خصوصی در طبقه آخر")
+async def test_soft_utility_similar_text_scores_higher_than_unrelated(client):
+    description = "واحد نوساز با نورگیر عالی، کوچه خلوت و سقف بلند"
+    listing = make_listing(description=description)
+    listing.embedding = await client.generate_embedding(description)
 
-    close_score = await semantic_soft_score(client, close_intent, listing)
-    far_score = await semantic_soft_score(client, far_intent, listing)
-    assert close_score > far_score
+    close = await client.generate_embedding("نورگیر عالی و کوچه خلوت می‌خواهم")
+    far = await client.generate_embedding("پارکینگ دوبل و استخر خصوصی در طبقه آخر")
+    assert soft_utility(close, listing) > soft_utility(far, listing)
 
 
 # --- compute_utility ---
 
 
-async def test_compute_utility_zero_when_hard_mask_fails(client):
-    listing = make_listing(floor=4, has_elevator=False)
-    intent = make_intent(must_have_elevator=True)
-    assert await compute_utility(client, listing, intent) == 0.0
+def test_compute_utility_zero_when_hard_mask_fails():
+    listing = make_listing(has_parking=False)
+    intent = make_intent(must_have_parking=True)
+    utility, breakdown = compute_utility(listing, intent, default_weights(), MarketBaselines())
+    assert utility == 0.0
+    assert breakdown == {}
 
 
-async def test_compute_utility_matches_weighted_sum_with_neutral_components(client):
-    listing = make_listing(metro_walk_mins=8.0, building_age_years=1, has_balcony=True, has_storage=True)
-    intent = make_intent()  # no budget, no workplace, no soft preferences -> price/soft neutral
+def test_compute_utility_matches_the_weighted_sum_times_the_penalty():
+    listing = make_listing(metro_walk_mins=8.0, building_age_years=1, floor=4, has_elevator=False)
+    intent = make_intent()
+    weights = default_weights()
+    baselines = MarketBaselines(city=200_000.0)
 
-    utility = await compute_utility(client, listing, intent)
-    expected = (
-        0.35 * commute_score(listing, intent)
-        + 0.35 * price_score(listing, intent)
-        + 0.20 * 1.0
-        + 0.10 * quality_score(listing)
-    )
-    assert utility == pytest.approx(expected)
+    utility, breakdown = compute_utility(listing, intent, weights, baselines)
+    expected = sum(getattr(weights, name) * value for name, value in breakdown.items())
+    assert utility == pytest.approx(expected * structural_penalty(listing, intent, weights))
 
 
 # --- Pareto frontier ---
@@ -264,7 +374,9 @@ async def test_rank_listings_splits_tiers_and_attaches_trade_off_rationale(clien
     trade_off_listing = trade_off_listing.model_copy(update={"has_elevator": True, "floor": 1})
 
     tier1, tier2 = await rank_listings(
-        client, [tier1_listing, trade_off_listing, pruned_listing], intent_with_elevator
+        client,
+        [tier1_listing, trade_off_listing, pruned_listing],
+        intent_with_elevator,
     )
 
     assert [s.listing.id for s in tier1] == ["tier1"]

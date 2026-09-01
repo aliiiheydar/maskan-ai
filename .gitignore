@@ -29,3 +29,16 @@ dist/
 # Coverage
 .coverage
 htmlcov/
+
+# Working artifacts: server logs, and the screenshots used while debugging a
+# layout. Neither is part of the app.
+nohup.out
+divar-map-screenshots/
+filter-section-width-bug/
+non joining neighborhoods.png
+
+# The raw scrape and its token cache. Tens of megabytes of listing data that
+# the pipeline reads and never writes; kept out of git history and shared out
+# of band rather than versioned as a blob.
+crawler/divar_listings.json
+crawler/crawled_tokens.json

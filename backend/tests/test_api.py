@@ -54,7 +54,15 @@ async def test_search_classic_mode_returns_tiered_results(client):
     assert response.status_code == 200
 
     body = response.json()
-    assert set(body.keys()) == {"natural_language_summary", "tier_1_results", "tier_2_results", "total_count"}
+    assert set(body.keys()) == {
+        "natural_language_summary",
+        "tier_1_results",
+        "tier_2_results",
+        "map_points",
+        "map_clusters",
+        "total_count",
+        "applied_intent",
+    }
     assert body["natural_language_summary"]
     assert body["total_count"] >= 0
     assert len(body["tier_1_results"]) + len(body["tier_2_results"]) <= 10
@@ -121,10 +129,14 @@ async def test_chat_stream_yields_tokens_then_state_update_then_done(client):
     assert [e["content"] for e in token_events] == ["سلام", "! چند مورد پیدا کردم."]
 
     assert events[-2]["event"] == "state_update"
+    # target_neighborhood_keys is derived, not extracted: the endpoint resolves
+    # the model's Persian place names onto real neighborhood polygons before
+    # emitting, so the client receives the search area already grounded.
     assert events[-2]["extracted_intent"] == {
         "max_rent": 15_000_000,
         "must_have_elevator": True,
         "target_neighborhoods": ["شادمان"],
+        "target_neighborhood_keys": ["656"],
     }
     assert events[-1] == {"event": "done"}
 
@@ -133,9 +145,15 @@ async def test_chat_stream_yields_tokens_then_state_update_then_done(client):
 
 
 async def test_get_listing_returns_seeded_listing(client):
-    response = await client.get("/api/v1/listings/teh-1000")
+    # The id is taken from a search rather than hard-coded: the corpus now comes
+    # from the SQLite build of the real crawl, whose ids are Divar tokens, and a
+    # checkout with no database falls back to synthetic "teh-*" ones.
+    search = await client.post("/api/v1/search", json={"mode": "classic", "page_size": 1})
+    listing_id = search.json()["tier_1_results"][0]["id"]
+
+    response = await client.get(f"/api/v1/listings/{listing_id}")
     assert response.status_code == 200
-    assert response.json()["id"] == "teh-1000"
+    assert response.json()["id"] == listing_id
 
 
 async def test_get_listing_not_found_returns_404(client):

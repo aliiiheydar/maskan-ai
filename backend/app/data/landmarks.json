@@ -1,0 +1,79 @@
+{
+  "_comment": "Named places people give as a workplace or as an area landmark that no metro/BRT station covers. Coordinates are approximate to within a block -- they anchor a commute estimate and a vicinity lookup, not a route. Transit stations (app/data/tehran_transit_nodes.json) are the main gazetteer; this file only fills its gaps.",
+  "landmarks": [
+    {
+      "name": "دانشگاه امیرکبیر",
+      "lat": 35.7047,
+      "lon": 51.4083,
+      "aliases": [
+        "پلی تکنیک",
+        "پلی‌تکنیک",
+        "دانشگاه پلی تکنیک"
+      ]
+    },
+    {
+      "name": "دانشگاه شهید بهشتی",
+      "lat": 35.8055,
+      "lon": 51.401,
+      "aliases": [
+        "دانشگاه بهشتی",
+        "اوین دانشگاه"
+      ]
+    },
+    {
+      "name": "دانشگاه الزهرا",
+      "lat": 35.757,
+      "lon": 51.402,
+      "aliases": [
+        "دانشگاه الزهرا ونک"
+      ]
+    },
+    {
+      "name": "دانشگاه خواجه نصیر",
+      "lat": 35.7405,
+      "lon": 51.44,
+      "aliases": [
+        "خواجه نصیرالدین طوسی",
+        "دانشگاه خواجه نصیرالدین"
+      ]
+    },
+    {
+      "name": "بیمارستان میلاد",
+      "lat": 35.7448,
+      "lon": 51.3737,
+      "aliases": []
+    },
+    {
+      "name": "بیمارستان امام خمینی",
+      "lat": 35.7017,
+      "lon": 51.3826,
+      "aliases": [
+        "بیمارستان امام"
+      ]
+    },
+    {
+      "name": "بازار تهران",
+      "lat": 35.672,
+      "lon": 51.423,
+      "aliases": [
+        "بازار بزرگ تهران"
+      ]
+    },
+    {
+      "name": "ایران مال",
+      "lat": 35.7583,
+      "lon": 51.2033,
+      "aliases": [
+        "ایران‌مال"
+      ]
+    },
+    {
+      "name": "پارک آب و آتش",
+      "lat": 35.759,
+      "lon": 51.42,
+      "aliases": [
+        "آب و آتش"
+      ]
+    }
+  ]
+}

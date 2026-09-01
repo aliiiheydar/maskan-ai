@@ -1,0 +1,28 @@
+{
+  "_comment": "Published average residential sale price per square metre for each of Tehran's 22 municipal districts, in million Tomans. Sourced from Iranian market reporting (eghtesadonline بهمن ۱۴۰۴ and the surveys it aggregates), which quotes ~449 for Niavaran in منطقه ۱, ~349 for سعادت‌آباد in منطقه ۲, ~218 for پونک in منطقه ۵ and ~105 for چیتگر in منطقه ۲۲. Districts the reporting does not quote directly are interpolated from the standard north-to-south price gradient. This file is a *prior*: scripts/build_neighborhood_quality.py shrinks each neighborhood's own observed rent toward its district's figure, so a district with plenty of listings barely uses it and a thinly-sampled one leans on it.",
+  "_unit": "million Toman per square metre, residential sale price",
+  "districts": {
+    "منطقه 1": 430,
+    "منطقه 2": 330,
+    "منطقه 3": 350,
+    "منطقه 4": 165,
+    "منطقه 5": 200,
+    "منطقه 6": 250,
+    "منطقه 7": 175,
+    "منطقه 8": 150,
+    "منطقه 9": 120,
+    "منطقه 10": 115,
+    "منطقه 11": 125,
+    "منطقه 12": 118,
+    "منطقه 13": 140,
+    "منطقه 14": 112,
+    "منطقه 15": 95,
+    "منطقه 16": 95,
+    "منطقه 17": 90,
+    "منطقه 18": 85,
+    "منطقه 19": 88,
+    "منطقه 20": 92,
+    "منطقه 21": 100,
+    "منطقه 22": 160
+  }
+}
