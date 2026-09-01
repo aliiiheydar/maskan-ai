@@ -20,7 +20,7 @@ import clsx from "clsx";
 
 import { imageUrl } from "@/lib/api";
 import { useSearchStore } from "@/store/useSearchStore";
-import { matchBadgeStyle, type DisplayScale } from "@/lib/matchColor";
+import { matchBadgeStyle } from "@/lib/matchColor";
 import { fa, faMinutes, faYear, formatToman } from "@/lib/format";
 import type { ListingResult } from "@/types";
 
@@ -69,14 +69,7 @@ function Fact({ icon: Icon, children }: { icon: typeof Car; children: React.Reac
   );
 }
 
-export default function ListingCard({
-  listing,
-  scale,
-}: {
-  listing: ListingResult;
-  /** The set-relative scale this feed is displayed on (see adaptiveScale). */
-  scale?: DisplayScale;
-}) {
+export default function ListingCard({ listing }: { listing: ListingResult }) {
   const router = useRouter();
   const mode = useSearchStore((state) => state.mode);
   const selectedListingId = useSearchStore((state) => state.selectedListingId);
@@ -103,8 +96,7 @@ export default function ListingCard({
   };
 
   const isSelected = selectedListingId === listing.id;
-  const displayScore = scale ? scale(listing.utility_score) : listing.utility_score;
-  const matchPercent = Math.round(displayScore * 100);
+  const matchPercent = Math.round(listing.utility_score * 100);
   // Map-explore results are a plain filter, not a ranked score -- a
   // "% تطابق" badge would misleadingly read as "0% match" for every result.
   const showMatchBadge = mode !== "map";
@@ -142,7 +134,7 @@ export default function ListingCard({
           {showMatchBadge && (
             <span
               className="rounded-full px-2 py-0.5 text-xs font-bold tabular-nums"
-              style={matchBadgeStyle(displayScore)}
+              style={matchBadgeStyle(listing.utility_score)}
             >
               ٪{matchPercent}
             </span>

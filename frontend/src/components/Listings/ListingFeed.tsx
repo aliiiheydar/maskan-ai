@@ -3,8 +3,6 @@
 import { ArrowUp, Loader2, SearchX } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { adaptiveScale } from "@/lib/matchColor";
-
 import { useSearchStore } from "@/store/useSearchStore";
 import ListingCard from "./ListingCard";
 
@@ -38,7 +36,6 @@ export default function ListingFeed() {
 
   const selectedListingId = useSearchStore((state) => state.selectedListingId);
   const focusedListing = useSearchStore((state) => state.focusedListing);
-  const scoreRange = useSearchStore((state) => state.scoreRange);
   const setSelectedListingId = useSearchStore((state) => state.setSelectedListingId);
 
   const loadedCount = tier1Results.length + tier2Results.length;
@@ -54,12 +51,6 @@ export default function ListingFeed() {
     }
     return loaded;
   }, [tier1Results, tier2Results, focusedListing]);
-  // One scale for the whole search, so every card is measured against the same
-  // range -- and the map's pins against that same range too. It comes from the
-  // store rather than from the cards currently loaded: derived here, every
-  // "نمایش موارد بیشتر" moved the bottom of the range and rewrote the
-  // percentage on every card already on screen.
-  const scale = useMemo(() => adaptiveScale(scoreRange), [scoreRange]);
 
   /** Selecting a property anywhere -- a card, or its pin on the map -- brings
    * it into view here, so the map flying to a pin and the feed showing that
@@ -190,7 +181,7 @@ export default function ListingFeed() {
         <div className="flex min-w-0 flex-col gap-3">
           {ranked.map((listing) => (
             <div key={listing.id} ref={(node) => registerCard(listing.id, node)}>
-              <ListingCard listing={listing} scale={scale} />
+              <ListingCard listing={listing} />
             </div>
           ))}
         </div>

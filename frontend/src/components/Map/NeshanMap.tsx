@@ -15,7 +15,7 @@ import { MapContainer, Marker, Polygon, Popup, useMap, useMapEvents } from "reac
 
 import { getCongestionZones, getTransitStations } from "@/lib/api";
 import { useSearchStore } from "@/store/useSearchStore";
-import { adaptiveScale, matchColor, type DisplayScale } from "@/lib/matchColor";
+import { matchColor } from "@/lib/matchColor";
 import type { CongestionZone, GeoJSONGeometry, MapCluster, MapPoint, ListingResult, TransitStation } from "@/types";
 import { toLeafletRings } from "./geometry";
 import { useIsDesktop } from "@/lib/breakpoints";
@@ -295,12 +295,12 @@ function ClusterBadge({ cluster }: { cluster: MapCluster }) {
 }
 
 /** A ranked listing's pin: coloured by its match, selected on click. */
-function ListingMarker({ listing, scale }: { listing: ListingResult; scale: DisplayScale }) {
+function ListingMarker({ listing }: { listing: ListingResult }) {
   const hoveredListingId = useSearchStore((state) => state.hoveredListingId);
   const selectedListingId = useSearchStore((state) => state.selectedListingId);
   const setSelectedListingId = useSearchStore((state) => state.setSelectedListingId);
   const setHoveredListingId = useSearchStore((state) => state.setHoveredListingId);
-  const { fill, opacity } = matchColor(scale(listing.utility_score));
+  const { fill, opacity } = matchColor(listing.utility_score);
 
   const isFocused = listing.id === hoveredListingId || listing.id === selectedListingId;
 
@@ -708,7 +708,6 @@ export default function NeshanMap() {
   const mapPoints = useSearchStore((state) => state.mapPoints);
   const mapClusters = useSearchStore((state) => state.mapClusters);
   const focusedListing = useSearchStore((state) => state.focusedListing);
-  const scoreRange = useSearchStore((state) => state.scoreRange);
   const workplaceLocation = useSearchStore((state) => state.workplaceLocation);
   const isPickingWorkplace = useSearchStore((state) => state.isPickingWorkplace);
   const isPickingNeighborhood = useSearchStore((state) => state.isPickingNeighborhood);
@@ -737,10 +736,6 @@ export default function NeshanMap() {
     }
     return index;
   }, [mapPoints, tier1Results, tier2Results]);
-
-  // The pins are coloured on the same set-relative scale the feed prints its
-  // percentages on, so a pin and its card can never tell different stories.
-  const scale = useMemo(() => adaptiveScale(scoreRange), [scoreRange]);
 
   // Which pins the feed is showing a card for (see SelectedListingAction).
   const cardIds = useMemo(() => {
@@ -831,10 +826,10 @@ export default function NeshanMap() {
         ) : (
           <>
             {tier1Results.map((listing) => (
-              <ListingMarker key={listing.id} listing={listing} scale={scale} />
+              <ListingMarker key={listing.id} listing={listing} />
             ))}
             {tier2Results.map((listing) => (
-              <ListingMarker key={listing.id} listing={listing} scale={scale} />
+              <ListingMarker key={listing.id} listing={listing} />
             ))}
           </>
         )}
