@@ -55,6 +55,11 @@ export interface UnifiedSearchRequest {
   map_zoom?: number;
   page: number;
   page_size: number;
+  /** Where this page starts. Sent because the feed's first page is bigger
+   * than the ones after it, so (page - 1) * page_size does not say where the
+   * next one begins -- without it the server re-sent rows the feed already
+   * had. */
+  offset?: number;
 }
 
 // Full domain entity returned by GET /listings/{id} (docs/DATA_SCHEMA.md SS1).

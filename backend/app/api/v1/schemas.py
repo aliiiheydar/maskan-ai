@@ -71,6 +71,15 @@ class UnifiedSearchRequest(BaseModel):
     # viewport at once, since a cluster badge is only meaningful if it counts
     # every listing in the area rather than the first page of them.
     page_size: int = Field(default=20, ge=1, le=500)
+    # Where this page starts, for a client whose pages are not all one size.
+    # The feed offers 60 results up front and then 30 at a time, so
+    # (page - 1) * page_size stopped describing where its next page began: it
+    # asked for row 30 while already holding 60, and was handed rows 30..59 a
+    # second time -- the same listings again, at the higher scores they had
+    # ranked at, which read in the feed as the match percentage jumping back
+    # up mid-list. A client that knows how many rows it holds says so, and
+    # the two sides can no longer disagree about it.
+    offset: Optional[int] = Field(default=None, ge=0)
 
 
 class ListingResult(BaseModel):

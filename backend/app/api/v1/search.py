@@ -237,7 +237,7 @@ async def search(
 
     key = _cache_key(repository, payload, intent)
     cached = _cache_get(key)
-    wanted_through = payload.page * payload.page_size
+    wanted_through = _page_start(payload) + payload.page_size
     if cached is not None and (
         wanted_through <= len(cached.scored) or len(cached.scored) == cached.total_count
     ):
@@ -290,6 +290,16 @@ async def search(
     return _respond(entry, payload, intent)
 
 
+def _page_start(payload: UnifiedSearchRequest) -> int:
+    """The first row of the requested page.
+
+    ``offset`` wins when the client sends one, because only the client knows
+    where its own list ends -- see UnifiedSearchRequest.offset. The page
+    arithmetic remains for callers whose pages are all the same size.
+    """
+    return payload.offset if payload.offset is not None else (payload.page - 1) * payload.page_size
+
+
 def _respond(entry: _RankedPage, payload: UnifiedSearchRequest, intent: ExtractedSearchIntent) -> SearchResponse:
     """One ranking, sliced into the page that was asked for.
 
@@ -298,7 +308,7 @@ def _respond(entry: _RankedPage, payload: UnifiedSearchRequest, intent: Extracte
     the page by tier, so total_count is the full match count and tier
     boundaries stay intact within a page.
     """
-    start = (payload.page - 1) * payload.page_size
+    start = _page_start(payload)
     page = entry.scored[start : start + payload.page_size]
 
     return SearchResponse(

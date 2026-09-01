@@ -59,11 +59,31 @@ const MIN_SPREAD = 0.02;
 
 export type DisplayScale = (score: number) => number;
 
-export function adaptiveScale(scores: number[]): DisplayScale {
+/** The band a result set is displayed across; null when there is nothing to
+ * separate -- too few ranked results, or a spread too narrow to spend the
+ * scale on. */
+export type ScoreRange = { lo: number; hi: number };
+
+export function scoreRangeOf(scores: number[]): ScoreRange | null {
   const usable = scores.filter((score) => score > 0);
+  if (usable.length < 3) return null;
   const lo = Math.min(...usable);
   const hi = Math.max(...usable);
-  if (usable.length < 3 || hi - lo < MIN_SPREAD) return (score) => score;
+  return hi - lo < MIN_SPREAD ? null : { lo, hi };
+}
+
+/**
+ * The range is taken once, from the search, and not re-derived per page.
+ *
+ * It used to be measured over whatever happened to be loaded, so every click
+ * of "نمایش موارد بیشتر" -- which appends results weaker than any already
+ * shown -- pulled `lo` down and restretched the whole feed: percentages the
+ * user had just read changed underneath them. A listing's badge is a claim
+ * about the search, and paging through the results is not a new search.
+ */
+export function adaptiveScale(range: ScoreRange | null): DisplayScale {
+  if (!range) return (score) => score;
+  const { lo, hi } = range;
 
   return (score) => {
     // The set's own range, replayed over the half of the scale the colours

@@ -19,7 +19,7 @@ import { adaptiveScale, matchColor, type DisplayScale } from "@/lib/matchColor";
 import type { CongestionZone, GeoJSONGeometry, MapCluster, MapPoint, ListingResult, TransitStation } from "@/types";
 import { toLeafletRings } from "./geometry";
 import { useIsDesktop } from "@/lib/breakpoints";
-import { whenMapIsVisible } from "./visibility";
+import { isOnScreen, whenMapIsVisible } from "./visibility";
 import NeighborhoodLabels from "./NeighborhoodLabels";
 import NeighborhoodMapPicker from "./NeighborhoodMapPicker";
 import SearchAreaOverlay from "./SearchAreaOverlay";
@@ -404,7 +404,14 @@ function ResizeSync() {
 
   useEffect(() => {
     const container = map.getContainer();
-    const observer = new ResizeObserver(() => map.invalidateSize({ animate: false }));
+    const observer = new ResizeObserver(() => {
+      // A tab switch on a phone takes the map to 0x0 (see app/page.tsx), and
+      // re-measuring *that* teaches Leaflet a viewport of nothing -- which it
+      // then reports as a moveend with a collapsed bounding box. Sizes of zero
+      // are not sizes; the map keeps the last real one until it is back.
+      if (container.clientWidth === 0 || container.clientHeight === 0) return;
+      map.invalidateSize({ animate: false });
+    });
     observer.observe(container);
     return () => observer.disconnect();
   }, [map]);
@@ -436,6 +443,11 @@ function BBoxSync() {
     zoomstart: () => clearTimeout(timerRef.current),
     moveend: () => {
       if (!isActive) return;
+      // Off-screen: on a phone the map is a tab, and a hidden one has no
+      // viewport to search. Left unguarded, moving to the feed collapsed the
+      // map to 0x0, and the bounding box of nothing matched no listing -- the
+      // list the user had just switched to emptied itself a beat later.
+      if (!isOnScreen(map)) return;
       // Our own fly/pan, not the user's (see programmaticMoveUntil).
       if (Date.now() < programmaticMoveUntil) return;
       // Focused on one property: the search area is being held for them.
@@ -464,6 +476,7 @@ function BBoxSync() {
   // duplicate request.
   useEffect(() => {
     if (!isActive) return;
+    if (!isOnScreen(map)) return;
     const bounds = map.getBounds();
     setFilters({
       mapBBox: {
@@ -695,6 +708,7 @@ export default function NeshanMap() {
   const mapPoints = useSearchStore((state) => state.mapPoints);
   const mapClusters = useSearchStore((state) => state.mapClusters);
   const focusedListing = useSearchStore((state) => state.focusedListing);
+  const scoreRange = useSearchStore((state) => state.scoreRange);
   const workplaceLocation = useSearchStore((state) => state.workplaceLocation);
   const isPickingWorkplace = useSearchStore((state) => state.isPickingWorkplace);
   const isPickingNeighborhood = useSearchStore((state) => state.isPickingNeighborhood);
@@ -726,10 +740,7 @@ export default function NeshanMap() {
 
   // The pins are coloured on the same set-relative scale the feed prints its
   // percentages on, so a pin and its card can never tell different stories.
-  const scale = useMemo(
-    () => adaptiveScale([...tier1Results, ...tier2Results].map((listing) => listing.utility_score)),
-    [tier1Results, tier2Results],
-  );
+  const scale = useMemo(() => adaptiveScale(scoreRange), [scoreRange]);
 
   // Which pins the feed is showing a card for (see SelectedListingAction).
   const cardIds = useMemo(() => {
@@ -835,7 +846,7 @@ export default function NeshanMap() {
         <button
           type="button"
           onClick={restoreSearchArea}
-          className="absolute bottom-5 left-1/2 z-[900] -translate-x-1/2 rounded-full bg-slate-900/90 px-4 py-2 text-xs font-medium text-white shadow-lg backdrop-blur transition hover:bg-slate-900"
+          className="absolute bottom-20 left-1/2 z-[900] -translate-x-1/2 rounded-full bg-slate-900/90 lg:bottom-5 px-4 py-2 text-xs font-medium text-white shadow-lg backdrop-blur transition hover:bg-slate-900"
         >
           بازگشت به محدوده جستجو
         </button>

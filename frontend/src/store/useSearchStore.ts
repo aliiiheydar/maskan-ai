@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import { describeLocation, getListing, getNeighborhoodAt, getNeighborhoods, searchListings, streamChat } from "@/lib/api";
+import { scoreRangeOf, type ScoreRange } from "@/lib/matchColor";
 import type {
   Listing,
   LivingKind,
@@ -48,7 +49,7 @@ const FIRST_PAGE_SIZE = 60;
  * - intelligent: the same filter fields (the chat writes into them) plus the
  *   text of the last turn, which the backend re-extracts intent from.
  */
-function buildSearchRequest(state: FilterState, page: number): UnifiedSearchRequest {
+function buildSearchRequest(state: FilterState, page: number, offset = 0): UnifiedSearchRequest {
   if (state.mode === "map") {
     return {
       mode: "map",
@@ -73,6 +74,7 @@ function buildSearchRequest(state: FilterState, page: number): UnifiedSearchRequ
       // than as counted badges, so it travels with the box that defines them.
       map_zoom: state.mapZoom ?? undefined,
       page,
+      offset,
       // The feed pages like any other mode. The pins do not: the map draws
       // response.map_points plus response.map_clusters, which together account
       // for every match, so the badges still agree with the count above the
@@ -128,6 +130,7 @@ function buildSearchRequest(state: FilterState, page: number): UnifiedSearchRequ
     criteria_importance: state.criteriaWeights,
     financial_persona: state.financialPersona,
     page,
+    offset,
     page_size: page === 1 ? FIRST_PAGE_SIZE : RESULTS_PAGE_SIZE,
   };
 }
@@ -163,6 +166,7 @@ const MODE_SCOPED_RESET = {
   focusedListing: null as ListingResult | null,
   totalCount: 0,
   page: 1,
+  scoreRange: null as ScoreRange | null,
   naturalLanguageSummary: "",
   searchError: null,
   showTier2: false,
@@ -285,6 +289,10 @@ export interface FilterState {
   focusedListing: ListingResult | null;
   totalCount: number;
   page: number;
+  /** The band this search's results are shown across (see adaptiveScale).
+   * Fixed by the first page, so paging in weaker results further down cannot
+   * restate the percentage on a card the user has already read. */
+  scoreRange: ScoreRange | null;
   naturalLanguageSummary: string;
   isLoading: boolean;
   isLoadingMore: boolean;
@@ -468,6 +476,7 @@ export const useSearchStore = create<FilterState>((set, get) => ({
   focusedListing: null,
   totalCount: 0,
   page: 1,
+  scoreRange: null,
   naturalLanguageSummary: "",
   isLoading: false,
   isLoadingMore: false,
@@ -578,6 +587,9 @@ export const useSearchStore = create<FilterState>((set, get) => ({
         mapClusters: response.map_clusters ?? [],
         totalCount: response.total_count,
         page: 1,
+        scoreRange: scoreRangeOf(
+          [...response.tier_1_results, ...response.tier_2_results].map((listing) => listing.utility_score),
+        ),
         naturalLanguageSummary: response.natural_language_summary,
         isLoading: false,
         // A narrow search can leave Tier 1 with three results and a collapsed
@@ -603,9 +615,15 @@ export const useSearchStore = create<FilterState>((set, get) => ({
   loadMoreResults: async () => {
     const state = get();
     const nextPage = state.page + 1;
+    // Where to continue from is how many results are held, not which page
+    // this is: the first page is FIRST_PAGE_SIZE and the rest are smaller, so
+    // page arithmetic on the server's side asked for row 30 while the feed
+    // already had sixty -- and rows 30..59 arrived a second time, appended
+    // below themselves at the higher percentages they had ranked at.
+    const loaded = state.tier1Results.length + state.tier2Results.length;
     set({ isLoadingMore: true, searchError: null });
     try {
-      const response = await searchListings(buildSearchRequest(state, nextPage));
+      const response = await searchListings(buildSearchRequest(state, nextPage, loaded));
       set({
         tier1Results: [...state.tier1Results, ...response.tier_1_results],
         tier2Results: [...state.tier2Results, ...response.tier_2_results],

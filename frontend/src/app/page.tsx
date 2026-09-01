@@ -44,7 +44,6 @@ export default function Home() {
   const mode = useSearchStore((state) => state.mode);
   const setMode = useSearchStore((state) => state.setMode);
   const runSearch = useSearchStore((state) => state.runSearch);
-  const selectedListingId = useSearchStore((state) => state.selectedListingId);
   const isPicking = useSearchStore(
     (state) => state.isPickingWorkplace || state.isPickingNeighborhood,
   );
@@ -82,16 +81,12 @@ export default function Home() {
     return () => narrow.removeEventListener("change", enforce);
   }, [mode, setMode]);
 
-  /** Selecting a property shows it, here too.
-   *
-   * On a desktop a click on a card flies the map to that property and puts a
-   * «مشاهده ملک» button on its pin, with both columns in view. A phone can
-   * only show one of them, so the same click brings the map forward -- the
-   * selection is meaningless on the tab it was made from. */
-  useEffect(() => {
-    if (!selectedListingId) return;
-    showOnPhone("map");
-  }, [selectedListingId, showOnPhone]);
+  /* Selecting a property deliberately does *not* move a phone to the map.
+     Picking a card is how someone reads down a list -- comparing one against
+     the next -- and throwing them onto the map each time took the list away
+     mid-comparison and made getting back a two-tap round trip. The map still
+     flies to the selection; it just does it on the tab where the map is, and
+     «نقشه» is one tap away for the user who wants to see where it is. */
 
   /** Picking a point on the map, from a panel that is not on screen with it. */
   const wasPicking = useRef(false);

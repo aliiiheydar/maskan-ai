@@ -38,6 +38,7 @@ export default function ListingFeed() {
 
   const selectedListingId = useSearchStore((state) => state.selectedListingId);
   const focusedListing = useSearchStore((state) => state.focusedListing);
+  const scoreRange = useSearchStore((state) => state.scoreRange);
   const setSelectedListingId = useSearchStore((state) => state.setSelectedListingId);
 
   const loadedCount = tier1Results.length + tier2Results.length;
@@ -53,9 +54,12 @@ export default function ListingFeed() {
     }
     return loaded;
   }, [tier1Results, tier2Results, focusedListing]);
-  // One scale for the whole visible set, so every card is measured against the
-  // same range -- and the map's pins against that same range too.
-  const scale = useMemo(() => adaptiveScale(ranked.map((listing) => listing.utility_score)), [ranked]);
+  // One scale for the whole search, so every card is measured against the same
+  // range -- and the map's pins against that same range too. It comes from the
+  // store rather than from the cards currently loaded: derived here, every
+  // "نمایش موارد بیشتر" moved the bottom of the range and rewrote the
+  // percentage on every card already on screen.
+  const scale = useMemo(() => adaptiveScale(scoreRange), [scoreRange]);
 
   /** Selecting a property anywhere -- a card, or its pin on the map -- brings
    * it into view here, so the map flying to a pin and the feed showing that

@@ -1,5 +1,14 @@
 import type L from "leaflet";
 
+/** Whether the map has a viewport at all -- false while it is the tab a phone
+ * is not looking at. Anything that reads or reports the visible area has to
+ * ask first: a `display:none` container measures 0x0, and Leaflet answers
+ * questions about it with a bounding box collapsed onto its centre. */
+export function isOnScreen(map: L.Map): boolean {
+  const container = map.getContainer();
+  return container.clientWidth > 0 && container.clientHeight > 0;
+}
+
 /**
  * Runs a map movement as soon as the map actually has a size on screen.
  *
