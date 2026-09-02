@@ -32,7 +32,9 @@ class Settings(BaseSettings):
     # product makes.
     openrouter_api_key: str = "your_openrouter_api_key_here"
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
-    llm_model: str = "deepseek/deepseek-chat"
+    # The leading ~ belongs to the OpenRouter id: it marks a floating "latest"
+    # alias rather than a pinned dated build.
+    llm_model: str = "~deepseek/deepseek-v4-flash-latest"
     embedding_model: str = "openai/text-embedding-3-small"
     default_lat: float = 35.6997
     default_lon: float = 51.3380

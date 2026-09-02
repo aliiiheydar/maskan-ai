@@ -136,7 +136,7 @@ single most common way to get a blank result panel.
 | :-- | :-- | :-- |
 | `OPENROUTER_API_KEY` | placeholder | **The only optional feature in the app.** With a real key, جستجوی گفت‌وگویی works: Persian chat replies and intent extraction. Without one, `GET /config` reports the mode unavailable and the header shows it disabled. Nothing else changes — the ranking, the scores and the map are computed locally and are byte-identical either way. |
 | `OPENROUTER_BASE_URL` | `https://openrouter.ai/api/v1` | Any OpenAI-compatible endpoint. |
-| `LLM_MODEL` | `deepseek/deepseek-chat` | Chat and intent extraction. |
+| `LLM_MODEL` | `~deepseek/deepseek-v4-flash-latest` | Chat and intent extraction. The leading `~` is part of the OpenRouter id — it marks a floating "latest" alias, so the deployment follows DeepSeek's current Flash build instead of a pinned date. |
 | `EMBEDDING_MODEL` | `openai/text-embedding-3-small` | Description vectors. Only the corpus builders use these; with no key they fall back to a local hashing vectoriser. |
 | `DB_PATH` | *(empty)* | Where the SQLite corpus lives. Empty means inside the package (`app/data/assets/maskan.db`). The compose files set it to `/data/maskan.db` on a mounted volume. |
 | `CORS_ALLOW_ORIGINS` | `http://localhost:3000` | Comma-separated origins allowed to call the API. |

@@ -47,7 +47,7 @@ Divar does not as the boring option.
 ## Tech Stack & External APIs
 - **Backend**: Python 3.11+, FastAPI, Pydantic v2, Uvicorn, AsyncIO, NumPy, Shapely, H3, scikit-learn.
 - **Database**: SQLite — typed indexed columns + a JSON payload, an R*Tree for the viewport, FTS5 for Persian text, embeddings as float32 blobs. A compressed corpus ships at `backend/app/data/seed/maskan.db.xz` and is unpacked on first start.
-- **LLM Backbone**: `deepseek/deepseek-chat` via OpenRouter. **Entirely optional** — with no key the app loses one mode and nothing else.
+- **LLM Backbone**: `~deepseek/deepseek-v4-flash-latest` via OpenRouter (the `~` is part of the id — a floating "latest" alias). **Entirely optional** — with no key the app loses one mode and nothing else.
 - **Embeddings**: `openai/text-embedding-3-small` via OpenRouter; local hashing fallback.
 - **Frontend**: Next.js 14 (App Router), React 18, TypeScript, Tailwind CSS, Zustand, Leaflet + MapLibre GL over OpenFreeMap vector tiles (no API key, no Neshan SDK).
 - **Testing**: `pytest`, `pytest-asyncio`, `httpx` (backend), `vitest` (frontend).
