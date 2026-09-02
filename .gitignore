@@ -30,6 +30,12 @@ dist/
 .coverage
 htmlcov/
 
+# Everything that is not part of the app but was worth keeping rather than
+# deleting: superseded design notes, one-off scratch files, old data dumps,
+# debugging screenshots, server logs. Nothing here is read by any code path --
+# if something in _archive turns out to be needed, it is a bug that it moved.
+_archive/
+
 # Working artifacts: server logs, and the screenshots used while debugging a
 # layout. Neither is part of the app.
 nohup.out
@@ -37,8 +43,18 @@ divar-map-screenshots/
 filter-section-width-bug/
 non joining neighborhoods.png
 
-# The raw scrape and its token cache. Tens of megabytes of listing data that
-# the pipeline reads and never writes; kept out of git history and shared out
-# of band rather than versioned as a blob.
+# The raw scrape and the crawler's own caches. Tens of megabytes of listing
+# data that the pipeline reads and never writes, plus the token queues the
+# crawler rebuilds for itself; kept out of git history and shared out of band
+# rather than versioned as a blob.
 crawler/divar_listings.json
 crawler/crawled_tokens.json
+crawler/discovered_tokens.json
+crawler/*.log
+
+# Per-service environment files. Only the .example twins are committed --
+# see docs/GETTING_STARTED.md.
+backend/.env
+backend/.env.production
+frontend/.env
+frontend/.env.production
