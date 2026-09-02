@@ -8,11 +8,18 @@ override DB_PATH without editing anything.
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from app.core import paths
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        # backend/.env -- uvicorn and pytest are both started from backend/.
-        env_file=".env",
+        # An absolute path, not ".env" relative to the working directory.
+        # This is read once at import, and a process started from the
+        # repository root -- a reloader worker, a script, a one-off `python -c`
+        # -- would otherwise find no file, fall back to every default, and
+        # report a configured deployment as unconfigured. Where uvicorn was
+        # launched from is not something the configuration should depend on.
+        env_file=paths.BACKEND_DIR / ".env",
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore",
