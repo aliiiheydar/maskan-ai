@@ -1,6 +1,6 @@
 """GET /api/v1/geo/* -- the shapes the map draws search areas from.
 
-GET /geo/neighborhoods         -- all 258 محله, without polygons
+GET /geo/neighborhoods         -- all 370 محله, without polygons
 GET /geo/neighborhoods/shapes  -- polygons for the selected keys only
 GET /geo/neighborhoods/area    -- the selected keys dissolved into one outline
 GET /geo/neighborhood-at       -- which محله a map coordinate falls in

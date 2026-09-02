@@ -59,7 +59,7 @@ class ListingRepository:
             self._by_h3[listing.h3_index].append(listing.id)
         # Neighborhood price medians are a property of the corpus, not of a
         # query, so they are computed once here rather than inside the ranking
-        # loop ("architectural suggestion.md" SS7.2).
+        # loop (docs/ALGORITHMS.md SS7).
         self.baselines = MarketBaselines.from_listings(self._listings.values())
 
     def open(self, path: Path = database.DEFAULT_DB_PATH) -> int:
