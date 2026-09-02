@@ -36,7 +36,7 @@ import NeighborhoodPicker from "./NeighborhoodPicker";
 
 const LIVING_KINDS: { key: LivingKind; label: string; hint: string }[] = [
   { key: "standard", label: "ملک مستقل", hint: "آپارتمان یا خانه‌ی کامل" },
-  { key: "shared", label: "هم‌خانه و خوابگاه", hint: "اتاق، تخت یا سکونت مشترک" },
+  { key: "shared", label: "هم‌خانه و خوابگاه", hint: "اتاق، تخت، سکونت مشترک یا پارکینگ" },
 ];
 
 const MAX_ROOMS = 5;

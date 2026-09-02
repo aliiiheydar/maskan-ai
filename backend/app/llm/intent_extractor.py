@@ -52,8 +52,9 @@ yourself -- read min_build_year straight off this table: "نوساز" / "کلی�
 - "فقط با عکس" / "آگهی بدون عکس نباشه" -> must_have_images: true.
 - Shared housing is a separate market and must be asked for explicitly: "هم‌خونه‌ای", \
 "هم‌خانه", "هم‌اتاقی", "اتاق اجاره‌ای", "یه اتاق می‌خوام", "خوابگاه", "سوئیت اشتراکی", \
-"خونه مشترک" -> living_kind: "shared". Anything about a whole flat or house -- and silence on \
-the subject -- is "standard". Being a student, or having a small budget, is NOT on its own a \
+"خونه مشترک" -> living_kind: "shared". A parking space let on its own belongs to the same \
+option: "پارکینگ می‌خوام", "جای پارک اجاره‌ای" -> living_kind: "shared". Anything about a whole \
+flat or house -- and silence on the subject -- is "standard". Being a student, or having a small budget, is NOT on its own a \
 request for shared housing.
 - Place names go in target_neighborhoods, exactly as the user wrote them \
 (e.g. "دنبال خونه تو ونک و سعادت‌آباد" -> ["ونک", "سعادت‌آباد"]). Include streets, squares, \

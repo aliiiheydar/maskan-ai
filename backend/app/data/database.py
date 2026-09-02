@@ -43,7 +43,7 @@ from typing import Iterable, Iterator, Optional
 
 from app.core import paths
 from app.core.models import Listing
-from app.core.shared_living import is_shared_living
+from app.core.shared_living import is_not_a_home, is_parking_rental
 from app.core.normalizers import normalize_persian_text, parse_persian_numbers
 
 DEFAULT_DB_PATH = paths.asset("maskan.db")
@@ -159,38 +159,73 @@ CREATE TABLE IF NOT EXISTS embeddings (
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 """
 
+#: meta key recording that parking adverts have been flagged in this corpus.
+_PARKING_MIGRATION = "migration:parking_flagged"
+
+
+def _backfill(connection: sqlite3.Connection, predicate) -> int:
+    """Flag every stored row `predicate` accepts, from its payload.
+
+    Read back from the payload rather than from a re-crawl: the title and the
+    description are already there, and they are exactly what the classifiers
+    read, so the result is identical to what enrichment would have written --
+    and a corpus that took hours to crawl does not have to be rebuilt to gain
+    a flag.
+    """
+    flagged = [
+        (row["rowid"],)
+        for row in connection.execute("SELECT rowid, payload FROM listings WHERE is_shared_living = 0")
+        if predicate(json.loads(row["payload"]))
+    ]
+    connection.executemany("UPDATE listings SET is_shared_living = 1 WHERE rowid = ?", flagged)
+    return len(flagged)
+
 
 def migrate(connection: sqlite3.Connection) -> int:
     """Bring an already-built database up to the current schema.
 
     ``CREATE TABLE IF NOT EXISTS`` is a no-op on a table that exists, so a new
-    column has to be added -- and filled -- explicitly, or a corpus that took
-    hours to crawl would have to be rebuilt to gain one flag.
+    column has to be added -- and filled -- explicitly.
 
-    The only migration so far is ``is_shared_living``. It is backfilled from
-    each row's stored payload rather than from a re-crawl: the title and the
-    description are already there, and they are exactly what the classifier
-    reads, so the result is identical to what enrichment would have written.
-    Returns how many rows were flagged.
+    Two migrations so far, both feeding the one ``is_shared_living`` column:
+    the column itself, and the later discovery that parking spaces are let
+    under the same category as apartments (see app.core.shared_living). The
+    second one has no schema change to detect it by, so it records itself in
+    ``meta`` -- re-flagging on every open would be harmless but would read all
+    21k payloads each time the corpus is written to.
+
+    Returns how many rows this call flagged.
     """
     columns = {row["name"] for row in connection.execute("PRAGMA table_info(listings)")}
     # No table yet (a fresh database): _SCHEMA creates it with the column
-    # already in place, so there is nothing to migrate.
-    if not columns or "is_shared_living" in columns:
+    # already in place, and enrichment flags every row on the way in.
+    if not columns:
         return 0
 
+    flagged = 0
     with connection:
-        connection.execute("ALTER TABLE listings ADD COLUMN is_shared_living INTEGER NOT NULL DEFAULT 0")
-        connection.execute(
-            "CREATE INDEX IF NOT EXISTS idx_listings_shared ON listings(is_shared_living, effective_monthly_cost)"
-        )
-        flagged = []
-        for row in connection.execute("SELECT rowid, payload FROM listings"):
-            payload = json.loads(row["payload"])
-            if is_shared_living(payload.get("title"), payload.get("description")):
-                flagged.append((row["rowid"],))
-        connection.executemany("UPDATE listings SET is_shared_living = 1 WHERE rowid = ?", flagged)
-    return len(flagged)
+        # The migration records itself here, so it has to exist before the
+        # schema script runs (which is after this function -- see
+        # upsert_listings).
+        connection.execute("CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
+        if "is_shared_living" not in columns:
+            connection.execute("ALTER TABLE listings ADD COLUMN is_shared_living INTEGER NOT NULL DEFAULT 0")
+            connection.execute(
+                "CREATE INDEX IF NOT EXISTS idx_listings_shared ON listings(is_shared_living, effective_monthly_cost)"
+            )
+            flagged += _backfill(connection, lambda p: is_not_a_home(p.get("title"), p.get("description")))
+            connection.execute(
+                "INSERT OR REPLACE INTO meta (key, value) VALUES (?, '1')", (_PARKING_MIGRATION,)
+            )
+            return flagged
+
+        done = connection.execute("SELECT 1 FROM meta WHERE key = ?", (_PARKING_MIGRATION,)).fetchone()
+        if not done:
+            flagged += _backfill(connection, lambda p: is_parking_rental(p.get("title")))
+            connection.execute(
+                "INSERT OR REPLACE INTO meta (key, value) VALUES (?, '1')", (_PARKING_MIGRATION,)
+            )
+    return flagged
 
 
 def connect(path: Path = DEFAULT_DB_PATH, *, read_only: bool = False) -> sqlite3.Connection:

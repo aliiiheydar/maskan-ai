@@ -32,7 +32,8 @@ class Listing(BaseModel):
     )
     is_shared_living: bool = Field(
         default=False,
-        description="هم‌خانه، اتاق یا خوابگاه -- a room/bed/flatmate advert rather than a whole unit",
+        description="Not a whole property to live in: a room/bed/flatmate advert or a parking space "
+        "let on its own. Offered in the app as هم‌خانه و خوابگاه; see app/core/shared_living.py.",
     )
     is_full_rahn: bool = Field(
         default=False,

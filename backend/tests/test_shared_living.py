@@ -7,7 +7,7 @@ fires on مجردی would quietly drop ordinary apartments out of every search.
 
 import pytest
 
-from app.core.shared_living import is_shared_living
+from app.core.shared_living import is_not_a_home, is_parking_rental, is_shared_living
 
 
 @pytest.mark.parametrize(
@@ -58,3 +58,55 @@ def test_arabic_spellings_are_normalised_before_matching():
 
 def test_an_advert_with_no_text_at_all_is_not_shared_living():
     assert not is_shared_living(None, None)
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        "اجاره پارکینگ",
+        "اجاره پارکینگ مسقف",
+        "پارکینگ اجاره ای در جوادیه",
+        "رهن پارکینگ خودرو نزدیک مترو شهرری",
+        "پارکینگ خودرو و موتور",
+        # Words between the letting verb and the noun.
+        "اجاره سالیانه و ماهانه پارکینگ",
+        "اجاره یک جای پارکینگ",
+        # A real misspelling in the corpus; the advert is no less a parking
+        # space for it.
+        "اجاره پارکینک",
+    ],
+)
+def test_a_parking_space_let_on_its_own_is_caught(title):
+    assert is_parking_rental(title)
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        # The word alone means nothing: 1,534 of 21,377 titles carry it and
+        # nearly all are flats advertising the spot they come with.
+        "آپارتمان 70 متری با پارکینگ و انباری",
+        "اجاره آپارتمان 45متری پارکینگ دار",
+        "70متر پارکینگدار عربی",
+        "اجاره 54 متر بدون پارکینگ واسانسور",
+        # Leads with the amenity, but a floor and an area give it away.
+        "پارکینگ اصلی 64 متر طبقه دوم",
+    ],
+)
+def test_a_flat_that_merely_has_parking_is_left_alone(title):
+    assert not is_parking_rental(title)
+
+
+def test_the_description_is_not_read_for_parking():
+    """Every other advert names parking in its description; an advertiser
+    letting one says so in the title."""
+    assert not is_parking_rental(None)
+    assert not is_not_a_home("آپارتمان ۷۰ متری دو خوابه", "دارای پارکینگ و انباری و آسانسور")
+
+
+def test_one_predicate_covers_everything_that_is_not_a_whole_home():
+    """The crawler and the migration both flag on this, so they cannot drift
+    apart on what belongs in the standard search."""
+    assert is_not_a_home("اجاره پارکینگ مسقف", None)
+    assert is_not_a_home("هم‌خانه خانم نیازمندیم", None)
+    assert not is_not_a_home("آپارتمان ۸۵ متری دو خوابه با آسانسور", None)

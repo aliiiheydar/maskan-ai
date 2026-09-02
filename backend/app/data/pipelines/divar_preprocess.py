@@ -37,7 +37,7 @@ import h3
 
 from app.core import paths
 from app.core.constants import TEHRAN_BBOX
-from app.core.shared_living import is_shared_living
+from app.core.shared_living import is_not_a_home
 from app.core.models import Listing
 from app.core.normalizers import normalize_persian_text, parse_persian_numbers, to_persian_digits
 from app.core.pricing import calculate_effective_monthly_cost
@@ -584,8 +584,8 @@ def to_listing(record: dict) -> Listing:
         convertible_deposit_max_toman=facts["convertible_deposit_max_toman"],
         is_full_rahn=facts["is_full_rahn"],
         # Read off the advertiser's own words; there is no field on the
-        # advert that says "this is a room, not a flat".
-        is_shared_living=is_shared_living(record["title"], record["description"]),
+        # advert that says "this is a room, or a parking space, not a flat".
+        is_shared_living=is_not_a_home(record["title"], record["description"]),
         area_sqm=facts["area_sqm"],
         rooms=facts["rooms"],
         floor=facts["floor"],

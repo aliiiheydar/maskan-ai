@@ -1,9 +1,14 @@
-"""Telling a shared home or a dormitory apart from a whole property to rent.
+"""Telling a whole home to rent from everything else filed beside it.
 
-Divar files هم‌خانه adverts, room lettings and dormitory beds under the same
-``apartment-rent`` category as whole apartments -- there is no field on the
-advert that separates them. They are nonetheless a different product: someone
-offering a room in a flat they live in, or a bed in a dormitory, quotes a
+Two things are not a home you rent and live in on your own, and Divar files
+both under the same ``apartment-rent`` category as whole apartments: a room,
+bed or flatmate slot (below), and a parking space. They are separated here so
+the search can treat them as their own market, and the app offers them under
+one option -- هم‌خانه و خوابگاه -- rather than mixing them into ordinary
+results where they read as impossibly cheap flats.
+
+A room or a bed is a different product, not a bargain: someone offering a
+room in a flat they live in, or a bed in a dormitory, quotes a
 fraction of a whole-apartment price, so these dominate the cheap tail of every
 search and make an ordinary rental look overpriced beside them. The search has
 to treat them as a separate market rather than as bargains.
@@ -44,9 +49,68 @@ _MARKERS = re.compile(
 )
 
 
+# A parking space let on its own. The word پارکینگ is useless by itself --
+# 1,534 of 21,377 titles carry it and all but a few dozen are apartments
+# advertising a parking spot they come with -- so what is matched is پارکینگ
+# as the *subject* of the advert rather than as one of its features:
+#
+#   * a letting verb running into it: "اجاره پارکینگ", "رهن پارکینگ", and the
+#     same with a few words in between ("اجاره سالیانه و ماهانه پارکینگ",
+#     "اجاره یک جای پارکینگ", "اجاره ۲ تا پارکینگ غیرمزاحم");
+#   * the title opening on it: "پارکینگ مسقف", "پارکینگ خودرو و موتور";
+#   * the reverse order: "پارکینگ اجاره‌ای".
+#
+# پارکینک, with a ک, is included: it is a real misspelling in the corpus and
+# the advert is no less a parking space for it.
+_PARKING_MARKERS = re.compile(
+    r"(?:^|[\s/،,\-])(?:اجاره|رهن|کرایه|واگذاری)\s*(?:\S+\s+){0,3}?پارکین[گک]"
+    r"|^\s*پارکین[گک]"
+    r"|پارکین[گک]\s*(?:اجاره|کرایه)"
+)
+
+# ...unless the same title also advertises a dwelling. An apartment whose
+# title happens to lead with its parking ("پارکینگ اصلی ۶۴ متر طبقه دوم") is a
+# flat, and so is anything quoting a floor area: a parking space is sold as a
+# place to put a car, never as square metres. This costs two genuine parking
+# adverts out of ~54 and keeps hundreds of apartments out, which is the trade
+# worth making -- a home wrongly filed as parking disappears from the search
+# it belongs in, while parking wrongly left in merely looks cheap.
+_DWELLING_MARKERS = re.compile(
+    r"خواب|آپارتمان|اپارتمان|سوییت|سوئیت|مغازه|دفتر|طبقه|واحد(?![یي])|منزل|ویلا|خانه|اتاق|متری|متر\b"
+)
+
+
+def _one_line(*parts: str | None) -> str:
+    """The advert's words, normalised and flattened onto one line.
+
+    Zero-width joiners survive normalisation but split "هم‌خانه" for the
+    regexes, so they collapse into the ordinary space the patterns expect.
+    """
+    blob = " ".join(normalize_persian_text(part or "") for part in parts)
+    return re.sub(r"[‌\s]+", " ", blob)
+
+
 def is_shared_living(title: str | None, description: str | None) -> bool:
     """True when the advert is offering a room, a bed or a flatmate slot."""
-    blob = f"{normalize_persian_text(title or '')} {normalize_persian_text(description or '')}"
-    # Zero-width joiners survive normalisation but split "هم‌خانه" for the
-    # regex, so they collapse into the ordinary space the patterns expect.
-    return bool(_MARKERS.search(re.sub(r"[‌\s]+", " ", blob)))
+    return bool(_MARKERS.search(_one_line(title, description)))
+
+
+def is_parking_rental(title: str | None) -> bool:
+    """True when the advert is letting a parking space rather than a home.
+
+    The title only. Descriptions name parking constantly -- it is one of the
+    first amenities anyone lists -- so reading them would flag a large part of
+    the corpus, while an advertiser letting a parking space says so in the
+    title every time.
+    """
+    text = _one_line(title)
+    return bool(_PARKING_MARKERS.search(text)) and not _DWELLING_MARKERS.search(text)
+
+
+def is_not_a_home(title: str | None, description: str | None) -> bool:
+    """True for anything that is not a whole property to live in.
+
+    The one predicate the corpus is flagged with, so the crawler and the
+    migration cannot drift apart on what belongs in the standard search.
+    """
+    return is_shared_living(title, description) or is_parking_rental(title)
