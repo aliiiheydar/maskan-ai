@@ -159,8 +159,12 @@ CREATE TABLE IF NOT EXISTS embeddings (
 CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 """
 
-#: meta key recording that parking adverts have been flagged in this corpus.
+#: meta key recording which revision of the parking rule a corpus was flagged
+#: with. The rule is read off advertisers' spelling and keeps meeting new ways
+#: to write "parking", so bump the revision whenever app.core.shared_living
+#: learns one and every existing database re-runs the rule on its next write.
 _PARKING_MIGRATION = "migration:parking_flagged"
+_PARKING_RULE_REVISION = "2"
 
 
 def _backfill(connection: sqlite3.Connection, predicate) -> int:
@@ -190,9 +194,11 @@ def migrate(connection: sqlite3.Connection) -> int:
     Two migrations so far, both feeding the one ``is_shared_living`` column:
     the column itself, and the later discovery that parking spaces are let
     under the same category as apartments (see app.core.shared_living). The
-    second one has no schema change to detect it by, so it records itself in
-    ``meta`` -- re-flagging on every open would be harmless but would read all
-    21k payloads each time the corpus is written to.
+    second one has no schema change to detect it by, so it stamps ``meta``
+    with the revision of the parking rule it ran -- re-flagging on every open
+    would be harmless but would read all 21k payloads each time the corpus is
+    written to, and a stale stamp is what tells a corpus flagged under an older
+    rule to run the current one.
 
     Returns how many rows this call flagged.
     """
@@ -215,15 +221,19 @@ def migrate(connection: sqlite3.Connection) -> int:
             )
             flagged += _backfill(connection, lambda p: is_not_a_home(p.get("title"), p.get("description")))
             connection.execute(
-                "INSERT OR REPLACE INTO meta (key, value) VALUES (?, '1')", (_PARKING_MIGRATION,)
+                "INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)",
+                (_PARKING_MIGRATION, _PARKING_RULE_REVISION),
             )
             return flagged
 
-        done = connection.execute("SELECT 1 FROM meta WHERE key = ?", (_PARKING_MIGRATION,)).fetchone()
-        if not done:
+        stamp = connection.execute(
+            "SELECT value FROM meta WHERE key = ?", (_PARKING_MIGRATION,)
+        ).fetchone()
+        if stamp is None or stamp["value"] != _PARKING_RULE_REVISION:
             flagged += _backfill(connection, lambda p: is_parking_rental(p.get("title")))
             connection.execute(
-                "INSERT OR REPLACE INTO meta (key, value) VALUES (?, '1')", (_PARKING_MIGRATION,)
+                "INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)",
+                (_PARKING_MIGRATION, _PARKING_RULE_REVISION),
             )
     return flagged
 

@@ -61,6 +61,18 @@ def test_migrating_twice_changes_nothing():
     assert _flagged(connection) == {"0"}
 
 
+def test_a_corpus_flagged_under_an_older_parking_rule_is_run_again():
+    """The rule is read off advertisers' spelling and keeps meeting new ways
+    to write "parking", so the stamp records which revision ran, not merely
+    that one did."""
+    connection = _db(PARKING, APARTMENT, with_column=True)
+    assert migrate(connection) == 1
+    connection.execute("UPDATE listings SET is_shared_living = 0")
+    connection.execute("UPDATE meta SET value = '1' WHERE key = 'migration:parking_flagged'")
+    assert migrate(connection) == 1
+    assert _flagged(connection) == {"0"}
+
+
 def test_an_already_flagged_row_is_not_re_examined():
     connection = _db(APARTMENT, with_column=True)
     connection.execute("UPDATE listings SET is_shared_living = 1")

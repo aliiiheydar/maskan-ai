@@ -71,9 +71,15 @@ def test_an_advert_with_no_text_at_all_is_not_shared_living():
         # Words between the letting verb and the noun.
         "اجاره سالیانه و ماهانه پارکینگ",
         "اجاره یک جای پارکینگ",
-        # A real misspelling in the corpus; the advert is no less a parking
-        # space for it.
+        # Real misspellings in the corpus -- ک for گ and back again; the
+        # advert is no less a parking space for it.
         "اجاره پارکینک",
+        "اجاره پارگینگ خودرو",
+        # No letting verb at all: the title is the word, and the advertiser
+        # had nothing else to say about what is on offer. ("آجا" is how this
+        # one spelt اجاره.)
+        "آجا پارکینگ",
+        "پارکینگ",
     ],
 )
 def test_a_parking_space_let_on_its_own_is_caught(title):
@@ -91,6 +97,13 @@ def test_a_parking_space_let_on_its_own_is_caught(title):
         "اجاره 54 متر بدون پارکینگ واسانسور",
         # Leads with the amenity, but a floor and an area give it away.
         "پارکینگ اصلی 64 متر طبقه دوم",
+        # Ends on the amenity, which is only the subject when there is nothing
+        # else in the title: a district and a street to name means a flat...
+        "افسریه والفجر با پارکینگ",
+        "نامجو-سلمان فارسی با پارکینگ",
+        # ...and so does a number, which in a title this short is a floor area
+        # or a room count, never a parking bay.
+        "پیروزی/نبرد/لرستان/55متربا پارکینگ",
     ],
 )
 def test_a_flat_that_merely_has_parking_is_left_alone(title):

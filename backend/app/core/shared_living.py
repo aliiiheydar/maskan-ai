@@ -58,14 +58,23 @@ _MARKERS = re.compile(
 #     same with a few words in between ("اجاره سالیانه و ماهانه پارکینگ",
 #     "اجاره یک جای پارکینگ", "اجاره ۲ تا پارکینگ غیرمزاحم");
 #   * the title opening on it: "پارکینگ مسقف", "پارکینگ خودرو و موتور";
-#   * the reverse order: "پارکینگ اجاره‌ای".
+#   * the reverse order: "پارکینگ اجاره‌ای";
+#   * the title being nothing but the word, give or take one qualifier: "آجا
+#     پارکینگ" says what it is letting by having nothing else to say. One
+#     leading word only, and no digits in it: "افسریه والفجر با پارکینگ" and
+#     "پیروزی/نبرد/لرستان/55متربا پارکینگ" both end on the word and are both
+#     apartments, the first by having a district and a street to name, the
+#     second by quoting a floor area.
 #
-# پارکینک, with a ک, is included: it is a real misspelling in the corpus and
-# the advert is no less a parking space for it.
+# The word is spelled four ways because the corpus spells it four ways:
+# پارکینگ, پارکینک, پارگینگ, پارگینک. A misspelling makes the advert no less a
+# parking space.
+_PARKING = r"پار[کگ]ین[گک]"
 _PARKING_MARKERS = re.compile(
-    r"(?:^|[\s/،,\-])(?:اجاره|رهن|کرایه|واگذاری)\s*(?:\S+\s+){0,3}?پارکین[گک]"
-    r"|^\s*پارکین[گک]"
-    r"|پارکین[گک]\s*(?:اجاره|کرایه)"
+    r"(?:^|[\s/،,\-])(?:اجاره|رهن|کرایه|واگذاری)\s*(?:\S+\s+){0,3}?" + _PARKING
+    + r"|^\s*" + _PARKING
+    + r"|" + _PARKING + r"\s*(?:اجاره|کرایه)"
+    + r"|^\s*(?:[^\s\d]+\s+)?" + _PARKING + r"\s*$"
 )
 
 # ...unless the same title also advertises a dwelling. An apartment whose
