@@ -1,0 +1,61 @@
+# Development. The source is mounted from the host and both servers reload on
+# save:
+#
+#     cp backend/.env.example backend/.env
+#     cp frontend/.env.example frontend/.env
+#     docker compose -f docker-compose.dev.yml up --build
+#
+# A separate file rather than an override layered onto docker-compose.yml: the
+# two share almost nothing -- different commands, different stages of the
+# frontend image, different volumes -- and an override that replaces every
+# meaningful key is harder to read than the file it is overriding.
+#
+# Running the two servers directly on the host (uvicorn --reload and npm run
+# dev) is still the fastest loop and is what docs/GETTING_STARTED.md leads
+# with. This is for working on a machine you would rather not install Python
+# 3.11 and Node 20 on.
+
+name: maskan-ai-dev
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    env_file:
+      - backend/.env
+    environment:
+      DB_PATH: /data/maskan.db
+    volumes:
+      # The whole package, so an edit on the host is what uvicorn reloads. It
+      # shadows the copy baked into the image, including the seed file, which
+      # is the point: a corpus rebuilt on the host is the one the container
+      # unpacks.
+      - ./backend:/app
+      - maskan-db-dev:/data
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+      # The dependency stage only: `next dev` compiles from the mounted source,
+      # so building the production bundle here would be thrown away.
+      target: deps
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+      # An anonymous volume parked on top of the mount, so the image's
+      # node_modules -- installed for Linux -- survives the host directory
+      # being mounted over it. Without this line the container would see the
+      # host's node_modules, or none at all.
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  maskan-db-dev:

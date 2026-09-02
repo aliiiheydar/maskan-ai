@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.media import close_client as close_media_client
 from app.api.v1.router import api_router
+from app.core.config import settings
 from app.data import database
 from app.data.repository import ListingRepository
 from app.data.synthetic_generator import generate_synthetic_listings
@@ -26,10 +27,19 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     app.state.llm_client = OpenRouterClient()
     app.state.repository = ListingRepository()
 
-    # The real corpus lives in SQLite (scripts/build_database.py). Generating a
-    # synthetic one is the fallback for a checkout that has never built it --
-    # the app comes up either way, rather than failing on a missing file.
-    if database.listing_count():
+    # The real corpus lives in SQLite (scripts/build_database.py). A checkout
+    # that has never built one gets the copy that ships with the repository,
+    # unpacked once on this first start -- which is what makes `docker compose
+    # up` on a fresh clone a real Tehran search rather than an empty demo.
+    # Generating a synthetic corpus is the last resort, so the app comes up
+    # either way rather than failing on a missing file.
+    count = database.listing_count()
+    if count is None:
+        count = database.restore_seed()
+        if count:
+            print(f"[maskan] unpacked the shipped corpus to {database.DEFAULT_DB_PATH}")
+
+    if count:
         count = app.state.repository.open()
         print(f"[maskan] loaded {count} listings from {database.DEFAULT_DB_PATH.name}")
     else:
@@ -49,9 +59,12 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(title="Maskan AI", lifespan=lifespan)
 
+# Which browsers may call this API is a deployment fact, not a constant: the
+# frontend is served from a different origin in every shape this project runs
+# in (a dev server on :3000, a container, a domain).
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=settings.allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

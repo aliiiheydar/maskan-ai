@@ -32,6 +32,16 @@ ASSETS_DIR: Path = APP_DIR / "data" / "assets"
 #: re-running the scrape. Only the pipelines read these.
 RAW_ASSETS_DIR: Path = ASSETS_DIR / "raw"
 
+#: The corpus as it ships, compressed, one file.
+#:
+#: Building one takes hours of crawling that nobody should have to repeat to
+#: run the app, and the built database is far too large to version, so a
+#: compressed copy travels with the repository instead and is unpacked on the
+#: first start that finds no database -- see database.restore_seed. It is the
+#: reason `docker compose up` on a fresh clone comes up with the real Tehran
+#: corpus rather than the synthetic fallback.
+SEED_DIR: Path = APP_DIR / "data" / "seed"
+
 
 def asset(*parts: str) -> Path:
     """Path to a data file, e.g. ``asset("tehran.geojson")``."""

@@ -1,0 +1,49 @@
+# Everything the build does not need. Without this the context is ~350 MB --
+# the raw crawl, the built database, the embedding cache and two node_modules
+# trees -- and every `docker build` pays for uploading it.
+
+.git
+.gitignore
+_archive/
+docs/
+*.md
+
+# Local toolchains and caches.
+**/__pycache__/
+**/*.py[cod]
+**/.venv/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/node_modules/
+**/.next/
+**/*.tsbuildinfo
+.vscode/
+.idea/
+.DS_Store
+
+# Secrets. The backend's configuration arrives as container environment (see
+# the compose files' env_file), never baked into a layer.
+**/.env
+**/.env.local
+**/.env.*.local
+# ...with one deliberate exception: NEXT_PUBLIC_* values are compiled into the
+# JavaScript bundle, so the frontend's production values have to be present at
+# build time. They are public by definition -- an API URL, nothing else.
+!frontend/.env.production
+
+# The raw scrape and everything derived from it. The corpus reaches the image
+# as backend/app/data/seed/maskan.db.xz, 14 MB, and is unpacked at first start.
+crawler/divar_listings.json
+crawler/crawled_tokens.json
+crawler/discovered_tokens.json
+crawler/*.log
+backend/app/data/assets/maskan.db
+backend/app/data/assets/maskan.db-shm
+backend/app/data/assets/maskan.db-wal
+backend/app/data/assets/processed_listings.json
+backend/app/data/assets/embedding_cache.json
+
+# Vendored at build time by frontend/scripts/copy-map-assets.mjs.
+frontend/public/vendor/
+frontend/src/app/fonts/

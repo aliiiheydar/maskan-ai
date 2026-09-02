@@ -37,16 +37,26 @@ from __future__ import annotations
 import array
 import hashlib
 import json
+import lzma
+import os
+import shutil
 import sqlite3
 from pathlib import Path
 from typing import Iterable, Iterator, Optional
 
 from app.core import paths
+from app.core.config import settings
 from app.core.models import Listing
 from app.core.shared_living import is_not_a_home, is_parking_rental
 from app.core.normalizers import normalize_persian_text, parse_persian_numbers
 
-DEFAULT_DB_PATH = paths.asset("maskan.db")
+#: Where the corpus is read from and written to. Inside the package by
+#: default, which is what a checkout run from source wants; a container sets
+#: DB_PATH to a mounted volume so the database outlives the image.
+DEFAULT_DB_PATH = Path(settings.db_path) if settings.db_path else paths.asset("maskan.db")
+
+#: The shipped corpus, compressed. See paths.SEED_DIR.
+SEED_DB_PATH = paths.SEED_DIR / "maskan.db.xz"
 
 # Columns that exist purely so SQLite can filter and sort without touching the
 # JSON payload. Kept in one place because the schema, the INSERT and the
@@ -124,11 +134,11 @@ CREATE TABLE IF NOT EXISTS listings (
 );
 
 -- The composite ones are ordered by what the UI actually narrows on first:
--- an area or neighborhood bound, then price. That keeps the common classic
+-- an area or neighborhood bound, then price. That keeps the common panel
 -- search a range scan on one index rather than a scan of the table.
 CREATE INDEX IF NOT EXISTS idx_listings_cost      ON listings(effective_monthly_cost);
 -- Every search filters on this first (shared homes are a separate market),
--- so it leads the composite the classic search then narrows on price with.
+-- so it leads the composite the ranked search then narrows on price with.
 CREATE INDEX IF NOT EXISTS idx_listings_shared    ON listings(is_shared_living, effective_monthly_cost);
 CREATE INDEX IF NOT EXISTS idx_listings_area_cost ON listings(area_sqm, effective_monthly_cost);
 CREATE INDEX IF NOT EXISTS idx_listings_hood      ON listings(neighborhood_key, effective_monthly_cost);
@@ -642,6 +652,38 @@ def load_all(connection: sqlite3.Connection, *, with_embeddings: bool = True) ->
         if row["vector"] is not None:
             listing.embedding = array.array("f", row["vector"]).tolist()
         yield listing
+
+
+def restore_seed(path: Path = DEFAULT_DB_PATH, seed: Path = SEED_DB_PATH) -> Optional[int]:
+    """Unpack the shipped corpus to ``path``; returns its row count, or None.
+
+    None means there was nothing to unpack -- a checkout without the seed file
+    -- which is a fact about this deployment, not an error: the caller falls
+    back to the synthetic corpus. Anything else that goes wrong (a truncated
+    download, no room on the volume) is raised, because silently coming up on
+    3,000 invented listings when 21,000 real ones were meant to be there is
+    the failure that is hardest to notice.
+
+    Unpacked next to the target and moved into place, so a container killed
+    mid-restore leaves no half-written file behind for the next start to find
+    and mistake for a database. xz because it is the smallest of the formats
+    Python can read with no dependency at all: 114 MB of SQLite becomes 14.
+
+    LZMA is compressed with a 64 MB dictionary; decompressing streams it back
+    in 1 MB blocks rather than reading the whole corpus into memory.
+    """
+    if not seed.exists():
+        return None
+    path.parent.mkdir(parents=True, exist_ok=True)
+    staging = path.with_suffix(path.suffix + ".restoring")
+    try:
+        with lzma.open(seed, "rb") as packed, open(staging, "wb") as out:
+            shutil.copyfileobj(packed, out, length=1 << 20)
+        os.replace(staging, path)
+    except BaseException:
+        staging.unlink(missing_ok=True)
+        raise
+    return listing_count(path)
 
 
 def listing_count(path: Path = DEFAULT_DB_PATH) -> Optional[int]:

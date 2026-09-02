@@ -1,11 +1,18 @@
-"""Deployment/environment settings, sourced from .env (see .env.example)."""
+"""Deployment/environment settings, sourced from backend/.env.
+
+See backend/.env.example for a documented development file and
+backend/.env.production.example for a deployment one. Real environment
+variables take precedence over the file, which is how the compose files
+override DB_PATH without editing anything.
+"""
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=("../.env", ".env"),
+        # backend/.env -- uvicorn and pytest are both started from backend/.
+        env_file=".env",
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore",
@@ -29,6 +36,23 @@ class Settings(BaseSettings):
     explore_map_enabled: bool = True
     app_env: str = "development"
     debug: bool = True
+
+    #: Where the SQLite corpus lives. Empty means the default inside the
+    #: package (app/data/assets/maskan.db), which is right for a checkout run
+    #: from source. A container points it at a mounted volume instead, so the
+    #: database survives the image being rebuilt and the 100+ MB of it never
+    #: enters an image layer.
+    db_path: str = ""
+
+    #: Browsers that may call this API, comma-separated. The frontend is served
+    #: from a different origin than the API in every deployment shape this
+    #: project has, so there is always at least one, and in production it is
+    #: never the localhost default.
+    cors_allow_origins: str = "http://localhost:3000"
+
+    @property
+    def allowed_origins(self) -> list[str]:
+        return [origin.strip() for origin in self.cors_allow_origins.split(",") if origin.strip()]
 
 
 settings = Settings()

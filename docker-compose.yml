@@ -1,0 +1,59 @@
+# Production. Two images, one volume, no source on the host:
+#
+#     cp backend/.env.production.example backend/.env.production
+#     cp frontend/.env.production.example frontend/.env.production
+#     docker compose up -d --build
+#
+# The corpus is not crawled and not downloaded: backend/app/data/seed ships a
+# compressed copy of the 21,377-listing Tehran database inside the image, and
+# the backend unpacks it onto the volume the first time it starts against an
+# empty one. A first boot therefore takes a few seconds longer than the rest.
+#
+# For development -- hot reload, source mounted from the host -- use
+# docker-compose.dev.yml instead. See docs/GETTING_STARTED.md.
+
+name: maskan-ai
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    # Runtime configuration, read as container environment. Nothing here is
+    # baked into the image, so the same image runs in staging and production.
+    env_file:
+      - backend/.env.production
+    environment:
+      # Overrides whatever the env file says: in a container the corpus lives
+      # on the volume below, never inside the package directory.
+      DB_PATH: /data/maskan.db
+    volumes:
+      - maskan-db:/data
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+      args:
+        # Compiled into the bundle -- the browser reads this, not the
+        # container, so it must be an address the *user's* machine can reach.
+        # `docker compose build` interpolates it from your shell or from a .env
+        # file beside this one; frontend/.env.production is the fallback.
+        NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000/api/v1}
+    depends_on:
+      backend:
+        # Not merely started: the first request the browser makes is a search,
+        # and the backend's first start unpacks the corpus.
+        condition: service_healthy
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    restart: unless-stopped
+
+volumes:
+  # Named, not a bind mount: the database is derived data the container builds
+  # for itself, and it has to survive `up --build` without appearing in anyone
+  # else's working tree.
+  maskan-db:
