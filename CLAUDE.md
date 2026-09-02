@@ -43,7 +43,8 @@ Next-generation real estate rental discovery platform for Tehran inspired by Tor
 ## Key Commands
 - Install Backend: `pip install -r requirements.txt`
 - Run Backend Dev: `uvicorn app.main:app --reload --port 8000`
-- Run Tests: `pytest -v --tb=short`
+- Run Backend Tests: `cd backend && pytest -q --tb=short`
+- Run Frontend Tests: `cd frontend && npm test`
 - Install Frontend: `cd frontend && npm install`
 - Run Frontend Dev: `cd frontend && npm run dev`
 - Build Frontend: `cd frontend && npm run build`

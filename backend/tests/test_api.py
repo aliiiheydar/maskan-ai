@@ -170,3 +170,119 @@ async def test_get_transit_stations_returns_station_list(client):
     stations = response.json()
     assert len(stations) > 0
     assert {"id", "name", "lat", "lon", "lines", "type", "has_elevator", "relations"} <= stations[0].keys()
+
+
+# --- GET /api/v1/config ---
+
+
+async def test_config_reports_the_ai_search_off_without_a_key(client):
+    """The suite runs on the placeholder key (see conftest), which is exactly
+    the checkout this flag exists to describe."""
+    body = (await client.get("/api/v1/config")).json()
+    assert body["ai_search_enabled"] is False
+
+
+async def test_config_reports_the_ai_search_on_with_a_key(client):
+    app.dependency_overrides[get_llm_client] = lambda: FakeChatClient()
+    try:
+        body = (await client.get("/api/v1/config")).json()
+    finally:
+        app.dependency_overrides.clear()
+    assert body["ai_search_enabled"] is True
+
+
+async def test_config_publishes_the_explore_map_switch(client, monkeypatch):
+    """The header hides کاوش نقشه on the strength of this field alone, so a
+    deployment turning it off has to actually reach the client.
+
+    Both directions are set explicitly rather than read once: whatever the
+    developer happens to have in backend/.env is not what is under test."""
+    from app.core.config import settings
+
+    for configured in (True, False):
+        monkeypatch.setattr(settings, "explore_map_enabled", configured)
+        body = (await client.get("/api/v1/config")).json()
+        assert body["explore_map_enabled"] is configured
+
+
+# --- GET /api/v1/geo/* ---
+
+
+async def test_list_neighborhoods_omits_the_polygons(client):
+    """~700 KB of GeoJSON if it did not: the picker needs names and centres,
+    and asks for shapes only for what the user selected."""
+    body = (await client.get("/api/v1/geo/neighborhoods")).json()
+    assert len(body) > 200
+    assert "geometry" not in body[0]
+    assert {"key", "title", "center_lat", "center_lon", "area_sqkm"} <= set(body[0])
+
+
+async def test_neighborhood_shapes_returns_geometry_for_the_keys_asked_for(client):
+    keys = [n["key"] for n in (await client.get("/api/v1/geo/neighborhoods")).json()[:3]]
+    body = (await client.get("/api/v1/geo/neighborhoods/shapes", params={"keys": ",".join(keys)})).json()
+    assert [shape["key"] for shape in body] == keys
+    assert all(shape["geometry"]["type"] in {"Polygon", "MultiPolygon"} for shape in body)
+
+
+async def test_neighborhood_shapes_refuses_an_unbounded_request(client):
+    keys = ",".join(str(index) for index in range(200))
+    assert (await client.get("/api/v1/geo/neighborhoods/shapes", params={"keys": keys})).status_code == 400
+
+
+async def test_unknown_neighborhood_keys_are_dropped_rather_than_erroring(client):
+    body = (await client.get("/api/v1/geo/neighborhoods/shapes", params={"keys": "not-a-key"})).json()
+    assert body == []
+
+
+async def test_search_area_dissolves_the_selection_into_one_outline(client):
+    keys = [n["key"] for n in (await client.get("/api/v1/geo/neighborhoods")).json()[:4]]
+    body = (await client.get("/api/v1/geo/neighborhoods/area", params={"keys": ",".join(keys)})).json()
+    assert body["keys"] == keys
+    assert body["geometry"]["type"] in {"Polygon", "MultiPolygon"}
+
+
+async def test_search_area_of_nothing_is_no_shape_rather_than_an_error(client):
+    body = (await client.get("/api/v1/geo/neighborhoods/area", params={"keys": ""})).json()
+    assert body == {"keys": [], "geometry": None}
+
+
+async def test_neighborhood_at_a_point_finds_the_one_containing_it(client):
+    first = (await client.get("/api/v1/geo/neighborhoods")).json()[0]
+    params = {"lat": first["center_lat"], "lon": first["center_lon"]}
+    found = (await client.get("/api/v1/geo/neighborhood-at", params=params)).json()
+    assert found is not None and found["key"] == first["key"]
+
+
+async def test_a_point_outside_every_polygon_answers_none_not_an_error(client):
+    """The polygons cover about two thirds of the city; a click on a park or a
+    highway legitimately belongs to no محله."""
+    response = await client.get("/api/v1/geo/neighborhood-at", params={"lat": 10.0, "lon": 10.0})
+    assert response.status_code == 200
+    assert response.json() is None
+
+
+async def test_city_boundary_is_a_named_shape(client):
+    body = (await client.get("/api/v1/geo/city")).json()
+    assert body["name"]
+    assert body["geometry"]["type"] in {"Polygon", "MultiPolygon"}
+
+
+# --- GET /api/v1/transit/* ---
+
+
+async def test_isochrone_returns_one_merged_shape(client):
+    params = {"lat": 35.7575, "lon": 51.41, "max_minutes": 30, "mode": "transit"}
+    body = (await client.get("/api/v1/transit/isochrone", params=params)).json()
+    assert body["mode"] == "transit"
+    assert body["geometry"]["type"] in {"Polygon", "MultiPolygon"}
+
+
+async def test_isochrone_rejects_a_mode_it_cannot_draw(client):
+    params = {"lat": 35.7575, "lon": 51.41, "max_minutes": 30, "mode": "teleport"}
+    assert (await client.get("/api/v1/transit/isochrone", params=params)).status_code == 422
+
+
+async def test_congestion_zones_come_back_labelled(client):
+    body = (await client.get("/api/v1/transit/congestion-zones")).json()
+    assert body
+    assert all(zone["label"] and zone["geometry"]["type"] in {"Polygon", "MultiPolygon"} for zone in body)
