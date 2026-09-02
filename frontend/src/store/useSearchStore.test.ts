@@ -18,8 +18,7 @@ vi.mock("@/lib/api", () => ({
 
 const EMPTY_RESPONSE: SearchResponse = {
   natural_language_summary: "",
-  tier_1_results: [],
-  tier_2_results: [],
+  results: [],
   total_count: 0,
   extracted_intent: null,
 } as unknown as SearchResponse;
@@ -62,23 +61,23 @@ describe("capability gating", () => {
     useSearchStore.setState({ mode: "map" });
     vi.mocked(api.getAppConfig).mockResolvedValue({ ai_search_enabled: true, explore_map_enabled: false });
     await useSearchStore.getState().loadAppConfig();
-    expect(useSearchStore.getState().mode).toBe("classic");
+    expect(useSearchStore.getState().mode).toBe("ranked");
   });
 
   it("refuses a mode the deployment does not offer", () => {
     useSearchStore.setState({ aiSearchEnabled: false, exploreMapEnabled: false });
-    useSearchStore.getState().setMode("intelligent");
-    expect(useSearchStore.getState().mode).toBe("classic");
+    useSearchStore.getState().setMode("chat");
+    expect(useSearchStore.getState().mode).toBe("ranked");
     useSearchStore.getState().setMode("map");
-    expect(useSearchStore.getState().mode).toBe("classic");
+    expect(useSearchStore.getState().mode).toBe("ranked");
   });
 });
 
 describe("setMode", () => {
   it("clears the results when map-explore is entered, being a different search", async () => {
-    useSearchStore.setState({ tier1Results: [{ id: "x" }] as never, totalCount: 1 });
+    useSearchStore.setState({ results: [{ id: "x" }] as never, totalCount: 1 });
     useSearchStore.getState().setMode("map");
-    expect(useSearchStore.getState().tier1Results).toStrictEqual([]);
+    expect(useSearchStore.getState().results).toStrictEqual([]);
     expect(useSearchStore.getState().totalCount).toBe(0);
   });
 
@@ -87,10 +86,9 @@ describe("setMode", () => {
     // this would send the feed back to the top, drop the open listing and fly
     // the map home, all for a list that comes back the same.
     const place = {
-      tier1Results: [{ id: "x" }] as never,
+      results: [{ id: "x" }] as never,
       totalCount: 1,
       page: 2,
-      showTier2: true,
       selectedListingId: "x",
       restoreBounds: [
         [35.7, 51.3],
@@ -98,15 +96,15 @@ describe("setMode", () => {
       ] as never,
     };
     useSearchStore.setState(place);
-    useSearchStore.getState().setMode("intelligent");
-    expect(useSearchStore.getState()).toMatchObject({ ...place, mode: "intelligent" });
+    useSearchStore.getState().setMode("chat");
+    expect(useSearchStore.getState()).toMatchObject({ ...place, mode: "chat" });
 
-    useSearchStore.getState().setMode("classic");
-    expect(useSearchStore.getState()).toMatchObject({ ...place, mode: "classic" });
+    useSearchStore.getState().setMode("ranked");
+    expect(useSearchStore.getState()).toMatchObject({ ...place, mode: "ranked" });
   });
 
   it("does not re-search when swapping between the two ranked modes", () => {
-    useSearchStore.getState().setMode("intelligent");
+    useSearchStore.getState().setMode("chat");
     expect(api.searchListings).not.toHaveBeenCalled();
   });
 
@@ -117,12 +115,12 @@ describe("setMode", () => {
 
   it("searches immediately on leaving map-explore, whose results do not carry over", async () => {
     useSearchStore.setState({ mode: "map" });
-    useSearchStore.getState().setMode("classic");
+    useSearchStore.getState().setMode("ranked");
     await vi.waitFor(() => expect(api.searchListings).toHaveBeenCalled());
   });
 
   it("does nothing when the mode is already the current one", () => {
-    useSearchStore.getState().setMode("classic");
+    useSearchStore.getState().setMode("ranked");
     expect(api.searchListings).not.toHaveBeenCalled();
   });
 });
@@ -185,10 +183,10 @@ describe("the search request", () => {
     await useSearchStore.getState().runSearch();
     expect(lastRequest().query_text).toBeUndefined();
 
-    useSearchStore.setState({ mode: "intelligent" });
+    useSearchStore.setState({ mode: "chat" });
     await useSearchStore.getState().runSearch();
-    // Still the classic path: free text alone cannot rank without a chat turn.
-    expect(lastRequest().mode).toBe("classic");
+    // Still the ranked path: free text alone cannot rank without a chat turn.
+    expect(lastRequest().mode).toBe("ranked");
     expect(lastRequest().query_text).toBe("نزدیک مترو");
   });
 
@@ -205,22 +203,13 @@ describe("the search request", () => {
 });
 
 describe("results", () => {
-  it("opens the second tier on its own when the first is too thin to read as a result set", async () => {
-    vi.mocked(api.searchListings).mockResolvedValue({
-      ...EMPTY_RESPONSE,
-      tier_1_results: [{ id: "a" }, { id: "b" }] as never,
-    });
+  it("holds the page in the order the ranking sent it", async () => {
+    // One list, not two: the server has already ordered it by utility, and
+    // the store must not re-group or re-sort what it is handed.
+    const page = [{ id: "a" }, { id: "b" }, { id: "c" }] as never;
+    vi.mocked(api.searchListings).mockResolvedValue({ ...EMPTY_RESPONSE, results: page });
     await useSearchStore.getState().runSearch();
-    expect(useSearchStore.getState().showTier2).toBe(true);
-  });
-
-  it("leaves it closed when Tier 1 already fills the feed", async () => {
-    vi.mocked(api.searchListings).mockResolvedValue({
-      ...EMPTY_RESPONSE,
-      tier_1_results: Array.from({ length: 10 }, (_, index) => ({ id: String(index) })) as never,
-    });
-    await useSearchStore.getState().runSearch();
-    expect(useSearchStore.getState().showTier2).toBe(false);
+    expect(useSearchStore.getState().results).toStrictEqual(page);
   });
 
   it("reports a failed search in Persian rather than leaving the spinner up", async () => {
@@ -235,7 +224,7 @@ describe("results", () => {
     // offset computed from the page number re-served rows the feed already had.
     vi.mocked(api.searchListings).mockResolvedValue({
       ...EMPTY_RESPONSE,
-      tier_1_results: Array.from({ length: 60 }, (_, index) => ({ id: String(index) })) as never,
+      results: Array.from({ length: 60 }, (_, index) => ({ id: String(index) })) as never,
     });
     await useSearchStore.getState().runSearch();
     await useSearchStore.getState().loadMoreResults();

@@ -1,3 +1,3 @@
-"""Multi-criteria heuristic scoring, Pareto-tradeoff discovery, and ranking
-tier stratification (tier_1_results / tier_2_results). See docs/ALGORITHMS.md.
+"""Multi-criteria utility scoring, Pareto trade-off discovery and the one
+ranked result list the API pages through. See docs/ALGORITHMS.md.
 """

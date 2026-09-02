@@ -172,7 +172,7 @@ function Card({
     <section className="overflow-hidden rounded-2xl border border-line bg-white">
       <header className="flex items-center justify-between gap-3 border-b border-line-soft bg-slate-50/80 px-4 py-2.5">
         <h3 className="flex items-center gap-2 text-sm font-bold text-slate-800">
-          <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-tier1/10 text-tier1">
+          <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-brand/10 text-brand">
             <Icon size={14} />
           </span>
           {title}
@@ -230,9 +230,9 @@ function Chip({
     <span
       className={clsx(
         "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1",
-        tone === "green" && "bg-tier1-light text-tier1 ring-tier1/20",
+        tone === "green" && "bg-brand-light text-brand ring-brand/20",
         tone === "amber" && "bg-amber-50 text-amber-700 ring-amber-200",
-        tone === "blue" && "bg-tier2-light text-tier2 ring-tier2/20",
+        tone === "blue" && "bg-note-light text-note ring-note/20",
         tone === "slate" && "bg-slate-100 text-slate-700 ring-slate-200",
         // Struck through rather than red: a missing amenity is information,
         // not a fault of the property.
@@ -253,10 +253,10 @@ function Chip({
 function PriceCard({ listing }: { listing: Listing }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-line bg-white">
-      <div className="bg-gradient-to-bl from-tier1/10 via-tier1/5 to-transparent px-4 py-3.5">
+      <div className="bg-gradient-to-bl from-brand/10 via-brand/5 to-transparent px-4 py-3.5">
         {listing.is_full_rahn ? (
           <div>
-            <p className="text-xs font-semibold text-tier1">رهن کامل</p>
+            <p className="text-xs font-semibold text-brand">رهن کامل</p>
             <p className="text-2xl font-black tracking-tight text-slate-900">
               {formatToman(listing.deposit_toman, { unit: true })}
             </p>
@@ -367,11 +367,11 @@ function ListingActions({ listing }: { listing: Listing }) {
         className={clsx(
           "flex flex-1 items-center justify-center gap-2 rounded-xl border px-3 py-2.5 text-sm font-semibold transition",
           saved
-            ? "border-tier1 bg-tier1-light text-tier1"
+            ? "border-brand bg-brand-light text-brand"
             : "border-line bg-white text-slate-700 hover:border-line-strong hover:bg-slate-50",
         )}
       >
-        <Bookmark size={16} className={saved ? "fill-tier1" : undefined} />
+        <Bookmark size={16} className={saved ? "fill-brand" : undefined} />
         {saved ? "ذخیره شد" : "ذخیرهٔ ملک"}
       </button>
       <button
@@ -379,7 +379,7 @@ function ListingActions({ listing }: { listing: Listing }) {
         onClick={share}
         className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-line bg-white px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-line-strong hover:bg-slate-50"
       >
-        {copied ? <CheckCircle2 size={16} className="text-tier1" /> : <Share2 size={16} />}
+        {copied ? <CheckCircle2 size={16} className="text-brand" /> : <Share2 size={16} />}
         {copied ? "لینک کپی شد" : "اشتراک‌گذاری"}
       </button>
     </div>
@@ -434,7 +434,7 @@ function Description({ text }: { text: string }) {
         <button
           type="button"
           onClick={() => setExpanded((open) => !open)}
-          className="mt-2 flex items-center gap-1 text-sm font-semibold text-tier1 transition hover:opacity-75"
+          className="mt-2 flex items-center gap-1 text-sm font-semibold text-brand transition hover:opacity-75"
         >
           <ChevronDown size={15} className={clsx("transition-transform", expanded && "rotate-180")} />
           {expanded ? "بستن متن آگهی" : "نمایش کامل متن آگهی"}

@@ -116,7 +116,7 @@ export default function ListingCard({ listing }: { listing: ListingResult }) {
       className={clsx(
         "group block cursor-pointer rounded-2xl border bg-white p-4 transition-all",
         isSelected
-          ? "border-tier1 shadow-md shadow-tier1/10 ring-1 ring-tier1/25"
+          ? "border-brand shadow-md shadow-brand/10 ring-1 ring-brand/25"
           : "border-line hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md hover:shadow-slate-200/60",
       )}
     >
@@ -192,7 +192,7 @@ export default function ListingCard({ listing }: { listing: ListingResult }) {
             the converted figures next to the advertised ones is what keeps an
             apparently over-budget result from looking like a ranking bug. */}
         {suggestedDeposit != null && suggestedRent != null && (
-          <p className="flex min-w-0 items-start gap-1 px-1 text-[11px] leading-4 text-tier2">
+          <p className="flex min-w-0 items-start gap-1 px-1 text-[11px] leading-4 text-note">
             <Handshake size={11} className="mt-0.5 shrink-0" />
             {/* Wraps to a second line rather than running on: nowrap text here
                 has a min-content width wider than the card, and a flex item
@@ -219,7 +219,7 @@ export default function ListingCard({ listing }: { listing: ListingResult }) {
       </div>
 
       {listing.trade_off_rationale && (
-        <p className="mt-3 rounded-xl bg-tier2-light px-3 py-2 text-xs leading-5 text-tier2">
+        <p className="mt-3 rounded-xl bg-note-light px-3 py-2 text-xs leading-5 text-note">
           {listing.trade_off_rationale}
         </p>
       )}
@@ -242,7 +242,7 @@ export default function ListingCard({ listing }: { listing: ListingResult }) {
             event.preventDefault();
             router.push(`/listing/${encodeURIComponent(listing.id)}`, { scroll: false });
           }}
-          className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl bg-tier1 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-tier1/90"
+          className="mt-3 flex w-full items-center justify-center gap-1.5 rounded-xl bg-brand py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
         >
           <ArrowUpRight size={15} />
           مشاهده ملک

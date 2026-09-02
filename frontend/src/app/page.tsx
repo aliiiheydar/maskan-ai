@@ -7,7 +7,7 @@ import clsx from "clsx";
 
 import Header from "@/components/Layout/Header";
 import ChatPanel from "@/components/Chat/ChatPanel";
-import ClassicFilterPanel from "@/components/Filters/ClassicFilterPanel";
+import FilterPanel from "@/components/Filters/FilterPanel";
 import ListingFeed from "@/components/Listings/ListingFeed";
 import { DESKTOP_QUERY, isDesktop } from "@/lib/breakpoints";
 import { useSearchStore } from "@/store/useSearchStore";
@@ -79,7 +79,7 @@ export default function Home() {
     if (mode !== "map") return;
     const narrow = window.matchMedia(`not all and ${DESKTOP_QUERY}`);
     const enforce = () => {
-      if (narrow.matches) setMode("classic");
+      if (narrow.matches) setMode("ranked");
     };
     enforce();
     narrow.addEventListener("change", enforce);
@@ -110,8 +110,8 @@ export default function Home() {
   const tabs: { value: MobileView; label: string; Icon: typeof List }[] = [
     {
       value: "panel",
-      label: mode === "intelligent" ? "گفتگو" : "فیلترها",
-      Icon: mode === "intelligent" ? MessageSquare : SlidersHorizontal,
+      label: mode === "chat" ? "گفت‌وگو" : "فیلترها",
+      Icon: mode === "chat" ? MessageSquare : SlidersHorizontal,
     },
     { value: "feed", label: "فهرست", Icon: List },
     { value: "map", label: "نقشه", Icon: MapIcon },
@@ -141,8 +141,8 @@ export default function Home() {
               mobileView === "panel" ? "flex flex-1" : "hidden",
             )}
           >
-            {mode === "intelligent" && <ChatPanel />}
-            {mode === "classic" && <ClassicFilterPanel />}
+            {mode === "chat" && <ChatPanel />}
+            {mode === "ranked" && <FilterPanel />}
           </section>
         )}
 
@@ -181,7 +181,7 @@ export default function Home() {
                 aria-current={active ? "page" : undefined}
                 className={clsx(
                   "flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold transition-colors",
-                  active ? "bg-tier1 text-white" : "text-slate-600 hover:bg-slate-100",
+                  active ? "bg-brand text-white" : "text-slate-600 hover:bg-slate-100",
                 )}
               >
                 <Icon size={16} />

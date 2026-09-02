@@ -7,10 +7,17 @@ import type { SearchMode } from "@/types";
 
 /** The three ways to search, in the order they matter.
  *
- * فیلتر کلاسیک is the product; it leads. The conversational search is a real
- * feature but an early one -- its extraction is still being tuned -- so it
- * carries a بتا badge rather than being offered as an equal, and the map is
- * exploration rather than a way to state what you want. */
+ * جستجو و رتبه‌بندی is the product; it leads. The name is the feature: the
+ * panel does not merely filter, it scores every match against what the user
+ * asked for and orders the list by it, and calling that "فیلتر کلاسیک" sold
+ * the one thing this app does that Divar does not as the boring option.
+ *
+ * The conversational search is a real feature but an early one -- its
+ * extraction is still being tuned -- so it carries a بتا badge rather than
+ * being offered as an equal, and it is named for what it is (you talk to it)
+ * rather than for being the "smart" one: the ranking is where the intelligence
+ * lives, and it runs underneath both. The map is exploration rather than a way
+ * to state what you want. */
 const MODES: {
   value: SearchMode;
   label: string;
@@ -23,8 +30,8 @@ const MODES: {
    * a narrowed window back to the filters for the same reason. */
   desktopOnly?: boolean;
 }[] = [
-  { value: "classic", label: "فیلتر کلاسیک", Icon: SlidersHorizontal },
-  { value: "intelligent", label: "جستجوی هوشمند", Icon: Sparkles, badge: "بتا" },
+  { value: "ranked", label: "جستجو و رتبه‌بندی", Icon: SlidersHorizontal },
+  { value: "chat", label: "جستجوی گفت‌وگویی", Icon: Sparkles, badge: "بتا" },
   { value: "map", label: "کاوش نقشه", Icon: Map, desktopOnly: true },
 ];
 
@@ -40,7 +47,7 @@ const MODES: {
 function CitySelect() {
   return (
     <label className="relative flex shrink-0 items-center gap-1.5 rounded-full bg-slate-100 py-1.5 pe-2 ps-3 text-sm font-medium text-slate-700 transition hover:bg-slate-200/70">
-      <MapPin size={14} className="text-tier1" />
+      <MapPin size={14} className="text-brand" />
       <span className="sr-only">شهر</span>
       <select
         // Transparent over the pill rather than a styled <select> box: a
@@ -85,7 +92,7 @@ export default function Header() {
     // way, so it is the only one that shrinks.
     <header className="flex shrink-0 items-center justify-between gap-2 border-b border-line bg-white/90 px-3 py-2.5 backdrop-blur sm:gap-4 sm:px-6">
       <div className="flex min-w-0 shrink items-center gap-2 sm:gap-2.5">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-tier1 text-white shadow-sm shadow-tier1/25">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand text-white shadow-sm shadow-brand/25">
           <Building2 size={19} />
         </div>
         <div className="min-w-0 leading-tight">
@@ -104,7 +111,7 @@ export default function Header() {
           // its absence would look like a feature that was never built --
           // but visibly unavailable, and saying so in the tooltip, which is
           // the only place there is room to say why.
-          const disabled = value === "intelligent" && !aiSearchEnabled;
+          const disabled = value === "chat" && !aiSearchEnabled;
           const shownBadge = disabled ? "غیرفعال" : badge;
           return (
             <button
@@ -115,7 +122,7 @@ export default function Header() {
               aria-current={active ? "page" : undefined}
               title={
                 disabled
-                  ? "جستجوی هوشمند روی این سرور پیکربندی نشده است؛ از فیلترهای کلاسیک استفاده کنید."
+                  ? "جستجوی گفت‌وگویی روی این سرور پیکربندی نشده است؛ از پنل جستجو و رتبه‌بندی استفاده کنید."
                   : badge
                     ? `${label} (${badge})`
                     : label
@@ -126,7 +133,7 @@ export default function Header() {
                 disabled
                   ? "cursor-not-allowed text-slate-400"
                   : active
-                    ? "bg-white text-tier1 shadow-sm"
+                    ? "bg-white text-brand shadow-sm"
                     : "text-slate-600 hover:text-slate-900"
               }`}
             >

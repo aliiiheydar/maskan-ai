@@ -1,6 +1,6 @@
 """Multi-Attribute Utility Theory ranking engine.
 
-Implements the two-stage funnel from "architectural suggestion.md":
+Implements the two-stage funnel specified in docs/ALGORITHMS.md:
 
   Stage 1 -- elastic candidate retrieval. Hard requirements (search area,
   mandated amenities, رهن کامل) are enforced exactly; numeric limits are
@@ -22,8 +22,9 @@ Two design points are worth stating because they are easy to undo by accident:
     listing is *reachable* for a user with a particular amount of cash. It is
     therefore applied in the feasibility check, not in the price score.
 
-  * Tier membership follows from the score alone, so the tier a listing is
-    shown in always agrees with the match percentage printed next to it.
+  * The ranking is one list. A listing's place in it follows from its score
+    alone, which is the same number the card prints as a ٪ badge, so the order
+    on screen and the figure beside each row can never disagree.
 """
 
 import math
@@ -60,7 +61,7 @@ class MarketBaselines:
     neighborhood, and the median monthly cost of a Tehran flat outright.
 
     Precomputed once when the repository is seeded rather than derived per
-    request ("architectural suggestion.md" SS7.2): U_value needs a baseline for
+    request (docs/ALGORITHMS.md SS7): U_value needs a baseline for
     every candidate, and recomputing a median over the whole corpus inside the
     scoring loop is the difference between a 5 ms and a 5 s search.
     """
@@ -158,7 +159,7 @@ def _cap(value: Optional[int]) -> Optional[int]:
 
 def resolve_tabdil(listing: Listing, intent: ExtractedSearchIntent) -> tuple[int, int]:
     """The (deposit, rent) point on the listing's conversion line that best
-    fits this user, per "architectural suggestion.md" SS4.2.
+    fits this user, per docs/ALGORITHMS.md SS1.
 
     A cash-constrained user is pushed toward the low-deposit end to protect
     their liquidity; an income-constrained one toward رهن کامل to minimise
@@ -594,7 +595,7 @@ def default_weights() -> CriteriaWeights:
     )
 
 
-#: The classic panel expresses importance in three steps rather than as a
+#: The filter panel expresses importance in three steps rather than as a
 #: continuous dial, because a slider invites a precision the ranking does not
 #: have. "زیاد" is a little over double the default share and "کم" a little
 #: under half, which is enough to visibly reorder results without letting one
@@ -634,8 +635,9 @@ def resolve_weights(intent: ExtractedSearchIntent) -> CriteriaWeights:
     # A criterion the user said nothing about cannot separate one listing from
     # another -- every candidate scores the neutral 1.0 on it. Leaving those
     # criteria weighted would lift every score toward the top of the range and
-    # make the tier thresholds meaningless: with no budget stated, a listing
-    # would carry the full budget weight for free. Their share is redistributed
+    # flatten the ranking against its ceiling: with no budget stated, a listing
+    # would carry the full budget weight for free, and the ٪ badges would then
+    # crowd into the top few points where they separate nothing. Their share is redistributed
     # over the criteria that actually discriminate.
     #
     # Budget is deliberately not on that list. It has no stated ceiling to
@@ -671,7 +673,6 @@ def resolve_weights(intent: ExtractedSearchIntent) -> CriteriaWeights:
 class ScoredListing:
     listing: Listing
     utility_score: float
-    tier: int = 0
     trade_off_rationale: Optional[str] = None
     is_pareto_optimal: bool = False
     # The (deposit, rent) split actually scored, which is not the advertised
@@ -773,9 +774,11 @@ def pareto_frontier(scored: list[ScoredListing]) -> list[ScoredListing]:
     """Listings not strictly dominated by any other listing in the set.
 
     A three-dimensional skyline, computed by a sweep rather than by comparing
-    every pair: the pairwise form is O(n^2) and was, on a city-wide search of
-    ~3,500 tier-1 results, three quarters of the entire ranking cost (750k
-    comparisons, ~1.7s). Sorting by cost ascending -- then metro ascending,
+    every pair: the pairwise form is O(n^2) and was, on the ~3,500 strong
+    matches this used to run over, three quarters of the entire ranking cost --
+    750k comparisons, ~1.7s. It now runs over every result in the search
+    (~19,000 on a city-wide one) for 80ms, which the pairwise form could not
+    have done at all. Sorting by cost ascending -- then metro ascending,
     then area descending -- means every listing already visited has a cost no
     higher than the current one, so the only question left is whether any of
     them also had a metro walk no longer *and* an area no smaller. A Fenwick
@@ -806,43 +809,48 @@ def pareto_frontier(scored: list[ScoredListing]) -> list[ScoredListing]:
 
 
 @dataclass(frozen=True)
-class _Tier1Reference:
-    """What a typical Tier 1 pick looks like, per axis.
+class _HeadReference:
+    """What a typical result at the top of the ranking looks like, per axis.
 
-    Medians over the whole Tier 1 set rather than the attributes of
-    ``tier1[0]``, which is what this used to compare against. The top-ranked
-    listing wins on *utility*, and its area and metro walk are incidental to
-    that -- so it could be an unusually small flat that ranked first on price
-    and freshness, and every Tier 2 card in the search was then measured
-    against that accident. Two searches differing by one filter could describe
-    the same listing quite differently. A median moves when the result set
-    genuinely moves and not otherwise, and it is also what docs/ALGORITHMS.md
-    SS4 asks for: "compared to Tier 1 items", plural.
+    Medians over the head (constants.RANKING_HEAD_SIZE entries) rather than the
+    attributes of ``ranked[0]``, which is what this used to compare against.
+    The top-ranked listing wins on *utility*, and its area and metro walk are
+    incidental to that -- so it could be an unusually small flat that ranked
+    first on price and freshness, and every near miss in the search was then
+    measured against that accident. Two searches differing by one filter could
+    describe the same listing quite differently. A median moves when the result
+    set genuinely moves and not otherwise.
+
+    The head is also the honest comparison to draw, because it is what the user
+    has actually read: a nudge on the card at rank 300 is telling them how it
+    compares with the page they have already scrolled past.
     """
 
     area_sqm: float
     metro_walk_mins: float
 
 
-def _tier1_reference(tier1: list["ScoredListing"]) -> Optional[_Tier1Reference]:
-    if not tier1:
+def _head_reference(ranked: list["ScoredListing"]) -> Optional[_HeadReference]:
+    head = ranked[: constants.RANKING_HEAD_SIZE]
+    if not head:
         return None
-    return _Tier1Reference(
-        area_sqm=median(entry.listing.area_sqm for entry in tier1),
-        metro_walk_mins=median(entry.listing.metro_walk_mins for entry in tier1),
+    return _HeadReference(
+        area_sqm=median(entry.listing.area_sqm for entry in head),
+        metro_walk_mins=median(entry.listing.metro_walk_mins for entry in head),
     )
 
 
 def _trade_off_rationale(
     listing: Listing,
-    reference: _Tier1Reference,
+    reference: _HeadReference,
     intent: ExtractedSearchIntent,
     weights: CriteriaWeights,
 ) -> Optional[str]:
-    """The Persian trade-off nudge on a Tier 2 card (docs/ALGORITHMS.md SS4).
+    """The Persian trade-off nudge on a near miss (docs/ALGORITHMS.md SS4).
 
-    A near miss earns one when it is materially larger than a typical Tier 1
-    pick and the price of that space is small: at most a
+    A result below the head of the ranking earns one when it is materially
+    larger than a typical result in that head and the price of that space is
+    small: at most a
     TRADE_OFF_MAX_BUDGET_INCREASE overrun on the user's budget, or at most
     TRADE_OFF_MAX_COMMUTE_INCREASE_MINS more walking to the metro.
 
@@ -913,8 +921,8 @@ def _trade_off_rationale(
         else:
             return None
 
-    # Nothing but the area to say. True, but it is the whole Tier 2 tail rather
-    # than a find worth pointing at, so it stays quiet.
+    # Nothing but the area to say. True, but it is the whole tail of the
+    # ranking rather than a find worth pointing at, so it stays quiet.
     if len(gains) == 1 and not costs:
         return None
 
@@ -929,17 +937,37 @@ async def rank_listings(
     listings: list[Listing],
     intent: ExtractedSearchIntent,
     baselines: Optional[MarketBaselines] = None,
-) -> tuple[list[ScoredListing], list[ScoredListing]]:
-    """Score, then stratify into (tier_1_results, tier_2_results).
+) -> list[ScoredListing]:
+    """Score every candidate and return one list, strongest match first.
 
-    Tier membership is decided by the score alone -- Tier 1 is >=0.70, Tier 2
-    is 0.45..0.70 -- so the two tiers never overlap and the tier a listing
-    lands in always agrees with the match percentage shown next to it.
+    One list, not two. This used to stratify the results into a Tier 1
+    (Utility >= 0.70) and a Tier 2 (0.45..0.70), which restated part of the
+    ranking's own claim as a wall: two listings a hundredth of a point apart
+    landed on opposite sides of a heading, while the ٪ badge on both cards
+    said how close they really were. The order *is* the answer, and the badge
+    already says how good each row in it is.
 
-    Pareto optimality is reported as a flag on the Tier 1 entries it applies
-    to, never as a demotion: domination is a statement about (cost, metro
-    walk, area) trade-offs between two listings, not about which one better
-    fits what the user asked for.
+    What survives the split is its floor (constants.MIN_UTILITY_THRESHOLD),
+    because a ranked list still has an end.
+
+    Two things are attached on the way out.
+
+      * **Pareto optimality**, over the *whole* result set rather than any
+        slice of it, because the card's tooltip makes an unqualified claim --
+        "هیچ گزینه‌ی دیگری همزمان ارزان‌تر، نزدیک‌تر به مترو و بزرگ‌تر نیست" --
+        and that has to be true of the search, not of the sixty rows the
+        reader happens to be looking at. Scoped to the head it fired on a
+        quarter of the first page (15 of 60 on a city-wide search) and meant
+        very little; over the whole set it fires on three, and each one is a
+        statement worth reading. The sweep costs ~80ms on 19,000 results,
+        once per distinct search, which is what the ranked-page cache is for.
+
+        It is never a demotion: domination is a statement about trade-offs
+        between two listings, not about which one better answers the search.
+      * **The Persian trade-off nudge**, offered to results below the head of
+        the list and measured against its medians -- see _head_reference. That
+        one *is* about the head, because it exists to compare a card further
+        down against the page the user has already read.
     """
     if baselines is None:
         baselines = MarketBaselines.from_listings(listings)
@@ -966,33 +994,20 @@ async def rank_listings(
             )
         )
 
-    tier1 = sorted(
-        (s for s in scored if s.utility_score >= constants.TIER_1_UTILITY_THRESHOLD),
-        key=lambda s: s.utility_score,
-        reverse=True,
-    )
-    tier2 = sorted(
-        (
-            s
-            for s in scored
-            if constants.TIER_2_UTILITY_THRESHOLD <= s.utility_score < constants.TIER_1_UTILITY_THRESHOLD
-        ),
+    ranked = sorted(
+        (s for s in scored if s.utility_score >= constants.MIN_UTILITY_THRESHOLD),
         key=lambda s: s.utility_score,
         reverse=True,
     )
 
-    for scored_listing in tier1:
-        scored_listing.tier = 1
-    for scored_listing in pareto_frontier(tier1):
+    for scored_listing in pareto_frontier(ranked):
         scored_listing.is_pareto_optimal = True
-    for scored_listing in tier2:
-        scored_listing.tier = 2
 
-    reference = _tier1_reference(tier1)
+    reference = _head_reference(ranked)
     if reference is not None:
-        for scored_listing in tier2:
+        for scored_listing in ranked[constants.RANKING_HEAD_SIZE :]:
             scored_listing.trade_off_rationale = _trade_off_rationale(
                 scored_listing.listing, reference, intent, weights
             )
 
-    return tier1, tier2
+    return ranked

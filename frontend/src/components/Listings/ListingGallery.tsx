@@ -144,7 +144,7 @@ export default function ListingGallery({
               onClick={() => setIndex(position)}
               className={clsx(
                 "h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 bg-slate-100 transition",
-                position === index ? "border-tier1" : "border-transparent opacity-70 hover:opacity-100",
+                position === index ? "border-brand" : "border-transparent opacity-70 hover:opacity-100",
               )}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}

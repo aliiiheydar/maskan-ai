@@ -49,15 +49,14 @@ async def client():
 # --- POST /api/v1/search ---
 
 
-async def test_search_classic_mode_returns_tiered_results(client):
-    response = await client.post("/api/v1/search", json={"mode": "classic", "page_size": 10})
+async def test_search_ranked_mode_returns_one_ordered_list(client):
+    response = await client.post("/api/v1/search", json={"mode": "ranked", "page_size": 10})
     assert response.status_code == 200
 
     body = response.json()
     assert set(body.keys()) == {
         "natural_language_summary",
-        "tier_1_results",
-        "tier_2_results",
+        "results",
         "map_points",
         "map_clusters",
         "total_count",
@@ -65,46 +64,48 @@ async def test_search_classic_mode_returns_tiered_results(client):
     }
     assert body["natural_language_summary"]
     assert body["total_count"] >= 0
-    assert len(body["tier_1_results"]) + len(body["tier_2_results"]) <= 10
+    assert len(body["results"]) <= 10
 
-    for result in body["tier_1_results"] + body["tier_2_results"]:
-        assert result["tier"] in (1, 2)
-        assert 0.0 <= result["utility_score"] <= 1.0
+    scores = [result["utility_score"] for result in body["results"]]
+    assert all(0.0 <= score <= 1.0 for score in scores)
+    # The page is the ranking, so it arrives in ranking order rather than
+    # split into buckets the client has to reassemble.
+    assert scores == sorted(scores, reverse=True)
 
 
 async def test_search_elevator_requirement_is_enforced_above_ground_floor(client):
     response = await client.post(
-        "/api/v1/search", json={"mode": "classic", "requires_elevator": True, "page_size": 50}
+        "/api/v1/search", json={"mode": "ranked", "requires_elevator": True, "page_size": 50}
     )
     assert response.status_code == 200
     body = response.json()
-    for result in body["tier_1_results"] + body["tier_2_results"]:
+    for result in body["results"]:
         if result["floor"] > 1:
             assert result["has_elevator"] is True
 
 
 async def test_search_neighborhood_filter_restricts_results(client):
     response = await client.post(
-        "/api/v1/search", json={"mode": "classic", "neighborhoods": ["سعادت‌آباد"], "page_size": 50}
+        "/api/v1/search", json={"mode": "ranked", "neighborhoods": ["سعادت‌آباد"], "page_size": 50}
     )
     assert response.status_code == 200
     body = response.json()
-    for result in body["tier_1_results"] + body["tier_2_results"]:
+    for result in body["results"]:
         assert result["neighborhood"] == "سعادت‌آباد"
 
 
-async def test_search_intelligent_mode_without_api_key_returns_503(client):
+async def test_search_chat_mode_without_api_key_returns_503(client):
     response = await client.post(
-        "/api/v1/search", json={"mode": "intelligent", "query_text": "آپارتمان نزدیک مترو با آسانسور"}
+        "/api/v1/search", json={"mode": "chat", "query_text": "آپارتمان نزدیک مترو با آسانسور"}
     )
     assert response.status_code == 503
 
 
 async def test_search_pagination_limits_page_size(client):
-    response = await client.post("/api/v1/search", json={"mode": "classic", "page": 1, "page_size": 3})
+    response = await client.post("/api/v1/search", json={"mode": "ranked", "page": 1, "page_size": 3})
     assert response.status_code == 200
     body = response.json()
-    assert len(body["tier_1_results"]) + len(body["tier_2_results"]) <= 3
+    assert len(body["results"]) <= 3
 
 
 # --- POST /api/v1/chat/stream ---
@@ -148,8 +149,8 @@ async def test_get_listing_returns_seeded_listing(client):
     # The id is taken from a search rather than hard-coded: the corpus now comes
     # from the SQLite build of the real crawl, whose ids are Divar tokens, and a
     # checkout with no database falls back to synthetic "teh-*" ones.
-    search = await client.post("/api/v1/search", json={"mode": "classic", "page_size": 1})
-    listing_id = search.json()["tier_1_results"][0]["id"]
+    search = await client.post("/api/v1/search", json={"mode": "ranked", "page_size": 1})
+    listing_id = search.json()["results"][0]["id"]
 
     response = await client.get(f"/api/v1/listings/{listing_id}")
     assert response.status_code == 200

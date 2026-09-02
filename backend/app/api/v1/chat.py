@@ -15,8 +15,8 @@ from app.llm.intent_extractor import extract_search_intent
 router = APIRouter()
 
 GENERIC_ERROR_MESSAGE = (
-    "ارتباط با دستیار هوشمند برقرار نشد. لطفاً دوباره تلاش کنید؛ "
-    "در این فاصله می‌توانید از فیلترهای کلاسیک استفاده کنید."
+    "ارتباط با دستیار گفت‌وگو برقرار نشد. لطفاً دوباره تلاش کنید؛ "
+    "در این فاصله می‌توانید از پنل جستجو و رتبه‌بندی استفاده کنید."
 )
 EXTRACTION_ERROR_MESSAGE = (
     "پاسخ آماده شد، اما نتوانستم فیلترها را از گفتگو استخراج کنم. "
@@ -75,7 +75,7 @@ async def chat_stream(
     if not client.has_real_api_key():
         raise HTTPException(
             status_code=503,
-            detail="دستیار هوشمند پیکربندی نشده است. لطفاً از فیلترهای کلاسیک استفاده کنید.",
+            detail="دستیار گفت‌وگو پیکربندی نشده است. لطفاً از پنل جستجو و رتبه‌بندی استفاده کنید.",
         )
 
     history = [turn.model_dump() for turn in payload.history]

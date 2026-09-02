@@ -3,6 +3,7 @@ import math
 import pytest
 import pytest_asyncio
 
+from app.core import constants
 from app.core.constants import BUDGET_CEILING_MULTIPLIER
 from app.core.models import ExtractedSearchIntent, Listing
 from app.core.pricing import calculate_effective_monthly_cost
@@ -358,22 +359,30 @@ def test_pareto_frontier_removes_dominated_listing():
 # --- rank_listings ---
 
 
-async def test_rank_listings_splits_tiers_and_attaches_trade_off_rationale(client):
+async def test_rank_listings_returns_one_ordered_list_with_trade_off_rationales(client, monkeypatch):
+    """One list, best first, with the near miss further down explained.
+
+    The head of that list is what a near miss is measured against, so the test
+    shrinks it to a single entry rather than inventing sixty filler listings:
+    what matters is that the comparison is against the top of the ranking and
+    that the sentence goes to a listing below it.
+    """
+    monkeypatch.setattr(constants, "RANKING_HEAD_SIZE", 1)
     intent = make_intent(max_deposit=0, max_rent=10_000_000, workplace_lat=None, workplace_lon=None)
 
-    tier1_listing = make_listing(
-        id="tier1",
+    best = make_listing(
+        id="best",
         deposit_toman=0,
         rent_toman=10_000_000,
         metro_walk_mins=2.0,
         area_sqm=80,
         building_age_years=1,
     )
-    # >=25% bigger area than tier1, same metro-walk time, and a 10% overrun on
-    # the stated rent -- the edge of TRADE_OFF_MAX_BUDGET_INCREASE, so the
-    # nudge qualifies. The older building is what puts it below the 0.70
-    # tier-1 cutoff: the price alone no longer can, now that the overrun has
-    # to stay inside the band for a rationale to be written at all.
+    # >=25% bigger area than the head, same metro-walk time, and a 10% overrun
+    # on the stated rent -- the edge of TRADE_OFF_MAX_BUDGET_INCREASE, so the
+    # nudge qualifies. The older building is what keeps it below the head:
+    # the price alone no longer can, now that the overrun has to stay inside
+    # the band for a rationale to be written at all.
     trade_off_listing = make_listing(
         id="tradeoff",
         deposit_toman=0,
@@ -385,32 +394,35 @@ async def test_rank_listings_splits_tiers_and_attaches_trade_off_rationale(clien
     pruned_listing = make_listing(id="pruned", floor=5, has_elevator=False)
 
     intent_with_elevator = intent.model_copy(update={"must_have_elevator": True})
-    # keep tier1/trade_off listings elevator-compliant
-    tier1_listing = tier1_listing.model_copy(update={"has_elevator": True, "floor": 1})
+    # keep both scored listings elevator-compliant
+    best = best.model_copy(update={"has_elevator": True, "floor": 1})
     trade_off_listing = trade_off_listing.model_copy(update={"has_elevator": True, "floor": 1})
 
-    tier1, tier2 = await rank_listings(
+    ranked = await rank_listings(
         client,
-        [tier1_listing, trade_off_listing, pruned_listing],
+        [best, trade_off_listing, pruned_listing],
         intent_with_elevator,
     )
 
-    assert [s.listing.id for s in tier1] == ["tier1"]
-    assert any(s.listing.id == "tradeoff" for s in tier2)
-    assert all(s.listing.id != "pruned" for s in tier1 + tier2)
+    assert [s.listing.id for s in ranked] == ["best", "tradeoff"]
+    # Ordered by score, so the list itself carries the ranking -- there is no
+    # second bucket to look in for the weaker match.
+    assert ranked[0].utility_score >= ranked[1].utility_score
 
-    tradeoff_result = next(s for s in tier2 if s.listing.id == "tradeoff")
+    tradeoff_result = ranked[1]
     assert tradeoff_result.trade_off_rationale is not None
     assert "متر" in tradeoff_result.trade_off_rationale
     # The overrun is stated against the *user's* budget, not against the
     # reference listing's price, and it is the figure the band admitted.
     assert "۱۰٪ بالاتر از بودجهٔ شماست" in tradeoff_result.trade_off_rationale
+    # The head is the reference, not a card that needs explaining.
+    assert ranked[0].trade_off_rationale is None
 
     # Past that band the nudge says nothing at all, rather than dropping the
     # budget clause and presenting what is left as a bargain.
-    _, over_budget_tier2 = await rank_listings(
+    over_budget = await rank_listings(
         client,
-        [tier1_listing, trade_off_listing.model_copy(update={"rent_toman": 11_800_000}), pruned_listing],
+        [best, trade_off_listing.model_copy(update={"rent_toman": 11_800_000}), pruned_listing],
         intent_with_elevator,
     )
-    assert next(s for s in over_budget_tier2 if s.listing.id == "tradeoff").trade_off_rationale is None
+    assert next(s for s in over_budget if s.listing.id == "tradeoff").trade_off_rationale is None

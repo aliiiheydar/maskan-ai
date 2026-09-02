@@ -44,7 +44,7 @@ AVG_DRIVE_SPEED_KMH: float = 22.0
 # user decision -- TESTING_GUIDE.md's figure is stale.
 BUDGET_CEILING_MULTIPLIER: float = 1.20
 
-# --- MAUT weights ("architectural suggestion.md" SS5) ---
+# --- MAUT weights (docs/ALGORITHMS.md SS3) ---
 #
 # S_total = (sum_k w_k * U_k) * prod(penalties). The weights below are the
 # defaults used when the conversation has not expressed priorities of its own;
@@ -137,25 +137,40 @@ PRICE_SCORE_EPSILON: float = 1.0
 #
 # A stated filter is a preference, not a specification: someone who types "at
 # least 80 متر" does not want a 78-متر flat hidden from them. Numeric filters
-# therefore admit a margin beyond the stated limit, and listings inside that
-# margin enter the ranking with their Utility scaled down in proportion to how
-# far outside they sit (see scoring.constraint_fit_score). They land in Tier 2
-# by scoring their way there, so the tier a result is shown in still agrees
-# with its match percentage.
+# therefore admit a margin beyond the stated limit.
 #
-# The area/rooms bands are fractions of the stated value; the price band reuses
+# Nothing extra is needed to keep those near misses in their place. The
+# sub-utilities already price the distance: area_utility falls away from the
+# stated size on a concave curve, and financial_utility decays exponentially
+# once the budget is passed. A listing admitted on tolerance is one that scored
+# its way down, so it sits below the ones that met the filter outright rather
+# than beside them -- and its ٪ badge says so.
+#
+# The area band is a fraction of the stated value; the price band reuses
 # BUDGET_CEILING_MULTIPLIER so there is one budget tolerance, not two.
-# delta_A per "architectural suggestion.md" SS3.2 -- 8% is the tolerance a
-# renter actually negotiates on area, narrower than the budget band below.
+# delta_A per docs/ALGORITHMS.md SS2 -- 8% is the tolerance a renter actually
+# negotiates on area, narrower than the budget band above.
 AREA_CONFIDENCE_BAND: float = 0.08
-ROOMS_CONFIDENCE_BAND: int = 1
-# Weight of the fit factor: at the very edge of every band a listing keeps this
-# fraction of its Utility. Not 0 -- an edge case should rank last, not vanish.
-CONSTRAINT_FIT_FLOOR: float = 0.55
 
-# Tier stratification thresholds.
-TIER_1_UTILITY_THRESHOLD: float = 0.70
-TIER_2_UTILITY_THRESHOLD: float = 0.45
+#: The weakest match a search will return.
+#:
+#: The only cut the ranking makes. Everything above it is one list ordered by
+#: score, because that is what a ranking is: the card's own ٪ badge says how
+#: good each match is, and a second, coarser statement of the same fact --
+#: "tier 1" against "tier 2" -- only asked the user to read the boundary
+#: instead of the number.
+#:
+#: The floor stays, because a ranked list still has an end. A listing here has
+#: passed every hard filter and still scores under half: it answers the
+#: question badly, and the rows below it are the tail nobody scrolls to.
+MIN_UTILITY_THRESHOLD: float = 0.45
+
+#: How many of the top-ranked results define "a typical strong match" when a
+#: near miss further down is described against them -- see
+#: scoring._head_reference. Sized to the feed's first page: the head of the
+#: list is exactly what the user has already read by the time a nudge further
+#: down is worth anything.
+RANKING_HEAD_SIZE: int = 60
 
 # Tabdil conversion band assumed for a قابل تبدیل listing whose advertiser did
 # not publish an explicit ceiling: the deposit may move anywhere from a fifth
@@ -164,8 +179,8 @@ TIER_2_UTILITY_THRESHOLD: float = 0.45
 # listing fits the user's cash position at all.
 TABDIL_MIN_DEPOSIT_FRACTION: float = 0.20
 
-# Trade-off nudge identifier: a Tier 2 near miss measured against the median
-# Tier 1 pick, and against the user's own budget.
+# Trade-off nudge identifier: a near miss further down the ranking, measured
+# against the median of its head, and against the user's own budget.
 TRADE_OFF_MIN_AREA_INCREASE: float = 0.25
 TRADE_OFF_MAX_BUDGET_INCREASE: float = 0.10
 TRADE_OFF_MAX_COMMUTE_INCREASE_MINS: float = 7.0
@@ -178,7 +193,7 @@ TRADE_OFF_MAX_COMMUTE_INCREASE_MINS: float = 7.0
 #: on the one fact they have said they do not weigh.
 #:
 #: Set between the normalized shares a criterion lands on at کم and at normal
-#: (~0.04 and ~0.10 for مترو in a typical classic search), so the dial the user
+#: (~0.04 and ~0.10 for مترو in a typical panel search), so the dial the user
 #: turned is exactly what decides it.
 TRADE_OFF_MIN_AXIS_WEIGHT: float = 0.08
 

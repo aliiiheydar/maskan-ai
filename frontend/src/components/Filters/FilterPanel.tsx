@@ -109,7 +109,7 @@ const FINANCIAL_PERSONAS: { value: FinancialPersona; label: string; hint: string
  * as it is typed. */
 const inputClass =
   "w-full rounded-xl border border-line bg-white px-3 py-2 text-sm tabular-nums text-slate-900 outline-none transition " +
-  "placeholder:text-slate-500 hover:border-line-strong focus:border-tier1 focus:ring-2 focus:ring-tier1/20";
+  "placeholder:text-slate-500 hover:border-line-strong focus:border-brand focus:ring-2 focus:ring-brand/20";
 
 /** Section shell: one heading, one rule, consistent spacing. Keeping this in
  * one place is what stops the panel from drifting into six slightly different
@@ -144,7 +144,7 @@ function WeightPicker({ value, onChange }: { value: WeightLevel; onChange: (leve
           onClick={() => onChange(level)}
           className={clsx(
             "px-2.5 py-1.5 text-xs font-medium transition-colors",
-            value === level ? "bg-tier1 text-white" : "text-slate-500 hover:bg-slate-100",
+            value === level ? "bg-brand text-white" : "text-slate-500 hover:bg-slate-100",
           )}
         >
           {label}
@@ -172,7 +172,7 @@ function Explainer({ children, label = "توضیح این بخش" }: { children:
         aria-expanded={open}
         className={clsx(
           "flex items-center gap-1 text-xs font-medium transition-colors",
-          open ? "text-tier1" : "text-slate-500 hover:text-slate-700",
+          open ? "text-brand" : "text-slate-500 hover:text-slate-700",
         )}
       >
         <Info size={13} />
@@ -391,10 +391,10 @@ function Pill({
       // so a row of equal choices rendered at unequal heights.
       className={`flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full border px-2.5 py-2 text-xs font-medium transition-colors ${
         active
-          ? "border-tier1 bg-tier1 text-white"
+          ? "border-brand bg-brand text-white"
           : disabled
             ? "cursor-not-allowed border-line-soft bg-slate-50 text-slate-400"
-            : "border-line text-slate-700 hover:border-tier1 hover:bg-tier1-light/40 hover:text-tier1"
+            : "border-line text-slate-700 hover:border-brand hover:bg-brand-light/40 hover:text-brand"
       }`}
     >
       {children}
@@ -402,7 +402,7 @@ function Pill({
   );
 }
 
-export default function ClassicFilterPanel() {
+export default function FilterPanel() {
   const {
     livingKind,
     minDepositToman,
@@ -675,7 +675,7 @@ export default function ClassicFilterPanel() {
               className={clsx(
                 "rounded-lg border px-2.5 py-1.5 text-center text-xs font-medium transition-colors",
                 livingKind === key
-                  ? "border-tier1 bg-tier1 text-white"
+                  ? "border-brand bg-brand text-white"
                   : "border-line bg-white text-slate-600 hover:bg-slate-50",
               )}
             >
@@ -708,8 +708,8 @@ export default function ClassicFilterPanel() {
             onClick={toggleViewportSearch}
             className={`flex items-center justify-between gap-2 rounded-xl border px-3 py-2.5 text-xs font-medium transition-colors ${
               searchInViewport
-                ? "border-tier1 bg-tier1 text-white"
-                : "border-line text-slate-600 hover:border-tier1"
+                ? "border-brand bg-brand text-white"
+                : "border-line text-slate-600 hover:border-brand"
             }`}
           >
             <span className="flex items-center gap-1.5">
@@ -759,7 +759,7 @@ export default function ClassicFilterPanel() {
       >
         <div className="flex flex-col gap-2.5">
           {workplaceLocation ? (
-            <div className="flex items-center justify-between gap-2 rounded-xl bg-tier1-light px-3 py-2 text-xs text-tier1">
+            <div className="flex items-center justify-between gap-2 rounded-xl bg-brand-light px-3 py-2 text-xs text-brand">
               {/* Never the raw coordinates: "۳۵٫۷۵۹۱, ۵۱٫۴۱۰۲" tells the user
                   nothing about the place they just clicked. The name is filled
                   in as soon as the lookup answers. */}
@@ -790,7 +790,7 @@ export default function ClassicFilterPanel() {
             <button
               type="submit"
               disabled={isGeocoding || !addressQuery.trim()}
-              className="absolute end-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg text-slate-500 transition-colors hover:text-tier1 disabled:opacity-40"
+              className="absolute end-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg text-slate-500 transition-colors hover:text-brand disabled:opacity-40"
               aria-label="جستجوی آدرس"
             >
               <Search size={14} />
@@ -829,8 +829,8 @@ export default function ClassicFilterPanel() {
             onClick={() => setFilters({ isPickingWorkplace: !isPickingWorkplace })}
             className={`flex items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-colors ${
               isPickingWorkplace
-                ? "border-tier1 bg-tier1 text-white"
-                : "border-line text-slate-600 hover:border-tier1"
+                ? "border-brand bg-brand text-white"
+                : "border-line text-slate-600 hover:border-brand"
             }`}
           >
             <Crosshair size={14} />
@@ -847,8 +847,8 @@ export default function ClassicFilterPanel() {
                     onClick={() => setFilters({ commuteMode: value })}
                     className={`flex flex-1 items-center justify-center gap-1 rounded-xl border px-2 py-2 text-xs transition-colors ${
                       commuteMode === value
-                        ? "border-tier1 bg-tier1 text-white"
-                        : "border-line text-slate-600 hover:border-tier1"
+                        ? "border-brand bg-brand text-white"
+                        : "border-line text-slate-600 hover:border-brand"
                     }`}
                   >
                     <Icon size={13} />
@@ -926,10 +926,10 @@ export default function ClassicFilterPanel() {
                   onClick={() => setFilters({ financialPersona: value })}
                   className={`flex h-full flex-col items-center justify-center gap-0.5 rounded-xl border px-2 py-2 text-center text-xs leading-4 transition-colors ${
                     financialPersona === value && !fullRahnOnly
-                      ? "border-tier1 bg-tier1 text-white"
+                      ? "border-brand bg-brand text-white"
                       : fullRahnOnly
                         ? "cursor-not-allowed border-line-soft bg-slate-50 text-slate-300"
-                        : "border-line text-slate-600 hover:border-tier1"
+                        : "border-line text-slate-600 hover:border-brand"
                   }`}
                 >
                   <span className="font-medium">{label}</span>

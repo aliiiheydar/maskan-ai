@@ -10,7 +10,7 @@ from app.core import constants
 class CriteriaWeights(BaseModel):
     """How much each MAUT sub-utility matters to *this* user.
 
-    The classic filter panel has no way to express this, so it leaves the
+    The filter panel has no way to express this, so it leaves the
     weights unset and the documented constants (docs/ALGORITHMS.md SS2) apply.
     The conversational path can infer them -- "مهم‌ترین چیز برام نزدیکی به مترو
     است، قیمت مهم نیست" is a statement about weights, not about filters -- and

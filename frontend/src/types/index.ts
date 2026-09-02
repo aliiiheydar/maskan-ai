@@ -1,7 +1,7 @@
 // Mirrors backend/app/api/v1/schemas.py (see docs/API_SPEC.md, docs/DATA_SCHEMA.md).
 // Keep these in sync with the backend DTOs -- they are the wire contract.
 
-export type SearchMode = "intelligent" | "classic" | "map";
+export type SearchMode = "ranked" | "chat" | "map";
 
 export type CommuteMode = "walk" | "transit" | "drive";
 
@@ -160,9 +160,9 @@ export interface ListingResult {
   dist_to_metro_mins: number;
   commute_to_work_mins?: number | null;
   utility_score: number;
-  tier: 1 | 2;
   trade_off_rationale?: string | null;
-  /** No other tier-1 pick beats this one on cost, metro walk, and area at once. */
+  /** No other result in the whole search beats this one on cost, metro walk,
+   * and area at once. */
   is_pareto_optimal?: boolean;
   /** Per-criterion sub-utilities behind utility_score. */
   score_breakdown?: Record<string, number>;
@@ -175,7 +175,6 @@ export interface MapPoint {
   id: string;
   lat: number;
   lon: number;
-  tier: 1 | 2;
 }
 
 /** A counted group of matches in one part of the viewport, with the rectangle
@@ -199,8 +198,8 @@ export type LivingKind = "standard" | "shared";
 
 export interface SearchResponse {
   natural_language_summary: string;
-  tier_1_results: ListingResult[];
-  tier_2_results: ListingResult[];
+  /** One page of the ranking, strongest match first. */
+  results: ListingResult[];
   /** Every match, unpaginated. Empty outside map mode. */
   map_points: MapPoint[];
   map_clusters: MapCluster[];
@@ -258,7 +257,7 @@ export interface ExtractedSearchIntent {
   soft_preferences?: string[];
   soft_preference_summary?: string;
   /** Per-criterion ranking weights the assistant inferred from the
-   * conversation; absent on the classic-filter path. */
+   * conversation; absent when the filter panel drove the search. */
   weights?: CriteriaWeights | null;
 }
 
@@ -267,7 +266,7 @@ export interface ExtractedSearchIntent {
  * (app/search/scoring.py::IMPORTANCE_MULTIPLIERS). */
 export type WeightLevel = "low" | "normal" | "high";
 
-/** The criteria the classic panel can be weighted on -- those that have a
+/** The criteria the filter panel can be weighted on -- those that have a
  * filter section to attach the control to. */
 export type WeightedCriterion = "budget" | "area" | "amenity" | "metro" | "quality" | "freshness";
 

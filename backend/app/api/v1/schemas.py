@@ -19,7 +19,14 @@ class BBoxFilter(BaseModel):
 
 
 class UnifiedSearchRequest(BaseModel):
-    mode: Literal["intelligent", "classic", "map"] = "classic"
+    #: Which search this is.
+    #:
+    #: ``ranked`` is the product: the filters, weighted into one utility score
+    #: per listing and ordered by it. ``chat`` is the same ranking with a
+    #: Persian sentence in front of it, which the LLM turns into those same
+    #: filters. ``map`` is neither -- an unranked viewport filter, see the
+    #: /search handler.
+    mode: Literal["ranked", "chat", "map"] = "ranked"
     query_text: Optional[str] = None
     # Neighborhood keys from GET /geo/neighborhoods. Persian titles are also
     # accepted and resolved server-side, so a hand-written request works too.
@@ -115,10 +122,9 @@ class ListingResult(BaseModel):
     dist_to_metro_mins: float
     commute_to_work_mins: Optional[float] = None
     utility_score: float
-    tier: int
     trade_off_rationale: Optional[str] = None
-    # Pareto-optimal on (effective cost, metro walk, area) among the Tier 1
-    # set -- i.e. no other primary pick beats it on all three at once.
+    # Pareto-optimal on (effective cost, metro walk, area) across the whole
+    # result set -- i.e. no other match beats it on all three at once.
     is_pareto_optimal: bool = False
     # Per-criterion sub-utilities behind utility_score, so the UI can explain
     # a match rather than only assert a percentage.
@@ -140,7 +146,6 @@ class MapPoint(BaseModel):
     id: str
     lat: float
     lon: float
-    tier: Literal[1, 2]
 
 
 class MapCluster(BaseModel):
@@ -161,8 +166,14 @@ class MapCluster(BaseModel):
 
 class SearchResponse(BaseModel):
     natural_language_summary: str
-    tier_1_results: list[ListingResult]
-    tier_2_results: list[ListingResult]
+    #: One page of the ranking, strongest match first.
+    #:
+    #: One list, not the tier_1_results/tier_2_results pair this used to
+    #: return. Each card carries its own utility_score and the feed prints it,
+    #: so a split at 0.70 only restated the number as a boundary -- and put a
+    #: heading between two listings a hundredth of a point apart. See
+    #: search.rank_listings.
+    results: list[ListingResult]
     # Every match, unpaginated -- see MapPoint. Empty outside map mode, where
     # the ranked feed and its pins are the same paginated set.
     map_points: list[MapPoint] = Field(default_factory=list)
@@ -202,7 +213,7 @@ class CongestionZone(BaseModel):
 class NeighborhoodSummary(BaseModel):
     """One neighborhood without its polygon: enough for the filter picker and
     for the map to decide where and when to draw its label, but ~250x smaller
-    than shipping all 258 outlines to every client on load."""
+    than shipping all 370 outlines to every client on load."""
 
     key: str
     title: str
@@ -244,6 +255,14 @@ class SearchArea(BaseModel):
 class CityBoundary(BaseModel):
     name: str
     geometry: dict
+
+
+class HealthReport(BaseModel):
+    """Liveness plus the one fact that says the process is actually usable."""
+
+    status: str
+    #: Rows the running process is serving. See the /health handler.
+    listings: int
 
 
 class AppConfig(BaseModel):

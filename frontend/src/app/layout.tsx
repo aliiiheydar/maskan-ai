@@ -24,8 +24,12 @@ const vazirmatn = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "مسکن‌یار | جستجوی هوشمند اجاره در تهران",
-  description: "پلتفرم کشف اجاره مسکن با درک محاوره فارسی و امتیازدهی دسترسی به حمل‌ونقل عمومی تهران.",
+  // The ranking is the product, so the tab says so. It used to read «جستجوی
+  // هوشمند», which is now the name of one mode -- and the least important
+  // claim the app can make about itself.
+  title: "مسکن‌یار | جستجو و رتبه‌بندی اجاره در تهران",
+  description:
+    "اجارهٔ تهران، مرتب‌شده بر اساس میزان تطابق با خواستهٔ شما: رتبه‌بندی چندمعیاره با احتساب تبدیل، دسترسی به مترو و کیفیت محله.",
 };
 
 export default function RootLayout({

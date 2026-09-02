@@ -95,16 +95,16 @@ export default function ChatPanel() {
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      {/* The classic panel opens with a section heading and this one opened
+      {/* The filter panel opens with a section heading and this one opened
           with nothing, so switching modes read as the column having emptied
           rather than changed. It also gives «گفتگوی جدید» somewhere to live --
           starting over was previously only possible by reloading. */}
       <div className="flex shrink-0 items-center justify-between gap-3 border-b border-line bg-white px-4 py-3">
         <h2 className="flex items-center gap-2 text-sm font-bold text-slate-800">
-          <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-tier1/10 text-tier1">
+          <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-brand/10 text-brand">
             <Sparkles size={14} />
           </span>
-          دستیار جستجو
+          دستیار گفت‌وگو
           <span className="rounded-full bg-amber-100 px-1.5 py-px text-xs font-bold text-amber-700">بتا</span>
         </h2>
         {chatMessages.length > 0 && (
@@ -122,7 +122,7 @@ export default function ChatPanel() {
       <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto p-4">
         {chatMessages.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center gap-2.5 px-1 text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-tier1-light text-tier1">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-light text-brand">
               <Sparkles size={26} />
             </div>
             <p className="text-base font-bold text-slate-800">بگویید دنبال چه خانه‌ای می‌گردید</p>
@@ -131,10 +131,10 @@ export default function ChatPanel() {
             </p>
             {/* Said once, where the user is about to rely on it -- not buried
                 in a tooltip on the tab. What it understood is always visible
-                in the chips below, and فیلتر کلاسیک is one click away. */}
+                in the chips below, and the filter panel is one click away. */}
             <p className="max-w-[36ch] rounded-xl bg-amber-50 px-3 py-2 text-xs leading-6 text-amber-800 ring-1 ring-amber-200/70">
               این بخش نسخهٔ آزمایشی است و ممکن است بخشی از خواستهٔ شما را اشتباه بفهمد. برداشت دستیار همیشه
-              پایین همین ستون نشان داده می‌شود و می‌توانید آن را در «فیلتر کلاسیک» اصلاح کنید.
+              پایین همین ستون نشان داده می‌شود و می‌توانید آن را در «جستجو و رتبه‌بندی» اصلاح کنید.
             </p>
             <div className="mt-3 flex w-full flex-col gap-2">
               <p className="text-start text-xs font-semibold text-slate-500">مثلاً بنویسید:</p>
@@ -143,7 +143,7 @@ export default function ChatPanel() {
                   key={starter}
                   type="button"
                   onClick={() => send(starter)}
-                  className="flex items-center gap-2 rounded-xl border border-line bg-white px-3 py-2.5 text-start text-sm leading-6 text-slate-700 transition-all hover:border-tier1 hover:bg-tier1-light/40 hover:text-tier1"
+                  className="flex items-center gap-2 rounded-xl border border-line bg-white px-3 py-2.5 text-start text-sm leading-6 text-slate-700 transition-all hover:border-brand hover:bg-brand-light/40 hover:text-brand"
                 >
                   <ArrowLeft size={14} className="shrink-0 text-slate-400" />
                   {starter}
@@ -163,7 +163,7 @@ export default function ChatPanel() {
                     // every reply made the transcript read as a wall of
                     // highlighted text with the user's turn hidden in it.
                     message.role === "user"
-                      ? "rounded-bl-md bg-tier1 text-white"
+                      ? "rounded-bl-md bg-brand text-white"
                       : "rounded-br-md border border-line bg-white text-slate-800",
                   )}
                 >
@@ -181,7 +181,7 @@ export default function ChatPanel() {
 
         {/* An amber notice, not a red failure banner: the assistant being
             briefly unreachable is a hiccup the user can retry or route around
-            with the classic filters, and styling it as an error makes the
+            with the filter panel, and styling it as an error makes the
             product look broken when it is not. */}
         {chatError && (
           <div className="mt-3 flex items-start gap-2 rounded-2xl border border-amber-200 bg-amber-50 px-3 py-2.5">
@@ -205,10 +205,10 @@ export default function ChatPanel() {
                 )}
                 <button
                   type="button"
-                  onClick={() => setFilters({ mode: "classic", chatError: null })}
+                  onClick={() => setFilters({ mode: "ranked", chatError: null })}
                   className="text-xs font-medium text-amber-700 transition-opacity hover:opacity-70"
                 >
-                  رفتن به فیلترهای کلاسیک
+                  رفتن به جستجو و رتبه‌بندی
                 </button>
               </div>
             </div>
@@ -230,13 +230,13 @@ export default function ChatPanel() {
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           placeholder="پیام خود را بنویسید..."
-          className="min-w-0 flex-1 rounded-full border border-line bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition-colors placeholder:text-slate-500 focus:border-tier1 focus:bg-white"
+          className="min-w-0 flex-1 rounded-full border border-line bg-slate-50 px-4 py-2.5 text-sm text-slate-800 outline-none transition-colors placeholder:text-slate-500 focus:border-brand focus:bg-white"
           disabled={isChatStreaming}
         />
         <button
           type="submit"
           disabled={isChatStreaming || !draft.trim()}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-tier1 text-white transition-opacity disabled:opacity-40"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-white transition-opacity disabled:opacity-40"
           aria-label="ارسال"
         >
           {isChatStreaming ? <Loader2 className="animate-spin" size={16} /> : <Send size={16} />}

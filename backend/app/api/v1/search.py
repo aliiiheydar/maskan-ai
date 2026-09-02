@@ -1,4 +1,4 @@
-"""POST /api/v1/search -- unified boolean-filter / map-bbox / AI search."""
+"""POST /api/v1/search -- one endpoint for all three ways of searching."""
 
 from collections import OrderedDict
 from dataclasses import dataclass
@@ -92,11 +92,11 @@ def _cache_put(key: tuple, entry: _RankedPage) -> None:
 
 
 async def _build_intent(payload: UnifiedSearchRequest, client: OpenRouterClient) -> ExtractedSearchIntent:
-    if payload.mode == "intelligent" and payload.query_text:
+    if payload.mode == "chat" and payload.query_text:
         if not client.has_real_api_key():
             raise HTTPException(
                 status_code=503,
-                detail="جستجوی هوشمند پیکربندی نشده است. لطفاً از فیلترهای کلاسیک استفاده کنید.",
+                detail="جستجوی گفت‌وگویی پیکربندی نشده است. لطفاً از پنل جستجو و رتبه‌بندی استفاده کنید.",
             )
         try:
             intent = await extract_search_intent(client, payload.query_text)
@@ -220,7 +220,6 @@ def _to_result(scored: ScoredListing, intent: ExtractedSearchIntent) -> ListingR
         dist_to_metro_mins=scored.listing.metro_walk_mins,
         commute_to_work_mins=commute_mins,
         utility_score=round(scored.utility_score, 3),
-        tier=scored.tier,
         trade_off_rationale=scored.trade_off_rationale,
         is_pareto_optimal=scored.is_pareto_optimal,
         score_breakdown={name: round(value, 3) for name, value in scored.score_breakdown.items()},
@@ -248,24 +247,23 @@ async def search(
     if payload.mode == "map":
         # Map-explore is a plain boolean filter, not the weighted utility
         # ranking -- there's no "best" pin when you're panning the map, so
-        # every hard-constraint match is surfaced equally (tier 1, unsorted
-        # by score) instead of being split/reordered by Utility(L|U).
-        combined = [
-            ScoredListing(listing=listing, utility_score=0.0, tier=1)
+        # every hard-constraint match is surfaced equally, unsorted, instead
+        # of being reordered by Utility(L|U).
+        ranked = [
+            ScoredListing(listing=listing, utility_score=0.0)
             for listing in candidates
             if hard_constraint_mask(listing, intent)
         ]
-        summary = f"{to_persian_digits(len(combined))} مورد در این محدوده از نقشه یافت شد."
+        summary = f"{to_persian_digits(len(ranked))} مورد در این محدوده از نقشه یافت شد."
     else:
         # Baselines come from the whole corpus, not from the candidate slice:
         # "cheap for this neighborhood" has to be measured against the
         # neighborhood, not against whatever survived the user's filters.
-        tier1, tier2 = await rank_listings(client, candidates, intent, repository.baselines)
-        combined = tier1 + tier2
+        ranked = await rank_listings(client, candidates, intent, repository.baselines)
         # No LLM prose above the feed: it repeated what the cards already
         # show, cost a chat round-trip on every keystroke-debounced search,
         # and delayed results behind a generation the user did not ask for.
-        summary = f"{to_persian_digits(len(combined))} مورد یافت شد."
+        summary = f"{to_persian_digits(len(ranked))} مورد یافت شد."
 
     map_points: list[MapPoint] = []
     map_clusters: list[MapCluster] = []
@@ -274,14 +272,14 @@ async def search(
         # of pins and counted cells rather than ten thousand pins. The split is
         # made server-side against the viewport that was asked about, so the
         # browser never receives, or re-clusters, more than it can draw.
-        cells, drawn = cluster_matches([s.listing for s in combined], payload.bbox, payload.map_zoom)
-        map_points = [MapPoint(id=l.id, lat=l.lat, lon=l.lon, tier=1) for l in drawn]
+        cells, drawn = cluster_matches([s.listing for s in ranked], payload.bbox, payload.map_zoom)
+        map_points = [MapPoint(id=l.id, lat=l.lat, lon=l.lon) for l in drawn]
         map_clusters = [MapCluster(**vars(cell)) for cell in cells]
 
     head = max(_CACHE_HEAD_RESULTS, wanted_through)
     entry = _RankedPage(
-        scored=combined[:head],
-        total_count=len(combined),
+        scored=ranked[:head],
+        total_count=len(ranked),
         summary=summary,
         map_points=map_points,
         map_clusters=map_clusters,
@@ -303,18 +301,15 @@ def _page_start(payload: UnifiedSearchRequest) -> int:
 def _respond(entry: _RankedPage, payload: UnifiedSearchRequest, intent: ExtractedSearchIntent) -> SearchResponse:
     """One ranking, sliced into the page that was asked for.
 
-    docs/API_SPEC.md doesn't define how page/page_size interact with the two
-    tiers; this paginates over the combined, tier-1-first ranking and re-splits
-    the page by tier, so total_count is the full match count and tier
-    boundaries stay intact within a page.
+    ``total_count`` is the full match count, not the page's: the feed prints
+    it above the list and pages into it with "بیشتر".
     """
     start = _page_start(payload)
     page = entry.scored[start : start + payload.page_size]
 
     return SearchResponse(
         natural_language_summary=entry.summary,
-        tier_1_results=[_to_result(s, intent) for s in page if s.tier == 1],
-        tier_2_results=[_to_result(s, intent) for s in page if s.tier == 2],
+        results=[_to_result(s, intent) for s in page],
         map_points=entry.map_points,
         map_clusters=entry.map_clusters,
         total_count=entry.total_count,

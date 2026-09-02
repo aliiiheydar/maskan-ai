@@ -16,7 +16,7 @@
  *
  * The colour is what separates near-equal results instead, and it is spent on
  * the band results actually occupy: a search never returns anything below the
- * Tier 2 floor, and anything at RAMP_HI or above is as good a match as this
+ * ranking's floor, and anything at RAMP_HI or above is as good a match as this
  * ranking produces. Running the ramp over a nominal 0..100٪ would give most of
  * the spectrum to scores that cannot occur.
  */

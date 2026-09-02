@@ -69,7 +69,7 @@ export default function NeighborhoodPicker() {
               key={key}
               type="button"
               onClick={() => remove(key)}
-              className="group flex items-center gap-1 rounded-full bg-tier1 px-2.5 py-1 text-xs font-medium text-white transition-colors hover:bg-tier1/85"
+              className="group flex items-center gap-1 rounded-full bg-brand px-2.5 py-1 text-xs font-medium text-white transition-colors hover:bg-brand/85"
             >
               {byKey.get(key)?.title ?? key}
               <X size={12} className="opacity-70 group-hover:opacity-100" />
@@ -94,8 +94,8 @@ export default function NeighborhoodPicker() {
         onClick={() => setFilters({ isPickingNeighborhood: !isPickingNeighborhood })}
         className={`flex items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-medium transition-colors ${
           isPickingNeighborhood
-            ? "border-tier1 bg-tier1 text-white"
-            : "border-line text-slate-600 hover:border-tier1"
+            ? "border-brand bg-brand text-white"
+            : "border-line text-slate-600 hover:border-brand"
         }`}
       >
         <Crosshair size={14} />
@@ -112,7 +112,7 @@ export default function NeighborhoodPicker() {
           // Deferred so a click on a suggestion lands before the list closes.
           onBlur={() => setTimeout(() => setIsOpen(false), 150)}
           placeholder="جستجوی محله یا خیابان..."
-          className="w-full rounded-xl border border-line bg-slate-50 py-2 pe-8 ps-3 text-sm outline-none transition-colors focus:border-tier1 focus:bg-white"
+          className="w-full rounded-xl border border-line bg-slate-50 py-2 pe-8 ps-3 text-sm outline-none transition-colors focus:border-brand focus:bg-white"
         />
       </div>
 

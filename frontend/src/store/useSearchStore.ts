@@ -28,10 +28,6 @@ import type {
   WeightLevel,
 } from "@/types";
 
-/** Below this many Tier 1 results the feed opens the second tier on its own,
- * so a narrow search shows near misses instead of white space. */
-const MIN_COMFORTABLE_RESULTS = 6;
-
 const RESULTS_PAGE_SIZE = 30;
 
 /** How many results the first page offers.
@@ -51,9 +47,9 @@ const FIRST_PAGE_SIZE = 60;
  * - map: the viewport, and nothing else. Exploring the map means "show me
  *   what's here", so the panel's filters are deliberately not applied -- the
  *   pin count in a cluster has to mean every listing in that area.
- * - classic: the filter panel. No viewport, or panning the map would silently
+ * - ranked: the filter panel. No viewport, or panning the map would silently
  *   hide matches; no free text, since there is no box to type it in.
- * - intelligent: the same filter fields (the chat writes into them) plus the
+ * - chat: the same filter fields (the conversation writes into them) plus the
  *   text of the last turn, which the backend re-extracts intent from.
  */
 function buildSearchRequest(state: FilterState, page: number, offset = 0): UnifiedSearchRequest {
@@ -98,10 +94,10 @@ function buildSearchRequest(state: FilterState, page: number, offset = 0): Unifi
 
   return {
     // Free-text alone can't drive ranking without a chat turn, so the
-    // intelligent mode's own searches run through the classic path with the
+    // conversational mode's own searches run through the ranked path with the
     // filters the conversation produced.
-    mode: "classic",
-    query_text: state.mode === "intelligent" ? state.queryText || undefined : undefined,
+    mode: "ranked",
+    query_text: state.mode === "chat" ? state.queryText || undefined : undefined,
     neighborhoods: viewportArea ? [] : state.selectedNeighborhoods,
     bbox: viewportArea
       ? {
@@ -145,8 +141,8 @@ function buildSearchRequest(state: FilterState, page: number, offset = 0): Unifi
 /** A full listing rendered as a feed card.
  *
  * Map-explore does not rank -- its pins are a filter, and the card hides the
- * ٪ badge in that mode -- so the score is 0 and the tier is 1 rather than
- * inventing a match this search never computed. */
+ * ٪ badge in that mode -- so the score is 0 rather than inventing a match this
+ * search never computed. */
 function asResult(listing: Listing): ListingResult {
   return {
     ...listing,
@@ -157,26 +153,24 @@ function asResult(listing: Listing): ListingResult {
     source_url: listing.source_url ?? null,
     dist_to_metro_mins: listing.metro_walk_mins,
     utility_score: 0,
-    tier: 1,
   };
 }
 
 // Cleared when the mode change is into or out of map-explore, which is a
 // different search from the other two: an unranked viewport filter, with no
-// tiers, no match scores and no paging, driven by where the map is pointing
-// rather than by the filters. Its results and the ranked modes' cannot stand
-// in for each other, and its viewport state (`mapBBox`, `restoreBounds`,
+// match scores and no paging, driven by where the map is pointing rather than
+// by the filters. Its results and the ranked modes' cannot stand in for each
+// other, and its viewport state (`mapBBox`, `restoreBounds`,
 // `searchAreaBounds`) means something only while it is the one searching.
 //
-// Classic and intelligent are deliberately *not* reset against each other:
-// they are the same ranked search over the same filters, one with a sentence
-// of Persian added, so the results on screen are still the right answer after
+// The two ranked modes are deliberately *not* reset against each other: they
+// are the same ranked search over the same filters, one with a sentence of
+// Persian added, so the results on screen are still the right answer after
 // the switch. Clearing them threw the list away, sent the feed back to the
 // top, dropped the selected listing and let the map fly home -- a switch of
 // input panel that cost the user their place. See setMode.
 const MODE_SCOPED_RESET = {
-  tier1Results: [] as ListingResult[],
-  tier2Results: [] as ListingResult[],
+  results: [] as ListingResult[],
   mapPoints: [] as MapPoint[],
   mapClusters: [] as MapCluster[],
   focusedListing: null as ListingResult | null,
@@ -184,7 +178,6 @@ const MODE_SCOPED_RESET = {
   page: 1,
   naturalLanguageSummary: "",
   searchError: null,
-  showTier2: false,
   selectedListingId: null,
   hoveredListingId: null,
   mapBBox: null,
@@ -299,11 +292,10 @@ export interface FilterState {
   searchAreaBounds: BBoxFilter | null;
   selectedListingId: string | null;
   hoveredListingId: string | null;
-  showTier2: boolean;
 
   // Result Set
-  tier1Results: ListingResult[];
-  tier2Results: ListingResult[];
+  /** One page of the ranking, strongest match first. */
+  results: ListingResult[];
   /** Every match in map mode, pin-sized. Unpaginated on purpose. */
   mapPoints: MapPoint[];
   /** Counted cells for the parts of the viewport too dense to draw as pins. */
@@ -336,7 +328,6 @@ export interface FilterState {
   resetFilters: () => void;
   setSelectedListingId: (id: string | null) => void;
   setHoveredListingId: (id: string | null) => void;
-  toggleTier2: () => void;
   syncFromExtractedIntent: (intent: ExtractedSearchIntent) => void;
 
   // Additional actions to actually drive the app
@@ -435,7 +426,7 @@ const DEFAULT_FILTERS = {
 } satisfies Partial<FilterState>;
 
 export const useSearchStore = create<FilterState>((set, get) => ({
-  mode: "classic",
+  mode: "ranked",
 
   // Optimistic: a configured deployment is the normal one, and starting from
   // `false` would blink the mode switch disabled on every load. An
@@ -450,8 +441,8 @@ export const useSearchStore = create<FilterState>((set, get) => ({
       set({ aiSearchEnabled: ai_search_enabled, exploreMapEnabled: explore_map_enabled });
       // A user parked in a mode that just turned out to be unavailable is
       // handed back the filters rather than left on a panel that cannot reply.
-      if (!ai_search_enabled && get().mode === "intelligent") get().setMode("classic");
-      if (!explore_map_enabled && get().mode === "map") get().setMode("classic");
+      if (!ai_search_enabled && get().mode === "chat") get().setMode("ranked");
+      if (!explore_map_enabled && get().mode === "map") get().setMode("ranked");
     } catch {
       // Unreachable backend is the search's problem to report, not the mode
       // switch's; the capability keeps its optimistic default.
@@ -461,7 +452,7 @@ export const useSearchStore = create<FilterState>((set, get) => ({
   setMode: (mode) => {
     const previous = get().mode;
     if (previous === mode) return;
-    if (mode === "intelligent" && !get().aiSearchEnabled) return;
+    if (mode === "chat" && !get().aiSearchEnabled) return;
     if (mode === "map" && !get().exploreMapEnabled) return;
 
     // Between the two ranked modes, only the input panel changes. Nothing is
@@ -530,10 +521,8 @@ export const useSearchStore = create<FilterState>((set, get) => ({
   searchAreaBounds: null,
   selectedListingId: null,
   hoveredListingId: null,
-  showTier2: false,
 
-  tier1Results: [],
-  tier2Results: [],
+  results: [],
   mapPoints: [],
   mapClusters: [],
   focusedListing: null,
@@ -567,7 +556,7 @@ export const useSearchStore = create<FilterState>((set, get) => ({
       return;
     }
     const state = get();
-    if ([...state.tier1Results, ...state.tier2Results].some((listing) => listing.id === id)) {
+    if (state.results.some((listing) => listing.id === id)) {
       set({ focusedListing: null });
       return;
     }
@@ -583,9 +572,7 @@ export const useSearchStore = create<FilterState>((set, get) => ({
 
   setHoveredListingId: (id) => set({ hoveredListingId: id }),
 
-  toggleTier2: () => set((state) => ({ showTier2: !state.showTier2 })),
-
-  // Applies an LLM-extracted intent onto the classic filter state, so the
+  // Applies an LLM-extracted intent onto the panel's filter state, so the
   // sliders/checkboxes visually reflect what the chat understood (the
   // "chat -> filters" half of the bidirectional sync in
   // docs/FRONTEND_STATE.md SS2). Only fields the intent actually set are
@@ -643,21 +630,13 @@ export const useSearchStore = create<FilterState>((set, get) => ({
     try {
       const response = await searchListings(buildSearchRequest(state, 1));
       set({
-        tier1Results: response.tier_1_results,
-        tier2Results: response.tier_2_results,
+        results: response.results,
         mapPoints: response.map_points ?? [],
         mapClusters: response.map_clusters ?? [],
         totalCount: response.total_count,
         page: 1,
         naturalLanguageSummary: response.natural_language_summary,
         isLoading: false,
-        // A narrow search can leave Tier 1 with three results and a collapsed
-        // panel underneath, which reads as "there is nothing here" when there
-        // are in fact two hundred near misses. Opening the second tier fills
-        // the feed *without* relabelling anything: those listings still carry
-        // their own match percentage and their own tier heading, so the
-        // ranking never claims a listing is a better fit than it scored.
-        showTier2: response.tier_1_results.length < MIN_COMFORTABLE_RESULTS,
       });
     } catch (error) {
       set({
@@ -668,9 +647,9 @@ export const useSearchStore = create<FilterState>((set, get) => ({
     }
   },
 
-  // Fetches the next page and appends it to the existing tier1/tier2 arrays,
-  // rather than replacing them (unlike runSearch, which always starts fresh
-  // from page 1).
+  // Fetches the next page and appends it to the results already held, rather
+  // than replacing them (unlike runSearch, which always starts fresh from
+  // page 1).
   loadMoreResults: async () => {
     const state = get();
     const nextPage = state.page + 1;
@@ -679,13 +658,12 @@ export const useSearchStore = create<FilterState>((set, get) => ({
     // page arithmetic on the server's side asked for row 30 while the feed
     // already had sixty -- and rows 30..59 arrived a second time, appended
     // below themselves at the higher percentages they had ranked at.
-    const loaded = state.tier1Results.length + state.tier2Results.length;
+    const loaded = state.results.length;
     set({ isLoadingMore: true, searchError: null });
     try {
       const response = await searchListings(buildSearchRequest(state, nextPage, loaded));
       set({
-        tier1Results: [...state.tier1Results, ...response.tier_1_results],
-        tier2Results: [...state.tier2Results, ...response.tier_2_results],
+        results: [...state.results, ...response.results],
         totalCount: response.total_count,
         page: nextPage,
         isLoadingMore: false,

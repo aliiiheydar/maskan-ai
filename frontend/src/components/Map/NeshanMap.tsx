@@ -708,8 +708,7 @@ function FocusedListingFly({ points }: { points: Map<string, [number, number]> }
 
 export default function NeshanMap() {
   const mode = useSearchStore((state) => state.mode);
-  const tier1Results = useSearchStore((state) => state.tier1Results);
-  const tier2Results = useSearchStore((state) => state.tier2Results);
+  const results = useSearchStore((state) => state.results);
   const mapPoints = useSearchStore((state) => state.mapPoints);
   const mapClusters = useSearchStore((state) => state.mapClusters);
   const focusedListing = useSearchStore((state) => state.focusedListing);
@@ -736,18 +735,18 @@ export default function NeshanMap() {
   const positions = useMemo(() => {
     const index = new Map<string, [number, number]>();
     for (const point of mapPoints) index.set(point.id, [point.lat, point.lon]);
-    for (const listing of [...tier1Results, ...tier2Results]) {
+    for (const listing of results) {
       index.set(listing.id, [listing.lat, listing.lon]);
     }
     return index;
-  }, [mapPoints, tier1Results, tier2Results]);
+  }, [mapPoints, results]);
 
   // Which pins the feed is showing a card for (see SelectedListingAction).
   const cardIds = useMemo(() => {
-    const ids = new Set([...tier1Results, ...tier2Results].map((listing) => listing.id));
+    const ids = new Set(results.map((listing) => listing.id));
     if (focusedListing) ids.add(focusedListing.id);
     return ids;
-  }, [tier1Results, tier2Results, focusedListing]);
+  }, [results, focusedListing]);
 
   /** Puts the map back on the rectangle the search was run against -- the
    * same one, to the corner, not an approximation of it. Because the viewport
@@ -830,10 +829,7 @@ export default function NeshanMap() {
           </>
         ) : (
           <>
-            {tier1Results.map((listing) => (
-              <ListingMarker key={listing.id} listing={listing} />
-            ))}
-            {tier2Results.map((listing) => (
+            {results.map((listing) => (
               <ListingMarker key={listing.id} listing={listing} />
             ))}
           </>

@@ -11,14 +11,19 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        // Tier 1 = strong matches (Utility >= 0.70): gold/green per docs/FRONTEND_STATE.md SS3.
-        tier1: {
+        // The product's own green: every affirmative surface -- the active
+        // mode, a selected card's ring, the primary button, a strong match
+        // pin. `gold` is its warm counterpart, used for the commute isochrone
+        // and other map annotations that must not read as a listing.
+        brand: {
           DEFAULT: "#15803d",
           gold: "#b45309",
           light: "#dcfce7",
         },
-        // Tier 2 = secondary/trade-off matches (0.45 <= Utility < 0.70): blue/gray.
-        tier2: {
+        // The explanatory blue: the trade-off sentence on a card, the "why
+        // this one" notes. Informational, never a call to action, so it is
+        // deliberately not the brand colour.
+        note: {
           DEFAULT: "#2563eb",
           gray: "#64748b",
           light: "#eff6ff",

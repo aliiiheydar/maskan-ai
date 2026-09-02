@@ -7,7 +7,7 @@ const hue = (color: string): number => Number(color.match(/hsl\((\d+)/)![1]);
 
 describe("matchColor", () => {
   it("spends the whole spectrum on the band results actually occupy", () => {
-    // The Tier 2 floor and up: a search never returns anything below 0.45,
+    // The ranking's floor and up: a search never returns anything below 0.45,
     // and 0.9 is as good as this ranking produces.
     expect(hue(matchColor(0.45).fill)).toBe(0);
     expect(hue(matchColor(0.9).fill)).toBe(128);

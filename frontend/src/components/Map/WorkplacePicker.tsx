@@ -2,7 +2,7 @@
 
 // Captures the map click that sets the workplace/commute-hub pin. Only
 // listens while isPickingWorkplace is armed (toggled from
-// ClassicFilterPanel's commute-hub section), so it never interferes with
+// FilterPanel's commute-hub section), so it never interferes with
 // normal map panning/marker clicks otherwise.
 import { useMapEvents } from "react-leaflet";
 

@@ -25,8 +25,7 @@ function FeedSkeleton() {
 export default function ListingFeed() {
   const {
     mode,
-    tier1Results,
-    tier2Results,
+    results,
     totalCount,
     isLoading,
     isLoadingMore,
@@ -38,19 +37,19 @@ export default function ListingFeed() {
   const focusedListing = useSearchStore((state) => state.focusedListing);
   const setSelectedListingId = useSearchStore((state) => state.setSelectedListingId);
 
-  const loadedCount = tier1Results.length + tier2Results.length;
+  const loadedCount = results.length;
   const hasMore = loadedCount < totalCount;
   const isEmpty = loadedCount === 0;
 
   // A pin selected from a part of the map the feed has not paged in yet is
   // appended here (see focusedListing), so every pin has a card to scroll to.
   const ranked = useMemo(() => {
-    const loaded = [...tier1Results, ...tier2Results];
+    const loaded = [...results];
     if (focusedListing && !loaded.some((listing) => listing.id === focusedListing.id)) {
       loaded.push(focusedListing);
     }
     return loaded;
-  }, [tier1Results, tier2Results, focusedListing]);
+  }, [results, focusedListing]);
 
   /** Selecting a property anywhere -- a card, or its pin on the map -- brings
    * it into view here, so the map flying to a pin and the feed showing that
@@ -173,11 +172,11 @@ export default function ListingFeed() {
           </div>
         )}
 
-        {/* One ranked list, not a strong list plus a folded-away weak one. The
-            ٪ badge already says how well each result matches, so a "سایر
-            گزینه‌ها" header only restated it as a wall the user had to click
-            through; the "نمایش بیشتر" button below is the one control the feed
-            needs. */}
+        {/* One ranked list. The ٪ badge already says how well each result
+            matches, so the tiers this used to draw -- a strong list above a
+            folded-away weak one -- only restated the number as a wall the user
+            had to click through; the "نمایش بیشتر" button below is the one
+            control the feed needs. */}
         <div className="flex min-w-0 flex-col gap-3">
           {ranked.map((listing) => (
             <div key={listing.id} ref={(node) => registerCard(listing.id, node)}>
