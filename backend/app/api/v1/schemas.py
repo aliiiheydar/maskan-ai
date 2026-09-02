@@ -249,12 +249,15 @@ class CityBoundary(BaseModel):
 class AppConfig(BaseModel):
     """The optional capabilities this deployment was configured with.
 
-    Only one so far, and it is the one that decides whether a mode is offered
-    at all: without an OpenRouter key the conversational search cannot answer,
-    so the client disables it up front instead of presenting it and failing.
+    Both decide whether a search mode is offered at all, and they are missing
+    for different reasons, so the client treats them differently: without an
+    OpenRouter key the conversational search *cannot* answer, so it is shown
+    disabled rather than presented and left to fail; the explore map is a
+    deliberate switch, so it is hidden outright.
     """
 
     ai_search_enabled: bool
+    explore_map_enabled: bool
 
 
 class TransitStation(BaseModel):

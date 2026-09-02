@@ -202,6 +202,12 @@ export interface FilterState {
    * rather than hidden (its absence would read as a missing feature) and
    * rather than left enabled to fail on the user's first sentence. */
   aiSearchEnabled: boolean;
+  /** Whether کاوش نقشه is offered at all.
+   *
+   * Unlike the one above this is a switch someone threw, not a key someone
+   * forgot, so the header hides the mode instead of showing it unavailable:
+   * there is nothing here for the user to go and fix. */
+  exploreMapEnabled: boolean;
   loadAppConfig: () => Promise<void>;
 
   // Search State
@@ -428,13 +434,15 @@ export const useSearchStore = create<FilterState>((set, get) => ({
   // button behaves as it always has -- the backend answers a chat turn with
   // its own Persian "not configured" notice.
   aiSearchEnabled: true,
+  exploreMapEnabled: true,
   loadAppConfig: async () => {
     try {
-      const { ai_search_enabled } = await getAppConfig();
-      set({ aiSearchEnabled: ai_search_enabled });
+      const { ai_search_enabled, explore_map_enabled } = await getAppConfig();
+      set({ aiSearchEnabled: ai_search_enabled, exploreMapEnabled: explore_map_enabled });
       // A user parked in a mode that just turned out to be unavailable is
       // handed back the filters rather than left on a panel that cannot reply.
       if (!ai_search_enabled && get().mode === "intelligent") get().setMode("classic");
+      if (!explore_map_enabled && get().mode === "map") get().setMode("classic");
     } catch {
       // Unreachable backend is the search's problem to report, not the mode
       // switch's; the capability keeps its optimistic default.
@@ -444,6 +452,7 @@ export const useSearchStore = create<FilterState>((set, get) => ({
   setMode: (mode) => {
     if (get().mode === mode) return;
     if (mode === "intelligent" && !get().aiSearchEnabled) return;
+    if (mode === "map" && !get().exploreMapEnabled) return;
     set({ mode, ...MODE_SCOPED_RESET, isLoading: true });
     // Map mode's first search is issued by the map itself, which is the only
     // thing that knows the viewport being searched (see BBoxSync).

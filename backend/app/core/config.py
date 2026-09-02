@@ -22,6 +22,11 @@ class Settings(BaseSettings):
     embedding_model: str = "openai/text-embedding-3-small"
     default_lat: float = 35.6997
     default_lon: float = 51.3380
+    # کاوش نقشه: the free-roam map that returns whatever is inside the
+    # viewport and ignores the filter panel. A deployment that wants the
+    # filters to be the only way in can turn it off, and the header then drops
+    # the mode entirely rather than showing a control that goes nowhere.
+    explore_map_enabled: bool = True
     app_env: str = "development"
     debug: bool = True
 

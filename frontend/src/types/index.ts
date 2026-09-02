@@ -351,6 +351,11 @@ export interface AppConfig {
    * deployment has no OpenRouter key, in which case the mode is offered
    * disabled rather than left to fail on the first message. */
   ai_search_enabled: boolean;
+  /** Whether کاوش نقشه is offered. False when the deployment switched it off
+   * (EXPLORE_MAP_ENABLED), in which case the mode is hidden rather than shown
+   * disabled: nothing is missing from this server, the mode is simply not
+   * part of the product here. */
+  explore_map_enabled: boolean;
 }
 
 export interface TransitStation {

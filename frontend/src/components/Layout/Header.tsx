@@ -69,6 +69,13 @@ export default function Header() {
   const mode = useSearchStore((state) => state.mode);
   const setMode = useSearchStore((state) => state.setMode);
   const aiSearchEnabled = useSearchStore((state) => state.aiSearchEnabled);
+  const exploreMapEnabled = useSearchStore((state) => state.exploreMapEnabled);
+
+  // کاوش نقشه is dropped rather than disabled when a deployment turns it off.
+  // The AI mode below is greyed out because something is missing that could be
+  // supplied; this one is a decision about what the product is, and a mode
+  // nobody can ever reach is just clutter in a three-item switch.
+  const modes = exploreMapEnabled ? MODES : MODES.filter(({ value }) => value !== "map");
 
   return (
     // Nothing here is allowed to push the bar wider than the window. At 360px
@@ -90,7 +97,7 @@ export default function Header() {
       </div>
 
       <nav className="flex shrink-0 items-center gap-0.5 rounded-full bg-slate-100 p-1 text-sm font-medium">
-        {MODES.map(({ value, label, Icon, badge, desktopOnly }) => {
+        {modes.map(({ value, label, Icon, badge, desktopOnly }) => {
           const active = mode === value;
           // The conversational mode is the one thing here that a deployment
           // can be missing (it needs an OpenRouter key). Shown, not hidden --
