@@ -161,10 +161,19 @@ function asResult(listing: Listing): ListingResult {
   };
 }
 
-// Cleared whenever the search mode changes. The three modes are different
-// searches -- map-explore is an unranked viewport filter, classic is a ranked
-// boolean query, intelligent is a ranked conversational one -- so results and
-// paging from one must never be left on screen under another.
+// Cleared when the mode change is into or out of map-explore, which is a
+// different search from the other two: an unranked viewport filter, with no
+// tiers, no match scores and no paging, driven by where the map is pointing
+// rather than by the filters. Its results and the ranked modes' cannot stand
+// in for each other, and its viewport state (`mapBBox`, `restoreBounds`,
+// `searchAreaBounds`) means something only while it is the one searching.
+//
+// Classic and intelligent are deliberately *not* reset against each other:
+// they are the same ranked search over the same filters, one with a sentence
+// of Persian added, so the results on screen are still the right answer after
+// the switch. Clearing them threw the list away, sent the feed back to the
+// top, dropped the selected listing and let the map fly home -- a switch of
+// input panel that cost the user their place. See setMode.
 const MODE_SCOPED_RESET = {
   tier1Results: [] as ListingResult[],
   tier2Results: [] as ListingResult[],
@@ -450,9 +459,22 @@ export const useSearchStore = create<FilterState>((set, get) => ({
   },
 
   setMode: (mode) => {
-    if (get().mode === mode) return;
+    const previous = get().mode;
+    if (previous === mode) return;
     if (mode === "intelligent" && !get().aiSearchEnabled) return;
     if (mode === "map" && !get().exploreMapEnabled) return;
+
+    // Between the two ranked modes, only the input panel changes. Nothing is
+    // cleared and no search is issued: the feed and the map stay mounted
+    // across the switch (see app/page.tsx), so leaving the state alone is
+    // what keeps the scroll position, the selected listing, where the map is
+    // pointing and the bounds it returns to on deselection. Re-running would
+    // undo all four for a list that came back the same.
+    if (previous !== "map" && mode !== "map") {
+      set({ mode });
+      return;
+    }
+
     set({ mode, ...MODE_SCOPED_RESET, isLoading: true });
     // Map mode's first search is issued by the map itself, which is the only
     // thing that knows the viewport being searched (see BBoxSync).

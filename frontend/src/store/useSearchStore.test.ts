@@ -75,11 +75,39 @@ describe("capability gating", () => {
 });
 
 describe("setMode", () => {
-  it("clears the results of the mode being left", async () => {
+  it("clears the results when map-explore is entered, being a different search", async () => {
     useSearchStore.setState({ tier1Results: [{ id: "x" }] as never, totalCount: 1 });
     useSearchStore.getState().setMode("map");
     expect(useSearchStore.getState().tier1Results).toStrictEqual([]);
     expect(useSearchStore.getState().totalCount).toBe(0);
+  });
+
+  it("keeps the user's place when swapping between the two ranked modes", () => {
+    // Same filters, same ranked search: only the input panel changes. Wiping
+    // this would send the feed back to the top, drop the open listing and fly
+    // the map home, all for a list that comes back the same.
+    const place = {
+      tier1Results: [{ id: "x" }] as never,
+      totalCount: 1,
+      page: 2,
+      showTier2: true,
+      selectedListingId: "x",
+      restoreBounds: [
+        [35.7, 51.3],
+        [35.8, 51.4],
+      ] as never,
+    };
+    useSearchStore.setState(place);
+    useSearchStore.getState().setMode("intelligent");
+    expect(useSearchStore.getState()).toMatchObject({ ...place, mode: "intelligent" });
+
+    useSearchStore.getState().setMode("classic");
+    expect(useSearchStore.getState()).toMatchObject({ ...place, mode: "classic" });
+  });
+
+  it("does not re-search when swapping between the two ranked modes", () => {
+    useSearchStore.getState().setMode("intelligent");
+    expect(api.searchListings).not.toHaveBeenCalled();
   });
 
   it("leaves map-explore's first search to the map, which is what knows the viewport", () => {
@@ -87,8 +115,9 @@ describe("setMode", () => {
     expect(api.searchListings).not.toHaveBeenCalled();
   });
 
-  it("searches immediately for the ranked modes", async () => {
-    useSearchStore.getState().setMode("intelligent");
+  it("searches immediately on leaving map-explore, whose results do not carry over", async () => {
+    useSearchStore.setState({ mode: "map" });
+    useSearchStore.getState().setMode("classic");
     await vi.waitFor(() => expect(api.searchListings).toHaveBeenCalled());
   });
 

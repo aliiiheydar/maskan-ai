@@ -462,7 +462,17 @@ export default function ClassicFilterPanel() {
   // re-search (docs/FRONTEND_STATE.md SS2, "filters -> search context"
   // direction of the bidirectional sync).
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  // Mounting is not a filter change. This panel is unmounted while the user
+  // is in the chat and mounted again when they come back, and searching on
+  // arrival threw away the list they were already reading -- sending the feed
+  // to the top and the map home -- to fetch the same results a second time.
+  // The session's first search is issued once by the page (app/page.tsx).
+  const filtersTouched = useRef(false);
   useEffect(() => {
+    if (!filtersTouched.current) {
+      filtersTouched.current = true;
+      return;
+    }
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       runSearch();

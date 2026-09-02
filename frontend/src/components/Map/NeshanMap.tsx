@@ -693,10 +693,15 @@ function FocusedListingFly({ points }: { points: Map<string, [number, number]> }
       beginProgrammaticMove(0.6);
       map.flyTo(target, Math.max(map.getZoom(), FOCUS_ZOOM), { duration: 0.6 });
     });
-    // restoreBounds and searchAreaBounds are read, not depended on: re-running
-    // when either is set would fly to the same listing a second time.
+    // Only a change of selection flies the map. Everything else this reads --
+    // restoreBounds, searchAreaBounds, and the mode/viewport/neighborhood
+    // trio that decides what "back" means -- is read at the moment of
+    // selection and deliberately not depended on: re-running on any of them
+    // would fly to the same listing a second time, which is how swapping the
+    // filter panel for the chat used to yank the map back off wherever the
+    // user had since dragged it.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedListingId, points, map, mode, searchInViewport, selectedNeighborhoods, setFilters]);
+  }, [selectedListingId, points, map, setFilters]);
 
   return null;
 }
