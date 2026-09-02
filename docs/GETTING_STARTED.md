@@ -20,7 +20,8 @@ unpacks it the first time it starts and finds no database.
 cd backend
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env                      # works as-is; see §4 to enable the chat
+cp .env.example .env                      # works as-is; the chat mode stays off
+                                          # until you paste a key — see §4
 uvicorn app.main:app --reload --port 8000
 ```
 
@@ -134,7 +135,7 @@ single most common way to get a blank result panel.
 
 | Variable | Default | What it does |
 | :-- | :-- | :-- |
-| `OPENROUTER_API_KEY` | placeholder | **The only optional feature in the app.** With a real key, جستجوی گفت‌وگویی works: Persian chat replies and intent extraction. Without one, `GET /config` reports the mode unavailable and the header shows it disabled. Nothing else changes — the ranking, the scores and the map are computed locally and are byte-identical either way. |
+| `OPENROUTER_API_KEY` | `your_openrouter_api_key_here` — **a placeholder, so the mode is off until you replace it** | **Required for جستجوی گفت‌وگویی, and the only optional feature in the app.** Copying `.env.example` leaves the placeholder in place, which counts as no key: `GET /config` returns `ai_search_enabled: false` and the header shows the mode disabled. Paste a real key from [openrouter.ai/keys](https://openrouter.ai/keys) and restart the backend to turn it on. Nothing else depends on it — the ranking, the scores and the map are computed locally and are byte-identical either way. |
 | `OPENROUTER_BASE_URL` | `https://openrouter.ai/api/v1` | Any OpenAI-compatible endpoint. |
 | `LLM_MODEL` | `~deepseek/deepseek-v4-flash-latest` | Chat and intent extraction. The leading `~` is part of the OpenRouter id — it marks a floating "latest" alias, so the deployment follows DeepSeek's current Flash build instead of a pinned date. |
 | `EMBEDDING_MODEL` | `openai/text-embedding-3-small` | Description vectors. Only the corpus builders use these; with no key they fall back to a local hashing vectoriser. |
@@ -219,6 +220,6 @@ python -m app.data.pipelines.build_gap_neighborhoods
 | `no database found; falling back to the synthetic corpus` | The seed file is missing. `GET /api/v1/health` will report ~3,000 listings instead of 21,377. |
 | Empty result panel, API answers fine in `curl` | `CORS_ALLOW_ORIGINS` does not list the origin the browser loaded the frontend from. |
 | Frontend calls `localhost:8000` from another machine | `NEXT_PUBLIC_API_BASE_URL` was not set **at build time**. |
-| جستجوی گفت‌وگویی shown as غیرفعال | No `OPENROUTER_API_KEY`. Everything else works. |
+| جستجوی گفت‌وگویی shown as غیرفعال | `OPENROUTER_API_KEY` is unset, or still the `your_openrouter_api_key_here` placeholder that `.env.example` ships with. This is the default state of a fresh checkout. Everything else works. |
 | Blank map, tiles stuck loading | `public/vendor/maplibre/` is missing — run `npm run dev`/`npm run build`, which vendor it, rather than `next dev` directly. |
 | `env file backend/.env.production not found` | Copy it from `.env.production.example`; compose requires it rather than starting misconfigured. |
