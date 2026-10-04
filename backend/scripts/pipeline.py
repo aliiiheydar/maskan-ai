@@ -3,6 +3,7 @@
     python -m scripts.pipeline                      # full run, density-weighted
     python -m scripts.pipeline --target 3000        # smaller sample
     python -m scripts.pipeline --skip-crawl         # re-enrich and re-store what is on disk
+    python -m scripts.pipeline --only "ایرانشهر,پارک لاله" --exhaustive   # every advert in named محله‌ها
     python -m scripts.pipeline --rebuild            # replace the corpus instead of merging
     python -m scripts.pipeline --embed              # also backfill description vectors
 
@@ -50,14 +51,24 @@ def _stage(name: str) -> float:
     return time.perf_counter()
 
 
-def crawl(target: int, districts: int, probe: bool, uniform: bool) -> None:
+def crawl(target: int, districts: int, probe: bool, uniform: bool, only: str, exhaustive: bool) -> None:
     command = [sys.executable, str(_CRAWLER), "--target", str(target)]
-    if districts:
-        command += ["--districts", str(districts)]
+    if only:
+        # A named run replaces the city-wide sample, so the sampling options
+        # are not forwarded with it: --target, --districts and --uniform all
+        # describe how a quota is split across a random slice of Tehran.
+        command = [sys.executable, str(_CRAWLER), "--only", only]
+        if exhaustive:
+            command.append("--exhaustive")
+        else:
+            command += ["--target", str(target)]
+    else:
+        if districts:
+            command += ["--districts", str(districts)]
+        if uniform:
+            command.append("--uniform")
     if probe:
         command.append("--probe")
-    if uniform:
-        command.append("--uniform")
     # Streamed rather than captured: a city-wide crawl runs for hours and its
     # progress log is the only way to tell a slow run from a stuck one.
     subprocess.run(command, check=True)
@@ -84,6 +95,14 @@ def main() -> int:
     parser.add_argument("--districts", type=int, default=0, help="limit discovery to N district shards")
     parser.add_argument("--probe", action="store_true", help="re-measure district posting density first")
     parser.add_argument("--uniform", action="store_true", help="equal quota per district")
+    parser.add_argument(
+        "--only", default="",
+        help="crawl only these districts: comma-separated slugs or Persian names",
+    )
+    parser.add_argument(
+        "--exhaustive", action="store_true",
+        help="with --only, take every advert those districts will show",
+    )
     parser.add_argument("--skip-crawl", action="store_true", help="use the crawl already on disk")
     parser.add_argument("--rebuild", action="store_true", help="replace the corpus instead of merging into it")
     parser.add_argument("--embed", action="store_true", help="backfill description vectors (slow, paid)")
@@ -92,7 +111,7 @@ def main() -> int:
 
     if not args.skip_crawl:
         started = _stage("1/4 crawl")
-        crawl(args.target, args.districts, args.probe, args.uniform)
+        crawl(args.target, args.districts, args.probe, args.uniform, args.only, args.exhaustive)
         print(f"crawl finished in {time.perf_counter() - started:.0f}s")
     elif not RAW_CRAWL_PATH.exists():
         raise SystemExit(f"--skip-crawl was given but {RAW_CRAWL_PATH} does not exist")

@@ -120,6 +120,10 @@ DENSITY_EXPONENT = 0.75
 # rate any single worker asks of the host.
 DEFAULT_DETAIL_WORKERS = 6
 
+# Stands in for "no quota" in --exhaustive runs: larger than any single Divar
+# result stream, so the scroll loop is bounded by the stall check alone.
+_EXHAUSTIVE_QUOTA = 1_000_000
+
 _SCROLL_STALL_LIMIT = 5
 _SCROLL_MAX_STEPS = 60
 
@@ -233,6 +237,84 @@ def build_client() -> httpx.Client:
 # --------------------------------------------------------------------------
 
 
+# Divar's shard list and this project's محله polygons do not name the same
+# places. Where a neighborhood we care about has no shard of its own, it is
+# mapped onto the shard that geographically contains it -- measured against
+# app/data/assets/gap_neighborhoods.geojson: the پارک لاله polygon sits
+# entirely inside بلوار کشاورز's bounding box (overlap 1.0), while the next
+# closest shard, فاطمی, covers only 53% of it.
+_DISTRICT_ALIASES = {
+    "پارک لاله": "bolvar-e-keshavarz",
+}
+
+
+def resolve_districts(districts: list[dict[str, Any]], selectors: list[str]) -> list[dict[str, Any]]:
+    """Pick named shards out of Divar's district list.
+
+    A selector may be a slug (`iranshahr`), Divar's alternate slug
+    (`meydan-valiasr`), or the district's Persian name -- which is how the
+    neighborhoods are written everywhere else in this project. Names are
+    matched after the CLAUDE.md normalisation, so `فلسطین (میدان انقلاب)`
+    typed with an Arabic yeh still lands on `enqelab`.
+    """
+    by_key: dict[str, dict[str, Any]] = {}
+    for district in districts:
+        for key in (district.get("slug"), district.get("second_slug")):
+            if key:
+                by_key.setdefault(key, district)
+        by_key.setdefault(normalize(district.get("name")), district)
+
+    chosen: list[dict[str, Any]] = []
+    missing: list[str] = []
+    for raw in selectors:
+        selector = raw.strip()
+        if not selector:
+            continue
+        key = _DISTRICT_ALIASES.get(selector, selector)
+        match = by_key.get(key) or by_key.get(normalize(key))
+        if match is None:
+            # Last resort: a substring of a district name, so that
+            # `دانشگاه تهران` finds Divar's `دانشگاه تهران قدیمی`. The
+            # shortest match wins, which keeps that from picking
+            # `شهرک دانشگاه تهران قدیمی` instead.
+            needle = normalize(key)
+            candidates = [d for d in districts if needle and needle in normalize(d.get("name"))]
+            match = min(candidates, key=lambda d: len(d.get("name", ""))) if candidates else None
+        if match is None:
+            missing.append(selector)
+        elif match not in chosen:
+            chosen.append(match)
+            if normalize(match.get("name")) != normalize(selector):
+                LOG.info("%s -> shard %s (%s)", selector, match["slug"], match.get("name"))
+
+    if missing:
+        raise SystemExit(
+            "این محله‌ها در فهرست مناطق شناخته نشدند: " + "، ".join(missing)
+        )
+    return chosen
+
+
+def shard_url(district: dict[str, Any]) -> str:
+    """The result page for one district.
+
+    Measured 2026-09-27: the path form this crawler used,
+    `/s/tehran/rent-apartment/<slug>`, now answers
+    "این صفحه حذف شده یا وجود ندارد" for districts whose `slug` and
+    `second_slug` disagree -- `iranshahr`, `bolvar-e-keshavarz` and
+    `tehran-university` among them -- so discovery silently harvested nothing
+    from them. Only `second_slug` still resolves as a path, and the numeric id
+    resolves as a query parameter. The id is what we send: it cannot go stale
+    behind a rename, and the page title confirms the filter applied.
+    """
+    base = LIST_URL.format(city=CITY_SLUG, category=CATEGORY)
+    return f"{base}?districts={district['id']}"
+
+
+def shard_key(url: str) -> str:
+    """The district identity inside a shard URL, for logs and density keys."""
+    return url.rsplit("districts=", 1)[-1] if "districts=" in url else url.rsplit("/", 1)[-1]
+
+
 def fetch_district_slugs(client: httpx.Client) -> list[dict[str, Any]]:
     response = client.get(DISTRICTS_API)
     response.raise_for_status()
@@ -325,7 +407,7 @@ def measure_density(shard_urls: list[str]) -> dict[str, float]:
         page.on("response", on_response)
         try:
             for index, url in enumerate(shard_urls, start=1):
-                slug = url.rsplit("/", 1)[-1]
+                slug = shard_key(url)
                 captured.clear()
                 try:
                     page.goto(url, wait_until="domcontentloaded", timeout=60_000)
@@ -382,7 +464,7 @@ def allocate_quotas(shard_urls: list[str], rates: dict[str, float], target: int)
 
     weights: dict[str, float] = {}
     for url in shard_urls:
-        slug = url.rsplit("/", 1)[-1]
+        slug = shard_key(url)
         weights[url] = max(rates.get(slug, fallback), 1e-6) ** DENSITY_EXPONENT
 
     quotas: dict[str, int] = {}
@@ -420,6 +502,7 @@ def discover_tokens(
     quotas: dict[str, int],
     known: set[str] | None = None,
     on_shard=None,
+    labels: dict[str, str] | None = None,
 ) -> set[str]:
     """Drive Chromium over each shard URL and collect post tokens.
 
@@ -519,7 +602,7 @@ def discover_tokens(
 
                 LOG.info(
                     "[%d/%d] %s -> +%d new of %d seen (%d fresh), quota %d (%d total)",
-                    index, len(shard_urls), url.rsplit("/", 1)[-1],
+                    index, len(shard_urls), (labels or {}).get(url, shard_key(url)),
                     len(found) - before, len(shard_found), len(candidates), per_shard, len(found),
                 )
                 if on_shard is not None:
@@ -799,6 +882,16 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Crawl Divar Tehran rental listings.")
     parser.add_argument("--stage", choices=["all", "list", "detail"], default="all")
     parser.add_argument("--districts", type=int, default=0, help="limit discovery to N district shards (0 = all)")
+    parser.add_argument(
+        "--only", default="",
+        help="crawl only these districts: comma-separated slugs or Persian names "
+             "(e.g. 'ایرانشهر,میدان ولیعصر'). Skips the random city-wide sample.",
+    )
+    parser.add_argument(
+        "--exhaustive", action="store_true",
+        help="take every advert each selected shard will show instead of a quota "
+             "(only meaningful with --only)",
+    )
     parser.add_argument("--limit", type=int, default=0, help="stop after fetching N new posts (0 = no limit)")
     parser.add_argument(
         "--target", type=int, default=DEFAULT_TARGET_LISTINGS,
@@ -844,23 +937,50 @@ def main() -> int:
     try:
         if args.stage in ("all", "list"):
             districts = fetch_district_slugs(client)
-            # Shuffle before any truncation, so --districts N is itself a
-            # random sample of the city rather than the alphabetical head of it.
-            random.shuffle(districts)
-            if args.districts:
-                districts = districts[: args.districts]
+            selectors = [part for part in args.only.split(",") if part.strip()]
+            if selectors:
+                # A named run is not a sample, so none of the sampling
+                # machinery applies: no shuffle (there is nothing to be
+                # unbiased about when every shard asked for is crawled), no
+                # truncation, and no density-weighted quota.
+                districts = resolve_districts(districts, selectors)
+                LOG.info(
+                    "crawling %d named districts: %s",
+                    len(districts), "، ".join(d.get("name", d["slug"]) for d in districts),
+                )
+            else:
+                # Shuffle before any truncation, so --districts N is itself a
+                # random sample of the city rather than the alphabetical head of it.
+                random.shuffle(districts)
+                if args.districts:
+                    districts = districts[: args.districts]
 
             # The city-wide shard is deliberately left out: it adds no
             # geographic information and its ordering is promotion-weighted.
-            base = LIST_URL.format(city=CITY_SLUG, category=CATEGORY)
-            shards = [f"{base}/{d['slug']}" for d in districts]
+            shards = [shard_url(d) for d in districts]
+            shard_names = {shard_url(d): d.get("name", d["slug"]) for d in districts}
 
-            if args.uniform:
+            if args.exhaustive:
+                # No cap: discovery then stops only when a shard's stream runs
+                # dry (_SCROLL_STALL_LIMIT), which is what "every advert in
+                # this محله" means in practice -- Divar's own feed stops
+                # yielding new tokens after roughly 216 per district.
+                quotas = {url: _EXHAUSTIVE_QUOTA for url in shards}
+                LOG.info("%d districts, draining each shard completely", len(districts))
+            elif args.uniform:
                 per_shard = max(MIN_TOKENS_PER_DISTRICT, math.ceil(args.target / max(1, len(districts))))
                 quotas = {url: per_shard for url in shards}
                 LOG.info("%d districts x %d listings each (uniform)", len(districts), per_shard)
             else:
                 rates = {} if args.probe else load_density()
+                # A cache measured under the old URL scheme is keyed by slug,
+                # not district id, so it matches nothing here -- and
+                # allocate_quotas would quietly hand every district the median
+                # rate instead of saying so. Re-probe unless most of the
+                # shards we are about to visit are actually in it.
+                if rates and sum(shard_key(u) in rates for u in shards) < len(shards) // 2:
+                    LOG.info("cached density does not cover these shards; re-probing")
+                    rates = {}
                 if not rates:
                     LOG.info("measuring posting density across %d districts", len(shards))
                     rates = measure_density(shards)
@@ -871,13 +991,15 @@ def main() -> int:
                 LOG.info(
                     "%d districts, density-weighted quotas %d..%d; busiest: %s",
                     len(districts), min(quotas.values()), max(quotas.values()),
-                    "، ".join(f"{u.rsplit('/', 1)[-1]}={q}" for u, q in busiest),
+                    "، ".join(f"{shard_names.get(u, shard_key(u))}={q}" for u, q in busiest),
                 )
 
             def checkpoint(found: set[str]) -> None:
                 save_json(QUEUE_FILE, sorted((queue | found) - crawled))
 
-            discovered = discover_tokens(shards, quotas, known=crawled | queue, on_shard=checkpoint)
+            discovered = discover_tokens(
+                shards, quotas, known=crawled | queue, on_shard=checkpoint, labels=shard_names,
+            )
             queue |= discovered - crawled
             save_json(QUEUE_FILE, sorted(queue))
             LOG.info("discovery finished: %d tokens queued", len(queue))
